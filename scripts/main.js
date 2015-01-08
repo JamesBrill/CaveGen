@@ -1,3 +1,4 @@
 $(document).ready(function () {  
-	alert("Cave Gen");
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
 });
