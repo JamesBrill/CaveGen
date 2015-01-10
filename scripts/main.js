@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 	var init = function()
 	{
-		grid = createGrid(width, height);
+		grid = new Cave(width, height);
 		view = new CaveGridView(width, height);
 		view.draw(grid); 
 		addEventListeners();
@@ -20,25 +20,14 @@ $(document).ready(function () {
 	        var pixelY = event.pageY - this.offsetTop;
 	        var gridX = view.getGridX(pixelX);
 	        var gridY = view.getGridY(pixelY);
-	        grid[gridY][gridX] = "heart";
-	        view.drawAtGridCoordinates(gridX, gridY, "heart");
-	    });
-	}
+	        grid.setTileAtCoordinates(gridX, gridY, { fileName: "heart", symbol: "l" });
+	        view.drawAtGridCoordinates(gridX, gridY, { fileName: "heart", symbol: "l" });
 
-	var createGrid = function(x, y)
-	{
-		var grid = new Array(x);
-		for (var i = 0; i < x; i++) {
-			grid[i] = new Array(y);
-		}
-		for (var i = 0; i < x; i++)
-		{
-			for (var j = 0; j < y; j++)
-			{
-				grid[i][j] = "terrain";
-			}
-		}
-		return grid;
+	        if (gridX == 0 && gridY == 0)
+	        {
+	        	alert(grid.getUploadableCaveString());
+	        }
+	    });
 	}
 
 	init();

@@ -19,7 +19,7 @@ CaveGridView.prototype.draw = function(gridModel)
 	{
 		for (var j = 0; j < this.height; j++)
 		{
-			this.drawAtGridCoordinates(i, j, gridModel[i][j]);
+			this.drawAtGridCoordinates(i, j, gridModel.getTileAtCoordinates(i, j));
 		}
 	}
 }
@@ -34,7 +34,7 @@ CaveGridView.prototype.drawAtGridCoordinates = function(x, y, tile)
 	{
 		context.drawImage(image, x * view.tileSize, y * view.tileSize, view.tileSize, view.tileSize);
 	}
-	image.src = "images/" + tile + ".png";
+	image.src = "images/" + tile.fileName + ".png";
 }
 
 CaveGridView.prototype.getGridX = function(pixelX)
