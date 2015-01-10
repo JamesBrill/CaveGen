@@ -1,7 +1,5 @@
 var Cave = function(width, height)
 {
-	this.width = width + 1;
-	this.height = height + 1;
 	this.grid = this.createGrid(width, height);
 	this.caveName = "_";
 	this.terrainType = "1";
@@ -43,7 +41,7 @@ Cave.prototype.getCaveString = function()
     {
         for (var j = 0; j < this.grid[0].length; j++)
         {
-            caveString += this.grid[i][j].symbol;
+            caveString += this.grid[j][i].symbol;
         }
         caveString += "\n";
     }
