@@ -44,6 +44,12 @@ $(document).ready(function () {
 			view.isMouseDown = false;
 	        view.paintLineMode = false;
 	    });
+
+		view.canvas.addEventListener("mouseleave", function (event) 
+		{
+			view.isMouseDown = false;
+	        view.paintLineMode = false;
+	    });
 	}
 
 	init();
