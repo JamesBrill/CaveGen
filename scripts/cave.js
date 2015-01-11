@@ -66,3 +66,13 @@ Cave.prototype.addMissingDoorAndStartingPosition = function(caveString)
     }
     return caveString;
 }
+
+Cave.prototype.applyBrushAtPosition = function(brush, position)
+{
+    if (this.grid[position.x][position.y] != brush.symbol)
+    {
+        this.grid[position.x][position.y] = brush.symbol;
+        return true;
+    }
+    return false;
+}

@@ -10,6 +10,8 @@ var CaveGridView = function(x, y)
 	this.canvas.width = this.pixelWidth;
 	this.canvas.height = this.pixelHeight;
 	this.context = canvas.getContext("2d");
+	this.paintLineMode = false;
+	this.isMouseDown = false;
 }
 
 CaveGridView.prototype.draw = function(gridModel)
@@ -45,4 +47,33 @@ CaveGridView.prototype.getGridX = function(pixelX)
 CaveGridView.prototype.getGridY = function(pixelY)
 {
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
+}
+
+CaveGridView.prototype.applyBrushAtPosition = function(brush, cave, column, row)
+{
+    var currentPoint = { x: column, y: row };
+
+    if (this.paintLineMode)
+    {
+        var lineStart = this.previousPaintedPoint;
+        var lineEnd = currentPoint;
+        var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
+        for (var i = 0; i < positions.length; i++)
+        {
+            var tilesChanged = cave.applyBrushAtPosition(brush, positions[i]);
+            if (tilesChanged)
+        	{
+        		this.drawAtGridCoordinates(positions[i].x, positions[i].y, brush);
+        	}
+        }
+    }
+    else
+    {
+        var tilesChanged = cave.applyBrushAtPosition(brush, currentPoint);
+		if (tilesChanged)
+		{
+			this.drawAtGridCoordinates(column, row, brush);
+		}
+    }
+    this.previousPaintedPoint = currentPoint;
 }
