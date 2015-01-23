@@ -6,10 +6,10 @@ var CaveGridView = function(x, y)
 	this.pixelHeight = y * this.tileSize;
 	this.width = x;
 	this.height = y;
-	this.canvas = document.getElementById("canvas");
+	this.canvas = document.getElementById("caveGridCanvas");
 	this.canvas.width = this.pixelWidth;
 	this.canvas.height = this.pixelHeight;
-	this.context = canvas.getContext("2d");
+	this.context = this.canvas.getContext("2d");
 	this.paintLineMode = false;
 	this.isMouseDown = false;
 }

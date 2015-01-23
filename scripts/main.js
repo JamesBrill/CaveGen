@@ -2,53 +2,55 @@ $(document).ready(function () {
 	var width = 40;
 	var height = 40;
 	var grid;
-	var view;
+	var caveGridView;
+	var paletteViewModel;
 
 	var init = function()
 	{
 		grid = new Cave(width, height);
-		view = new CaveGridView(width, height);
-		view.draw(grid); 
+		caveGridView = new CaveGridView(width, height);
+		caveGridView.draw(grid); 
 		addEventListeners();
+		ko.applyBindings(new PaletteViewModel());
 	}
 
 	var addEventListeners = function()
 	{
-		view.canvas.addEventListener("mousemove", function (event) 
+		caveGridView.canvas.addEventListener("mousemove", function (event) 
 		{
 	        var pixelX = event.pageX - this.offsetLeft;
 	        var pixelY = event.pageY - this.offsetTop;
-	        var gridX = view.getGridX(pixelX);
-	        var gridY = view.getGridY(pixelY);
+	        var gridX = caveGridView.getGridX(pixelX);
+	        var gridY = caveGridView.getGridY(pixelY);
 
-            if (view.isMouseDown)
+            if (caveGridView.isMouseDown)
             {
-                view.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
+                caveGridView.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
             }
 	    });
 
-		view.canvas.addEventListener("mousedown", function (event) 
+		caveGridView.canvas.addEventListener("mousedown", function (event) 
 		{
-			view.isMouseDown = true;
+			caveGridView.isMouseDown = true;
 	        var pixelX = event.pageX - this.offsetLeft;
 	        var pixelY = event.pageY - this.offsetTop;
-	        var gridX = view.getGridX(pixelX);
-	        var gridY = view.getGridY(pixelY);
+	        var gridX = caveGridView.getGridX(pixelX);
+	        var gridY = caveGridView.getGridY(pixelY);
 	        //grid.setTileAtCoordinates(gridX, gridY, { fileName: "heart", symbol: "l" });
-	        view.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
-	        view.paintLineMode = true;
+	        caveGridView.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
+	        caveGridView.paintLineMode = true;
 	    });
 
-		view.canvas.addEventListener("mouseup", function (event) 
+		caveGridView.canvas.addEventListener("mouseup", function (event) 
 		{
-			view.isMouseDown = false;
-	        view.paintLineMode = false;
+			caveGridView.isMouseDown = false;
+	        caveGridView.paintLineMode = false;
 	    });
 
-		view.canvas.addEventListener("mouseleave", function (event) 
+		caveGridView.canvas.addEventListener("mouseleave", function (event) 
 		{
-			view.isMouseDown = false;
-	        view.paintLineMode = false;
+			caveGridView.isMouseDown = false;
+	        caveGridView.paintLineMode = false;
 	    });
 	}
 
