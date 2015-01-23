@@ -18,8 +18,7 @@
     </div> 
     <div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px; display: inline-block">
       <div style="float: left">
-        <img style="display: block" data-bind="attr: { src: $root.imagePath($data) }, style: { width: $root.size, height: $root.size }">
+        <img style="display: block" data-bind="attr: { src: $root.imagePath(fileName) }, click: $root.handleClick, style: { width: $root.size, height: $root.size }">
       </div>
-    </div>
   </body>
 </html>

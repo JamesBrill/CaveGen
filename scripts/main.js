@@ -1,10 +1,11 @@
-$(document).ready(function () {  
-	var width = 40;
-	var height = 40;
-	var grid;
-	var caveGridView;
-	var paletteViewModel;
+var width = 40;
+var height = 40;
+var grid;
+var caveGridView;
+var paletteViewModel;
+var currentBrush;
 
+$(document).ready(function () {  
 	var init = function()
 	{
 		grid = new Cave(width, height);
@@ -12,6 +13,7 @@ $(document).ready(function () {
 		caveGridView.draw(grid); 
 		addEventListeners();
 		ko.applyBindings(new PaletteViewModel());
+		currentBrush = { fileName: "terrain", symbol: "x" };
 	}
 
 	var addEventListeners = function()
@@ -25,7 +27,7 @@ $(document).ready(function () {
 
             if (caveGridView.isMouseDown)
             {
-                caveGridView.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
+                caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
             }
 	    });
 
@@ -36,8 +38,7 @@ $(document).ready(function () {
 	        var pixelY = event.pageY - this.offsetTop;
 	        var gridX = caveGridView.getGridX(pixelX);
 	        var gridY = caveGridView.getGridY(pixelY);
-	        //grid.setTileAtCoordinates(gridX, gridY, { fileName: "heart", symbol: "l" });
-	        caveGridView.applyBrushAtPosition({ fileName: "heart", symbol: "l" }, grid, gridX, gridY);
+	        caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
 	        caveGridView.paintLineMode = true;
 	    });
 
