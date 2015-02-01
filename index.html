@@ -11,6 +11,7 @@
     <script type="text/javascript" src="scripts/cavegridview.js"></script>
     <script type="text/javascript" src="scripts/paletteviewmodel.js"></script>
     <script type="text/javascript" src="scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/palette.css">
   </head>
   <body>    
     <div id="canvas-container" style="display: inline-block">
@@ -18,7 +19,8 @@
     </div> 
     <div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px; display: inline-block">
       <div style="float: left">
-        <img style="display: block" data-bind="attr: { src: $root.imagePath(fileName) }, click: $root.handleClick, style: { width: $root.size, height: $root.size }">
+        <img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }">
       </div>
+    </div>
   </body>
 </html>

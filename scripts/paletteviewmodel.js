@@ -59,7 +59,7 @@ function PaletteViewModel() {
             var excessWidth = width % largestPossibleTileSize;
             largestPossibleTileSize = (width - excessWidth) / (columns + 1);
         }
-        return largestPossibleTileSize + "px";
+        return (largestPossibleTileSize - 6) + "px";
     });
 
     self.imagePath = function(imageName)
