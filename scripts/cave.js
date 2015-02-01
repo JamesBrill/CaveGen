@@ -79,5 +79,5 @@ Cave.prototype.applyBrushAtPosition = function(brush, position)
 
 Cave.prototype.withinLimits = function(x, y)
 {
-    return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid.length - 1;
+    return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid[0].length - 1;
 }
