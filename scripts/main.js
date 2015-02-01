@@ -25,7 +25,7 @@ $(document).ready(function () {
 	        var gridX = caveGridView.getGridX(pixelX);
 	        var gridY = caveGridView.getGridY(pixelY);
 
-            if (caveGridView.isMouseDown)
+            if (caveGridView.isMouseDown && grid.withinLimits(gridX, gridY))
             {
                 caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
             }
@@ -38,8 +38,11 @@ $(document).ready(function () {
 	        var pixelY = event.pageY - this.offsetTop;
 	        var gridX = caveGridView.getGridX(pixelX);
 	        var gridY = caveGridView.getGridY(pixelY);
-	        caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
-	        caveGridView.paintLineMode = true;
+	        if (grid.withinLimits(gridX, gridY))
+	        {
+	        	caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
+	        	caveGridView.paintLineMode = true;
+	    	}	        
 	    });
 
 		caveGridView.canvas.addEventListener("mouseup", function (event) 

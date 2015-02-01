@@ -76,3 +76,8 @@ Cave.prototype.applyBrushAtPosition = function(brush, position)
     }
     return false;
 }
+
+Cave.prototype.withinLimits = function(x, y)
+{
+    return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid.length - 1;
+}
