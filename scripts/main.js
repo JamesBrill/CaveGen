@@ -27,7 +27,7 @@ $(document).ready(function () {
 
             if (caveGridView.isMouseDown && grid.withinLimits(gridX, gridY))
             {
-                caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
+                caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
             }
 	    });
 
@@ -40,7 +40,7 @@ $(document).ready(function () {
 	        var gridY = caveGridView.getGridY(pixelY);
 	        if (grid.withinLimits(gridX, gridY))
 	        {
-	        	caveGridView.applyBrushAtPosition(currentBrush, grid, gridX, gridY);
+	        	caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
 	        	caveGridView.paintLineMode = true;
 	    	}	        
 	    });

@@ -81,3 +81,27 @@ Cave.prototype.withinLimits = function(x, y)
 {
     return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid[0].length - 1;
 }
+
+Cave.prototype.getCoordinatesWithinRectangularCursor = function(brushSize, column, row)
+{
+    var coordinatesWithinRectangularCursor = new Array();
+    var rowLimit = row + Math.floor(brushSize / 2) + 1;
+    var columnLimit = column + Math.floor(brushSize / 2) + 1;
+    if (brushSize % 2 == 0)
+    {
+        rowLimit--;
+        columnLimit--;
+    }
+    for (var i = row - Math.floor(brushSize / 2); i < rowLimit; i++)
+    {
+        for (var j = column - Math.floor(brushSize / 2); j < columnLimit; j++)
+        {
+            if (this.withinLimits(i, j))
+            {
+                coordinatesWithinRectangularCursor.push({x : j, y : i});
+            }
+        }
+    }
+
+    return coordinatesWithinRectangularCursor;
+}
