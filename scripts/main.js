@@ -4,6 +4,7 @@ var grid;
 var caveGridView;
 var paletteViewModel;
 var currentBrush;
+var brushSize = 1;;
 
 $(document).ready(function () {  
 	var init = function()
@@ -14,6 +15,19 @@ $(document).ready(function () {
 		addEventListeners();
 		ko.applyBindings(new PaletteViewModel());
 		currentBrush = { fileName: "terrain", symbol: "x" };
+		$("#brushSizeSlider").slider({
+		    value:1,
+		    min: 1,
+		    max: 6,
+		    step: 1,
+		    width: 100,
+		    slide: function( event, ui ) 
+		    {
+		    	$("#brushSize").val(ui.value);
+		    	brushSize = ui.value;
+		    }
+	    });
+	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
 	}
 
 	var addEventListeners = function()

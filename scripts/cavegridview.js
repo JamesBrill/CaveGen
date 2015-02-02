@@ -72,7 +72,7 @@ CaveGridView.prototype.applyBrushAtPosition = function(brush, column, row)
 
 CaveGridView.prototype.drawRectangularCursor = function(brush, x, y)
 {
-	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(5, x, y);
+	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
 	for (var i = 0; i < cursorPositions.length; i++)
 	{
         var tilesChanged = grid.applyBrushAtPosition(brush, cursorPositions[i]);
