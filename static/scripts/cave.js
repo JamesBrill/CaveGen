@@ -55,7 +55,7 @@ Cave.prototype.getCoordinatesWithinRectangularCursor = function(brushSize, colum
 	{
 		for (var j = column - Math.floor(brushSize / 2); j < columnLimit; j++)
 		{
-			if (this.withinLimits(i, j))
+			if (this.withinLimits(j, i))
 			{
 				coordinatesWithinRectangularCursor.push({x : j, y : i});
 			}
