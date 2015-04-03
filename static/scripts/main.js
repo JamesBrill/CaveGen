@@ -34,7 +34,7 @@ $(document).ready(function () {
 		{
 	        client.on('copy', function(event) 
 	        {
-	        	var caveText = grid.getCaveString();
+	        	var caveText = grid.getUploadableCaveString();
 	        	event.clipboardData.setData('text/plain', caveText);
 	        });
       	});
