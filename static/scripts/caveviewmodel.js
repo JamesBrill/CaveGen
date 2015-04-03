@@ -1,6 +1,25 @@
 function CaveViewModel()
 {
 	this.caveName = ko.observable("_");
+	this.validatedCaveName = ko.computed(function()
+	{
+		var text = this.caveName();
+		if (text == "")
+		{
+			return "_";
+		}
+		var regex = /[^a-zA-Z0-9_]/g;
+		var validName = text.replace(regex, "");
+		if (validName.length > 20)
+		{
+			validName = validName.substring(0, 20);
+		}
+		if (validName.Length < 1)
+		{
+			validName = "_";
+		}
+		return validName;
+	}, this);
 	this.caveWidth = ko.observable(40);
 	this.caveHeight = ko.observable(40);
 	this.terrainType = ko.observable("1");
@@ -39,7 +58,7 @@ CaveViewModel.prototype.finishPainting = function()
 CaveViewModel.prototype.getCaveString = function()
 {
 	var caveString = "";
-	caveString += this.caveName() + "\n";
+	caveString += this.validatedCaveName() + "\n";
 	caveString += "terrain " + this.terrainType() + "\n";
 	caveString += "background 1\n";
 	caveString += "water " + this.waterType() + "\n";

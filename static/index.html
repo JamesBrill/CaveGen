@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-	<meta charset="utf-8">
-	<title>Cave Gen</title>
-	<script type="text/javascript" src="scripts/lib/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>    
-	<script type="text/javascript" src="scripts/lib/knockout-3.2.0.js"></script>
-	<script type="text/javascript" src="scripts/lib/ZeroClipboard.min.js"></script>
-	<script type="text/javascript" src="scripts/utils.js"></script>
-	<script type="text/javascript" src="scripts/cavenetwork.js"></script>
-	<script type="text/javascript" src="scripts/cave.js"></script>
-	<script type="text/javascript" src="scripts/cavegridview.js"></script>
-	<script type="text/javascript" src="scripts/paletteviewmodel.js"></script>
-	<script type="text/javascript" src="scripts/main.js"></script>
-	<link rel="stylesheet" type="text/css" href="styles/palette.css">
-	<link rel="stylesheet" type="text/css" href="styles/clipboardButton.css">
-	<link rel="stylesheet" type="text/css" href="jquery-ui-1.11.2.custom/jquery-ui.min.css">
-  </head>
-  <body>  
+	<head>
+		<meta charset="utf-8">
+		<title>Cave Gen</title>
+		<script type="text/javascript" src="scripts/lib/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>    
+		<script type="text/javascript" src="scripts/lib/knockout-3.2.0.js"></script>
+		<script type="text/javascript" src="scripts/lib/ZeroClipboard.min.js"></script>
+		<script type="text/javascript" src="scripts/utils.js"></script>
+		<script type="text/javascript" src="scripts/cavenetwork.js"></script>
+		<script type="text/javascript" src="scripts/cave.js"></script>
+		<script type="text/javascript" src="scripts/cavegridview.js"></script>
+		<script type="text/javascript" src="scripts/paletteviewmodel.js"></script>
+		<script type="text/javascript" src="scripts/caveviewmodel.js"></script>
+		<script type="text/javascript" src="scripts/main.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/palette.css">
+		<link rel="stylesheet" type="text/css" href="styles/clipboardButton.css">
+		<link rel="stylesheet" type="text/css" href="jquery-ui-1.11.2.custom/jquery-ui.min.css">
+	</head>
+	<body>
+		<div id="canvas-container" style="display: inline-block">
+			<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1"/>
+		</div> 
 
-	<div id="canvas-container" style="display: inline-block">
-	  <canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1"/>
-	</div> 
+		<div style="display: inline-block; vertical-align:top">
+			<div id="cave-settings">
+				<label for="caveName">Cave name</label>
+				<input type="text" id="caveName" data-bind="textInput: caveName"/>
+			</div>
 
-	<div style="display: inline-block; vertical-align:top">
-	  <div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
-		<div style="float: left">
-		  <img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }">
+			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
+				<div style="float: left">
+					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }">
+				</div>
+			</div>
+
+			<label for="brushSize">Brush size: </label>
+			<input type="text" id="brushSize" readonly style="border:0; font-weight:bold;">
+			<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+
+			<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
 		</div>
-	  </div>
-
-	  <label for="brushSize">Brush size: </label>
-	  <input type="text" id="brushSize" readonly style="border:0; font-weight:bold;">
-	  <div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
-
-	  <button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
-	</div>
-
-  </body>
+	</body>
 </html>
