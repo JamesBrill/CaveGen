@@ -13,6 +13,7 @@ $(document).ready(function () {
 		caveGridView = new CaveGridView(width, height);
 		caveGridView.draw(grid); 
 		addEventListeners();
+		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel());
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		$("#brushSizeSlider").slider({
@@ -28,21 +29,6 @@ $(document).ready(function () {
 		    }
 	    });
 	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
-
-		var client = new ZeroClipboard($('#copyToClipboard'));
-		client.on('ready', function(event) 
-		{
-	        client.on('copy', function(event) 
-	        {
-	        	var caveText = grid.getUploadableCaveString();
-	        	event.clipboardData.setData('text/plain', caveText);
-	        });
-      	});
-
-      	client.on( 'error', function(event) 
-      	{
-        	ZeroClipboard.destroy();
-      	});
 	}
 
 	var addEventListeners = function()
@@ -85,6 +71,24 @@ $(document).ready(function () {
 			caveGridView.isMouseDown = false;
 	        caveGridView.paintLineMode = false;
 	    });
+	}
+
+	var initCopyToClipboardButton = function()
+	{
+		var client = new ZeroClipboard($('#copyToClipboard'));
+		client.on('ready', function(event) 
+		{
+	        client.on('copy', function(event) 
+	        {
+	        	var caveText = grid.getUploadableCaveString();
+	        	event.clipboardData.setData('text/plain', caveText);
+	        });
+      	});
+
+      	client.on( 'error', function(event) 
+      	{
+        	ZeroClipboard.destroy();
+      	});
 	}
 
 	init();
