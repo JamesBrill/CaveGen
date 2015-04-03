@@ -3,7 +3,7 @@ var Cave = function(width, height)
 	this.grid = this.createGrid(width, height);
 	this.caveName = "_";
 	this.terrainType = "1";
-    this.waterType = "clear";
+	this.waterType = "clear";
 }
 
 Cave.prototype.createGrid = function(x, y)
@@ -31,77 +31,77 @@ Cave.prototype.setTileAtCoordinates = function(x, y, tile)
 
 Cave.prototype.getCaveString = function()
 {
-    var caveString = "";
-    caveString += this.caveName + "\n";
-    caveString += "terrain " + this.terrainType + "\n";
-    caveString += "background 1\n";
-    caveString += "water " + this.waterType + "\n";
+	var caveString = "";
+	caveString += this.caveName + "\n";
+	caveString += "terrain " + this.terrainType + "\n";
+	caveString += "background 1\n";
+	caveString += "water " + this.waterType + "\n";
 
-    for (var i = 0; i < this.grid.length; i++)
-    {
-        for (var j = 0; j < this.grid[0].length; j++)
-        {
-            caveString += this.grid[j][i].symbol;
-        }
-        caveString += "\n";
-    }
-    return caveString;
+	for (var i = 0; i < this.grid.length; i++)
+	{
+		for (var j = 0; j < this.grid[0].length; j++)
+		{
+			caveString += this.grid[j][i].symbol;
+		}
+		caveString += "\n";
+	}
+	return caveString;
 }
 
 Cave.prototype.getUploadableCaveString = function()
 {
-    var caveString = this.getCaveString();
-    return this.addMissingDoorAndStartingPosition(caveString);
+	var caveString = this.getCaveString();
+	return this.addMissingDoorAndStartingPosition(caveString);
 }
 
 Cave.prototype.addMissingDoorAndStartingPosition = function(caveString)
 {
-    if (caveString.indexOf("#") == -1)
-    {
-        caveString += "#";
-    }
-    if (caveString.indexOf("D") == -1)
-    {
-        caveString += "D";
-    }
-    return caveString;
+	if (caveString.indexOf("#") == -1)
+	{
+		caveString += "#";
+	}
+	if (caveString.indexOf("D") == -1)
+	{
+		caveString += "D";
+	}
+	return caveString;
 }
 
 Cave.prototype.applyBrushAtPosition = function(brush, position)
 {
-    if (this.grid[position.x][position.y] != brush.symbol)
-    {
-        this.grid[position.x][position.y] = brush;
-        return true;
-    }
-    return false;
+	if (this.grid[position.x][position.y] != brush.symbol)
+	{
+		this.grid[position.x][position.y] = brush;
+		return true;
+	}
+	return false;
 }
 
 Cave.prototype.withinLimits = function(x, y)
 {
-    return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid[0].length - 1;
+	return x > 0 && y > 0 && x < this.grid.length - 1 && y < this.grid[0].length - 1;
 }
 
 Cave.prototype.getCoordinatesWithinRectangularCursor = function(brushSize, column, row)
 {
-    var coordinatesWithinRectangularCursor = new Array();
-    var rowLimit = row + Math.floor(brushSize / 2) + 1;
-    var columnLimit = column + Math.floor(brushSize / 2) + 1;
-    if (brushSize % 2 == 0)
-    {
-        rowLimit--;
-        columnLimit--;
-    }
-    for (var i = row - Math.floor(brushSize / 2); i < rowLimit; i++)
-    {
-        for (var j = column - Math.floor(brushSize / 2); j < columnLimit; j++)
-        {
-            if (this.withinLimits(i, j))
-            {
-                coordinatesWithinRectangularCursor.push({x : j, y : i});
-            }
-        }
-    }
+	var coordinatesWithinRectangularCursor = new Array();
+	var rowLimit = row + Math.floor(brushSize / 2) + 1;
+	var columnLimit = column + Math.floor(brushSize / 2) + 1;
+	if (brushSize % 2 == 0)
+	{
+		rowLimit--;
+		columnLimit--;
+	}
+	for (var i = row - Math.floor(brushSize / 2); i < rowLimit; i++)
+	{
+		for (var j = column - Math.floor(brushSize / 2); j < columnLimit; j++)
+		{
+			if (this.withinLimits(i, j))
+			{
+				coordinatesWithinRectangularCursor.push({x : j, y : i});
+			}
+		}
+	}
 
-    return coordinatesWithinRectangularCursor;
+	return coordinatesWithinRectangularCursor;
 }

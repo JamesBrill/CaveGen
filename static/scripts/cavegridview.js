@@ -51,23 +51,23 @@ CaveGridView.prototype.getGridY = function(pixelY)
 
 CaveGridView.prototype.applyBrushAtPosition = function(brush, column, row)
 {
-    var currentPoint = { x: column, y: row };
+	var currentPoint = { x: column, y: row };
 
-    if (this.paintLineMode)
-    {
-        var lineStart = this.previousPaintedPoint;
-        var lineEnd = currentPoint;
-        var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
-        for (var i = 0; i < positions.length; i++)
-        {
-        	this.drawRectangularCursor(brush, positions[i].x, positions[i].y);
-        }
-    }
-    else
-    {
-    	this.drawRectangularCursor(brush, column, row);
-    }
-    this.previousPaintedPoint = currentPoint;
+	if (this.paintLineMode)
+	{
+		var lineStart = this.previousPaintedPoint;
+		var lineEnd = currentPoint;
+		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
+		for (var i = 0; i < positions.length; i++)
+		{
+			this.drawRectangularCursor(brush, positions[i].x, positions[i].y);
+		}
+	}
+	else
+	{
+		this.drawRectangularCursor(brush, column, row);
+	}
+	this.previousPaintedPoint = currentPoint;
 }
 
 CaveGridView.prototype.drawRectangularCursor = function(brush, x, y)
@@ -75,10 +75,10 @@ CaveGridView.prototype.drawRectangularCursor = function(brush, x, y)
 	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
 	for (var i = 0; i < cursorPositions.length; i++)
 	{
-        var tilesChanged = grid.applyBrushAtPosition(brush, cursorPositions[i]);
-        if (tilesChanged)
-    	{
-    		this.drawAtGridCoordinates(cursorPositions[i].x, cursorPositions[i].y, brush);
-    	}
-    }
+		var tilesChanged = grid.applyBrushAtPosition(brush, cursorPositions[i]);
+		if (tilesChanged)
+		{
+			this.drawAtGridCoordinates(cursorPositions[i].x, cursorPositions[i].y, brush);
+		}
+	}
 }
