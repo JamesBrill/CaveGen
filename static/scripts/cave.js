@@ -71,7 +71,7 @@ Cave.prototype.applyBrushAtPosition = function(brush, position)
 {
     if (this.grid[position.x][position.y] != brush.symbol)
     {
-        this.grid[position.x][position.y] = brush.symbol;
+        this.grid[position.x][position.y] = brush;
         return true;
     }
     return false;
