@@ -1,4 +1,5 @@
-function PaletteViewModel() {
+function PaletteViewModel() 
+{
 	var self = this;
  
 	self.images = ko.observableArray([

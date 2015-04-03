@@ -2,9 +2,9 @@ var width = 40;
 var height = 40;
 var grid;
 var caveGridView;
-var paletteViewModel;
+var caveViewModel;
 var currentBrush;
-var brushSize = 1;;
+var brushSize = 1;
 
 $(document).ready(function () {  
 	var init = function()
@@ -12,9 +12,11 @@ $(document).ready(function () {
 		grid = new Cave(width, height);
 		caveGridView = new CaveGridView(width, height);
 		caveGridView.draw(grid); 
+		caveViewModel = new CaveViewModel();
 		addEventListeners();
 		initCopyToClipboardButton();
-		ko.applyBindings(new PaletteViewModel());
+		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
+		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		initBrushSizeSlider();
 	}
@@ -25,39 +27,24 @@ $(document).ready(function () {
 		{
 			var pixelX = event.pageX - this.offsetLeft;
 			var pixelY = event.pageY - this.offsetTop;
-			var gridX = caveGridView.getGridX(pixelX);
-			var gridY = caveGridView.getGridY(pixelY);
-
-			if (caveGridView.isMouseDown && grid.withinLimits(gridX, gridY))
-			{
-				caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
-			}
+			caveViewModel.continuePaintingAtMousePosition(pixelX, pixelY);
 		});
 
 		caveGridView.canvas.addEventListener("mousedown", function (event) 
 		{
-			caveGridView.isMouseDown = true;
 			var pixelX = event.pageX - this.offsetLeft;
 			var pixelY = event.pageY - this.offsetTop;
-			var gridX = caveGridView.getGridX(pixelX);
-			var gridY = caveGridView.getGridY(pixelY);
-			if (grid.withinLimits(gridX, gridY))
-			{
-				caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
-				caveGridView.paintLineMode = true;
-			}           
+			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
 		});
 
 		caveGridView.canvas.addEventListener("mouseup", function (event) 
 		{
-			caveGridView.isMouseDown = false;
-			caveGridView.paintLineMode = false;
+			caveViewModel.finishPainting();
 		});
 
 		caveGridView.canvas.addEventListener("mouseleave", function (event) 
 		{
-			caveGridView.isMouseDown = false;
-			caveGridView.paintLineMode = false;
+			caveViewModel.finishPainting();
 		});
 	}
 
