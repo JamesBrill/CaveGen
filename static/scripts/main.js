@@ -28,6 +28,7 @@ $(document).ready(function () {
 		    }
 	    });
 	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
+		var client = new ZeroClipboard($('#copyToClipboard'));
 	}
 
 	var addEventListeners = function()
