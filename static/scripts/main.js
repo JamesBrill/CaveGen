@@ -16,19 +16,7 @@ $(document).ready(function () {
 		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel());
 		currentBrush = { fileName: "terrain", symbol: "x" };
-		$("#brushSizeSlider").slider({
-		    value:1,
-		    min: 1,
-		    max: 6,
-		    step: 1,
-		    width: 100,
-		    slide: function( event, ui ) 
-		    {
-		    	$("#brushSize").val(ui.value);
-		    	brushSize = ui.value;
-		    }
-	    });
-	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
+		initBrushSizeSlider();
 	}
 
 	var addEventListeners = function()
@@ -89,6 +77,23 @@ $(document).ready(function () {
       	{
         	ZeroClipboard.destroy();
       	});
+	}
+
+	var initBrushSizeSlider = function()
+	{
+		$("#brushSizeSlider").slider({
+		    value:1,
+		    min: 1,
+		    max: 6,
+		    step: 1,
+		    width: 100,
+		    slide: function( event, ui ) 
+		    {
+		    	$("#brushSize").val(ui.value);
+		    	brushSize = ui.value;
+		    }
+	    });
+	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
 	}
 
 	init();
