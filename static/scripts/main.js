@@ -28,7 +28,21 @@ $(document).ready(function () {
 		    }
 	    });
 	    $("#brushSize").val($("#brushSizeSlider").slider("value"));
+
 		var client = new ZeroClipboard($('#copyToClipboard'));
+		client.on('ready', function(event) 
+		{
+	        client.on('copy', function(event) 
+	        {
+	        	var caveText = grid.getCaveString();
+	        	event.clipboardData.setData('text/plain', caveText);
+	        });
+      	});
+
+      	client.on( 'error', function(event) 
+      	{
+        	ZeroClipboard.destroy();
+      	});
 	}
 
 	var addEventListeners = function()
