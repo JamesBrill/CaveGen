@@ -1,10 +1,10 @@
 function CaveViewModel()
 {
-	var self = this;
-
-	self.caveName = ko.observable("_");
-	self.caveWidth = ko.observable(40);
-	self.caveHeight = ko.observable(40);
+	this.caveName = ko.observable("_");
+	this.caveWidth = ko.observable(40);
+	this.caveHeight = ko.observable(40);
+	this.terrainType = ko.observable("1");
+	this.waterType = ko.observable("clear");
 }
 
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
@@ -34,4 +34,42 @@ CaveViewModel.prototype.finishPainting = function()
 {
 	caveGridView.isMouseDown = false;
 	caveGridView.paintLineMode = false; 
+}
+
+CaveViewModel.prototype.getCaveString = function()
+{
+	var caveString = "";
+	caveString += this.caveName() + "\n";
+	caveString += "terrain " + this.terrainType() + "\n";
+	caveString += "background 1\n";
+	caveString += "water " + this.waterType() + "\n";
+
+	for (var i = 0; i < this.caveWidth(); i++)
+	{
+		for (var j = 0; j < this.caveHeight(); j++)
+		{
+			caveString += grid.getTileAtCoordinates(j, i).symbol;
+		}
+		caveString += "\n";
+	}
+	return caveString;
+}
+
+CaveViewModel.prototype.getUploadableCaveString = function()
+{
+	var caveString = this.getCaveString();
+	return this.addMissingDoorAndStartingPosition(caveString);
+}
+
+CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
+{
+	if (caveString.indexOf("#") == -1)
+	{
+		caveString += "#";
+	}
+	if (caveString.indexOf("D") == -1)
+	{
+		caveString += "D";
+	}
+	return caveString;
 }

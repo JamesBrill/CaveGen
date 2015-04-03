@@ -55,7 +55,7 @@ $(document).ready(function () {
 		{
 			client.on('copy', function(event) 
 			{
-				var caveText = grid.getUploadableCaveString();
+				var caveText = caveViewModel.getUploadableCaveString();
 				event.clipboardData.setData('text/plain', caveText);
 			});
 		});
