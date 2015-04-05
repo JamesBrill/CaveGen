@@ -91,9 +91,9 @@ CaveViewModel.prototype.getCaveString = function()
 	caveString += "background 1\n";
 	caveString += "water " + this.waterType() + "\n";
 
-	for (var i = 0; i < this.caveWidth(); i++)
+	for (var i = 0; i < this.caveHeight(); i++)
 	{
-		for (var j = 0; j < this.caveHeight(); j++)
+		for (var j = 0; j < this.caveWidth(); j++)
 		{
 			caveString += grid.getTileAtCoordinates(j, i).symbol;
 		}
