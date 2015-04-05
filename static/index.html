@@ -24,9 +24,23 @@
 		</div> 
 
 		<div style="display: inline-block; vertical-align:top">
-			<div id="cave-settings">
+			<div id="cave-settings" style="width: 250px">
 				<label for="caveName">Cave name</label>
 				<input type="text" id="caveName" data-bind="textInput: caveName"/>
+
+				<label for="width">Width</label>
+				<input type="text" id="width" data-bind="textInput: caveWidth"/>
+
+				<label for="height">Height</label>
+				<input type="text" id="height" data-bind="textInput: caveHeight"/>
+
+				<label for="brushSize">Brush size: </label>
+				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold;">
+				<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+
+				<button id="generate" class="clip_button" data-bind="click: updateDimensions()">Generate cave</button>
+
+				<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
 			</div>
 
 			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
@@ -34,12 +48,6 @@
 					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }">
 				</div>
 			</div>
-
-			<label for="brushSize">Brush size: </label>
-			<input type="text" id="brushSize" readonly style="border:0; font-weight:bold;">
-			<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
-
-			<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
 		</div>
 	</body>
 </html>

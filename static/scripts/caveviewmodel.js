@@ -26,6 +26,34 @@ function CaveViewModel()
 	this.waterType = ko.observable("clear");
 }
 
+CaveViewModel.prototype.updateDimensions = function()
+{
+	var width = this.caveWidth();
+	var height = this.caveHeight();
+	var widthHeightRatio = width / height;
+	var border;
+
+	if (widthHeightRatio > 1)
+	{
+		var displayWidth = 800 / widthHeightRatio;
+		var borderThickness = (800 - displayWidth) / 2;
+		border = { top: borderThickness, left: 0 };
+	}
+	else
+	{
+		var displayHeight = 800 * widthHeightRatio;
+		var borderThickness = (800 - displayHeight) / 2;
+		border = { top: 0, left: borderThickness };
+	}
+
+	var largestDimension = Math.max(width, height);
+	var tileSize = 800 / largestDimension; 
+
+	grid = new Cave(width, height);
+	caveGridView = new CaveGridView(width, height, tileSize, border);
+	caveGridView.draw(grid); 	
+}
+
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
 {
 	var gridX = caveGridView.getGridX(pixelX);

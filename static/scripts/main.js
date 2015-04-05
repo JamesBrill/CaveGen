@@ -6,11 +6,12 @@ var caveViewModel;
 var currentBrush;
 var brushSize = 1;
 
-$(document).ready(function () {  
+$(document).ready(function () 
+{  
 	var init = function()
 	{
 		grid = new Cave(width, height);
-		caveGridView = new CaveGridView(width, height);
+		caveGridView = new CaveGridView(width, height, 20);
 		caveGridView.draw(grid); 
 		caveViewModel = new CaveViewModel();
 		addEventListeners();
@@ -82,6 +83,6 @@ $(document).ready(function () {
 		});
 		$("#brushSize").val($("#brushSizeSlider").slider("value"));
 	}
-
+	
 	init();
 });

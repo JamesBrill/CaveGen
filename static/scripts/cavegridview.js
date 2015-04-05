@@ -1,9 +1,10 @@
-var CaveGridView = function(x, y)
+var CaveGridView = function(x, y, tileSize, border)
 {
 	this.location = {x:0, y:0};
-	this.tileSize = 20;
-	this.pixelWidth = x * this.tileSize;
-	this.pixelHeight = y * this.tileSize;
+	this.tileSize = tileSize;
+	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
+	this.pixelWidth = 800;
+	this.pixelHeight = 800;
 	this.width = x;
 	this.height = y;
 	this.canvas = document.getElementById("caveGridCanvas");
@@ -17,6 +18,9 @@ var CaveGridView = function(x, y)
 CaveGridView.prototype.draw = function(gridModel)
 {
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	this.context.rect(0, 0, this.canvas.width, this.canvas.height);
+	this.context.fillStyle = 'black';
+	this.context.fill();
 	for (var i = 0; i < this.width; i++)
 	{
 		for (var j = 0; j < this.height; j++)
@@ -29,23 +33,25 @@ CaveGridView.prototype.draw = function(gridModel)
 CaveGridView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
-	this.context.clearRect(x * view.tileSize, y * view.tileSize, view.tileSize, view.tileSize);
+	this.context.clearRect(x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
 	var image = new Image();
 	var context = this.context;
 	image.onload = function()
 	{
-		context.drawImage(image, x * view.tileSize, y * view.tileSize, view.tileSize, view.tileSize);
+		context.drawImage(image, x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
 	}
 	image.src = "images/" + tile.fileName + ".png";
 }
 
 CaveGridView.prototype.getGridX = function(pixelX)
 {
+	pixelX -= this.border.left;
 	return ((pixelX - (pixelX % this.tileSize)) / this.tileSize);   
 }
 
 CaveGridView.prototype.getGridY = function(pixelY)
 {
+	pixelY -= this.border.top;	
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
