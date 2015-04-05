@@ -57,35 +57,32 @@ CaveViewModel.prototype.updateDimensions = function()
 
 CaveViewModel.prototype.validateDimensions = function()
 {	
-	var width = this.caveWidth();
-	var height = this.caveHeight();
-
-	if (isNaN(width))
+	if (isNaN(this.caveWidth()))
 	{
 		this.caveWidth(40);
 		alert("Width must be an integer.")
 	}
-	if (isNaN(height))
+	if (isNaN(this.caveHeight()))
 	{
 		this.caveHeight(40);
 		alert("Height must be an integer.")
 	}
 
-	this.caveWidth(Math.round(width));
-	this.caveHeight(Math.round(height));
+	this.caveWidth(Math.round(this.caveWidth()));
+	this.caveHeight(Math.round(this.caveHeight()));
 
-	if (width < 5)
+	if (this.caveWidth() < 5)
 	{
 		this.caveWidth(5);
 		alert("Width too small. Must be at least 5.")
 	}
-	if (height < 5)
+	if (this.caveHeight() < 5)
 	{
 		this.caveHeight(5);
 		alert("Height too small. Must be at least 5.")
 	}
 
-	var area = width * height;
+	var area = this.caveWidth() * this.caveHeight();
 	if (area > 8000)
 	{
 		this.caveWidth(89);
