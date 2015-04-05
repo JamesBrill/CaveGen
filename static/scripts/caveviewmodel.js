@@ -59,6 +59,21 @@ CaveViewModel.prototype.validateDimensions = function()
 {	
 	var width = this.caveWidth();
 	var height = this.caveHeight();
+
+	if (isNaN(width))
+	{
+		this.caveWidth(40);
+		alert("Width must be an integer.")
+	}
+	if (isNaN(height))
+	{
+		this.caveHeight(40);
+		alert("Height must be an integer.")
+	}
+
+	this.caveWidth(Math.round(width));
+	this.caveHeight(Math.round(height));
+
 	if (width < 5)
 	{
 		this.caveWidth(5);
