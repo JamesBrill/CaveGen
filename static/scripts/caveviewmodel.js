@@ -57,15 +57,17 @@ CaveViewModel.prototype.updateDimensions = function()
 
 CaveViewModel.prototype.validateDimensions = function()
 {	
+	var validationReport = "";
+
 	if (isNaN(this.caveWidth()))
 	{
 		this.caveWidth(40);
-		alert("Width must be an integer.")
+		validationReport += "Width must be an integer.\n";
 	}
 	if (isNaN(this.caveHeight()))
 	{
 		this.caveHeight(40);
-		alert("Height must be an integer.")
+		validationReport += "Height must be an integer.\n";
 	}
 
 	this.caveWidth(Math.round(this.caveWidth()));
@@ -74,12 +76,12 @@ CaveViewModel.prototype.validateDimensions = function()
 	if (this.caveWidth() < 5)
 	{
 		this.caveWidth(5);
-		alert("Width too small. Must be at least 5.")
+		validationReport += "Width too small. Must be at least 5.\n";
 	}
 	if (this.caveHeight() < 5)
 	{
 		this.caveHeight(5);
-		alert("Height too small. Must be at least 5.")
+		validationReport += "Height too small. Must be at least 5.\n";
 	}
 
 	var area = this.caveWidth() * this.caveHeight();
@@ -87,13 +89,18 @@ CaveViewModel.prototype.validateDimensions = function()
 	{
 		this.caveWidth(89);
 		this.caveHeight(89);
-		alert("Area too large. Must be no more than 8000.")
+		validationReport += "Area too large. Must be no more than 8000.\n";
 	}
 	if (area < 256)
 	{
 		this.caveWidth(16);
 		this.caveHeight(16);
-		alert("Area too small. Must be no less than 256.")
+		validationReport += "Area too small. Must be no less than 256.\n";
+	}
+
+	if (validationReport != "")
+	{
+		alert(validationReport);
 	}
 }
 
