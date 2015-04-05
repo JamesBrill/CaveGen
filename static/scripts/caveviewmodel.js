@@ -28,6 +28,7 @@ function CaveViewModel()
 
 CaveViewModel.prototype.updateDimensions = function()
 {
+	this.validateDimensions(width, height);	
 	var width = this.caveWidth();
 	var height = this.caveHeight();
 	var widthHeightRatio = width / height;
@@ -52,6 +53,36 @@ CaveViewModel.prototype.updateDimensions = function()
 	grid = new Cave(width, height);
 	caveGridView = new CaveGridView(width, height, tileSize, border);
 	caveGridView.draw(grid); 	
+}
+
+CaveViewModel.prototype.validateDimensions = function()
+{	
+	var width = this.caveWidth();
+	var height = this.caveHeight();
+	if (width < 5)
+	{
+		this.caveWidth(5);
+		alert("Width too small. Must be at least 5.")
+	}
+	if (height < 5)
+	{
+		this.caveHeight(5);
+		alert("Height too small. Must be at least 5.")
+	}
+
+	var area = width * height;
+	if (area > 8000)
+	{
+		this.caveWidth(89);
+		this.caveHeight(89);
+		alert("Area too large. Must be no more than 8000.")
+	}
+	if (area < 256)
+	{
+		this.caveWidth(16);
+		this.caveHeight(16);
+		alert("Area too small. Must be no less than 256.")
+	}
 }
 
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
