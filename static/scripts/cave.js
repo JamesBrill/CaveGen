@@ -1,6 +1,8 @@
 var Cave = function(width, height)
 {
 	this.grid = this.createGrid(width, height);
+	this.width = width;
+	this.height = height;
 }
 
 Cave.prototype.createGrid = function(x, y)
@@ -15,6 +17,26 @@ Cave.prototype.createGrid = function(x, y)
 	}
 	return grid;
 }
+
+Cave.prototype.buildGridFromCaveString = function(caveString)
+{
+	var caveLines = caveString.split("\n");
+	caveLines.splice(0, 4);
+	caveLines.pop(); // Remove empty line at the end
+	this.width = caveLines[0].length;
+	this.height = caveLines.length; // Assumes lines all equal length
+	this.grid = new twoDimensionalArray(this.width, this.height);
+	for (var i = 0; i < this.width; i++)
+	{
+		for (var j = 0; j < this.height; j++)
+		{
+			var symbol = caveLines[j].charAt(i);
+			var fileName = TileUtils.getFileNameFromSymbol(symbol);
+			this.grid[i][j] = { fileName: fileName, symbol: symbol };
+		}
+	}
+}
+
 
 Cave.prototype.getTileAtCoordinates = function(x, y)
 {

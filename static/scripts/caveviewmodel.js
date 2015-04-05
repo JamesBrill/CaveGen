@@ -22,11 +22,11 @@ function CaveViewModel()
 	}, this);
 	this.caveWidth = ko.observable(40);
 	this.caveHeight = ko.observable(40);
-	this.terrainType = ko.observable("1");
-	this.waterType = ko.observable("clear");
+	this.terrainType = ko.observable("1"); 
+	this.waterType = ko.observable("clear"); 
 }
 
-CaveViewModel.prototype.updateDimensions = function()
+CaveViewModel.prototype.updateDimensions = function(cave)
 {
 	this.validateDimensions(width, height);	
 	var width = this.caveWidth();
@@ -48,9 +48,9 @@ CaveViewModel.prototype.updateDimensions = function()
 	}
 
 	var largestDimension = Math.max(width, height);
-	var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 
+	var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 	
 
-	grid = new Cave(width, height);
+	grid = (cave == undefined) ? new Cave(width, height) : cave;
 	caveGridView = new CaveGridView(width, height, tileSize, border);
 	caveGridView.draw(grid); 	
 }
@@ -169,4 +169,13 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 		caveString += "D";
 	}
 	return caveString;
+}
+
+CaveViewModel.prototype.loadCave = function(caveName, caveString)
+{
+	grid.buildGridFromCaveString(caveString);
+	this.caveName(caveName);
+	this.caveWidth(grid.width);
+	this.caveHeight(grid.height);
+	this.updateDimensions(grid);
 }

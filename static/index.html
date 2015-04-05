@@ -45,6 +45,12 @@
 				<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
 			</div>
 
+			<div id="cave-storage" style="width: 250px">
+				<select name="load" id="load" data-bind='options: caveNames, value: selectedCaveName, optionsCaption: "Load"' style="width: 250px"></select>
+
+				<button id="save" data-bind="click: function() { storeCave() }">Save</button>
+			</div>
+
 			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
 				<div style="float: left">
 					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }">
