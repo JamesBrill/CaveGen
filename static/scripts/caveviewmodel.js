@@ -36,19 +36,19 @@ CaveViewModel.prototype.updateDimensions = function()
 
 	if (widthHeightRatio > 1)
 	{
-		var displayWidth = 800 / widthHeightRatio;
-		var borderThickness = (800 - displayWidth) / 2;
+		var displayWidth = CAVE_DISPLAY_SIZE / widthHeightRatio;
+		var borderThickness = (CAVE_DISPLAY_SIZE - displayWidth) / 2;
 		border = { top: borderThickness, left: 0 };
 	}
 	else
 	{
-		var displayHeight = 800 * widthHeightRatio;
-		var borderThickness = (800 - displayHeight) / 2;
+		var displayHeight = CAVE_DISPLAY_SIZE * widthHeightRatio;
+		var borderThickness = (CAVE_DISPLAY_SIZE - displayHeight) / 2;
 		border = { top: 0, left: borderThickness };
 	}
 
 	var largestDimension = Math.max(width, height);
-	var tileSize = 800 / largestDimension; 
+	var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 
 
 	grid = new Cave(width, height);
 	caveGridView = new CaveGridView(width, height, tileSize, border);

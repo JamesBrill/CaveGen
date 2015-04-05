@@ -3,8 +3,8 @@ var CaveGridView = function(x, y, tileSize, border)
 	this.location = {x:0, y:0};
 	this.tileSize = tileSize;
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
-	this.pixelWidth = 800;
-	this.pixelHeight = 800;
+	this.pixelWidth = CAVE_DISPLAY_SIZE;
+	this.pixelHeight = CAVE_DISPLAY_SIZE;
 	this.width = x;
 	this.height = y;
 	this.canvas = document.getElementById("caveGridCanvas");

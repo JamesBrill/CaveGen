@@ -5,6 +5,7 @@ var caveGridView;
 var caveViewModel;
 var currentBrush;
 var brushSize = 1;
+var CAVE_DISPLAY_SIZE = 800;
 
 $(document).ready(function () 
 {  
@@ -83,6 +84,6 @@ $(document).ready(function ()
 		});
 		$("#brushSize").val($("#brushSizeSlider").slider("value"));
 	}
-	
+
 	init();
 });
