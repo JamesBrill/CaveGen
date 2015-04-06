@@ -20,24 +20,20 @@
 		<link rel="stylesheet" type="text/css" href="styles/clipboardButton.css">
 		<link rel="stylesheet" type="text/css" href="jquery-ui-1.11.2.custom/jquery-ui.min.css">
 	</head>
-	<body>
-		<div id="canvas-container" style="display: inline-block">
-			<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1"/>
-		</div> 
-
+	<body style="background-color: black">
 		<div style="display: inline-block; vertical-align:top">
 			<div id="cave-settings" style="width: 250px">
-				<label for="caveName">Cave name</label>
+				<label for="caveName"><font color="white">Cave name</font></label>
 				<input type="text" id="caveName" data-bind="textInput: caveName"/>
 
-				<label for="width">Width</label>
+				<label for="width"><font color="white">Width</font></label>
 				<input type="text" id="width" data-bind="textInput: caveWidth"/>
 
-				<label for="height">Height</label>
+				<label for="height"><font color="white">Height</font></label>
 				<input type="text" id="height" data-bind="textInput: caveHeight"/>
 
-				<label for="brushSize">Brush size: </label>
-				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold;">
+				<label for="brushSize"><font color="white">Brush size: </font></label>
+				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; margin-bottom: 5px">
 				<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
 
 				<button id="generate" class="clip_button" data-bind="click: updateDimensions()">Generate cave</button>
@@ -48,7 +44,7 @@
 			<div id="cave-storage" style="width: 250px">
 				<select name="load" id="load" data-bind='options: caveNames, value: selectedCaveName, optionsCaption: "Load"' style="width: 250px"></select>
 
-				<button id="save" data-bind="click: function() { storeCave() }">Save</button>
+				<button id="save" class="clip_button" data-bind="click: function() { storeCave() }">Save</button>
 			</div>
 
 			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
@@ -57,5 +53,9 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="canvas-container" style="display: inline-block">
+			<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1"/>
+		</div> 
 	</body>
 </html>
