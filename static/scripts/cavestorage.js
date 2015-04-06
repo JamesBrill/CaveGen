@@ -3,7 +3,7 @@ function CaveStorage()
 	var initialCaveNames = this.loadAllCaveNames();
 	this.caveNames = ko.observableArray(initialCaveNames);
 	this.selectedCaveName = ko.observable("");
-	this.selectedCaveString = ko.computed(function()
+	ko.computed(function()
 	{
 		var caveName = this.selectedCaveName();
 		if (caveName == undefined || caveName == "")
@@ -11,8 +11,7 @@ function CaveStorage()
 			return;
 		}
 		var caveString = this.loadCave(caveName);
-		caveViewModel.loadCave(caveName, caveString);
-		return caveString;
+		ko.ignoreDependencies(caveViewModel.loadCave, caveViewModel, [caveName, caveString]);
 	}, this);
 }
 
