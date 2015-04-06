@@ -12,6 +12,7 @@ function CaveStorage()
 		}
 		var caveString = this.loadCave(caveName);
 		ko.ignoreDependencies(caveViewModel.loadCave, caveViewModel, [caveName, caveString]);
+		_gaq.push(['_trackEvent', 'Storage', 'Load Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
 	}, this);
 }
 
@@ -45,7 +46,8 @@ CaveStorage.prototype.storeCave = function()
 	}
 
 	localStorage["cavegen_" + caveName] = caveString;
-
+	_gaq.push(['_trackEvent', 'Storage', 'Save Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
+	
 	// The flag seems redundant, but need to make sure storage did not fail before 
 	// adding the name to the list
 	if (addToCaveNameList)

@@ -128,6 +128,12 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 		caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
 		caveGridView.paintLineMode = true;
 	}   
+
+	if (brushSize != lastUsedBrushSize)
+	{
+		lastUsedBrushSize = brushSize;
+		_gaq.push(['_trackEvent', 'Painting', 'Use New Brush Size', this.caveName(), brushSize]);
+	}
 }
 
 CaveViewModel.prototype.finishPainting = function() 
@@ -172,6 +178,13 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 		caveString += "D";
 	}
 	return caveString;
+}
+
+CaveViewModel.prototype.generateCave = function()
+{
+	this.updateDimensions();
+	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
+	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
 }
 
 CaveViewModel.prototype.loadCave = function(caveName, caveString)

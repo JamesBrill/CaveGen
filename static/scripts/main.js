@@ -5,6 +5,7 @@ var caveGridView;
 var caveViewModel;
 var currentBrush;
 var brushSize = 1;
+var lastUsedBrushSize = 0;
 var CAVE_DISPLAY_SIZE = 800;
 
 $(document).ready(function () 
@@ -60,6 +61,8 @@ $(document).ready(function ()
 			{
 				var caveText = caveViewModel.getUploadableCaveString();
 				event.clipboardData.setData('text/plain', caveText);
+				_gaq.push(['_trackEvent', 'Copying', 'Copy To Clipboard', caveViewModel.caveName(), 
+							caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
 			});
 		});
 
