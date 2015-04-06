@@ -36,7 +36,7 @@
 				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; margin-bottom: 5px">
 				<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
 
-				<button id="generate" class="clip_button" data-bind="click: updateDimensions()">Generate cave</button>
+				<button id="generate" class="clip_button" data-bind="click: function() { updateDimensions() }">Generate cave</button>
 
 				<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
 			</div>
