@@ -47,7 +47,7 @@ TileUtils.getFileNameFromSymbol = function(symbol)
 	{
 		if (TileUtils.tileMap[i].symbol == symbol)
 		{
-			return TileUtils.tileMap[i].fileName;
+			return (symbol == " ") ? "black" : TileUtils.tileMap[i].fileName;
 		}
 	}
 	console.log("Attempted to get filename from invalid symbol: " + symbol + ".");
