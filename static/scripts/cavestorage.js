@@ -12,7 +12,10 @@ function CaveStorage()
 		}
 		var caveString = this.loadCave(caveName);
 		ko.ignoreDependencies(caveViewModel.loadCave, caveViewModel, [caveName, caveString]);
-		_gaq.push(['_trackEvent', 'Storage', 'Load Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
+		ko.ignoreDependencies(function() 
+		{
+			_gaq.push(['_trackEvent', 'Storage', 'Load Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
+		}, this, []);	
 	}, this);
 }
 
