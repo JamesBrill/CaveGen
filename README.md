@@ -18,6 +18,7 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * Fix bug where Generate/Save buttons don't highlight on hover
 * favicon.ico
 * Validate tiles (e.g. number of Hannahs, enemies, doors, etc.)
+* Zoom and pan
 
 ## Coming next!
 * Undo/Redo buttons
