@@ -1,7 +1,7 @@
 var width = 40;
 var height = 40;
 var grid;
-var caveGridView;
+var caveView;
 var caveViewModel;
 var currentBrush;
 var brushSize = 1;
@@ -13,8 +13,8 @@ $(document).ready(function ()
 	var init = function()
 	{
 		grid = new Cave(width, height);
-		caveGridView = new CaveGridView(width, height, 20);
-		caveGridView.draw(grid); 
+		caveView = new CaveView(width, height, 20);
+		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
 		addEventListeners();
 		initCopyToClipboardButton();
@@ -27,26 +27,26 @@ $(document).ready(function ()
 
 	var addEventListeners = function()
 	{
-		caveGridView.canvas.addEventListener("mousemove", function (event) 
+		caveView.canvas.addEventListener("mousemove", function (event) 
 		{
 			var pixelX = event.pageX - this.offsetLeft;
 			var pixelY = event.pageY - this.offsetTop;
 			caveViewModel.continuePaintingAtMousePosition(pixelX, pixelY);
 		});
 
-		caveGridView.canvas.addEventListener("mousedown", function (event) 
+		caveView.canvas.addEventListener("mousedown", function (event) 
 		{
 			var pixelX = event.pageX - this.offsetLeft;
 			var pixelY = event.pageY - this.offsetTop;
 			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
 		});
 
-		caveGridView.canvas.addEventListener("mouseup", function (event) 
+		caveView.canvas.addEventListener("mouseup", function (event) 
 		{
 			caveViewModel.finishPainting();
 		});
 
-		caveGridView.canvas.addEventListener("mouseleave", function (event) 
+		caveView.canvas.addEventListener("mouseleave", function (event) 
 		{
 			caveViewModel.finishPainting();
 		});

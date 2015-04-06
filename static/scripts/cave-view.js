@@ -1,4 +1,4 @@
-var CaveGridView = function(x, y, tileSize, border)
+var CaveView = function(x, y, tileSize, border)
 {
 	this.location = {x:0, y:0};
 	this.tileSize = tileSize;
@@ -15,7 +15,7 @@ var CaveGridView = function(x, y, tileSize, border)
 	this.isMouseDown = false;
 }
 
-CaveGridView.prototype.draw = function(gridModel)
+CaveView.prototype.draw = function(gridModel)
 {
 	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	this.context.rect(0, 0, this.canvas.width, this.canvas.height);
@@ -30,7 +30,7 @@ CaveGridView.prototype.draw = function(gridModel)
 	}
 }
 
-CaveGridView.prototype.drawAtGridCoordinates = function(x, y, tile)
+CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
 	this.context.clearRect(x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
@@ -43,19 +43,19 @@ CaveGridView.prototype.drawAtGridCoordinates = function(x, y, tile)
 	image.src = "images/" + tile.fileName + ".png";
 }
 
-CaveGridView.prototype.getGridX = function(pixelX)
+CaveView.prototype.getGridX = function(pixelX)
 {
 	pixelX -= this.border.left;
 	return ((pixelX - (pixelX % this.tileSize)) / this.tileSize);   
 }
 
-CaveGridView.prototype.getGridY = function(pixelY)
+CaveView.prototype.getGridY = function(pixelY)
 {
 	pixelY -= this.border.top;	
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
-CaveGridView.prototype.applyBrushAtPosition = function(brush, column, row)
+CaveView.prototype.applyBrushAtPosition = function(brush, column, row)
 {
 	var currentPoint = { x: column, y: row };
 
@@ -76,7 +76,7 @@ CaveGridView.prototype.applyBrushAtPosition = function(brush, column, row)
 	this.previousPaintedPoint = currentPoint;
 }
 
-CaveGridView.prototype.drawRectangularCursor = function(brush, x, y)
+CaveView.prototype.drawRectangularCursor = function(brush, x, y)
 {
 	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
 	for (var i = 0; i < cursorPositions.length; i++)

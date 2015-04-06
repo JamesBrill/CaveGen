@@ -53,8 +53,8 @@ CaveViewModel.prototype.updateDimensions = function(cave)
 		var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 	
 
 		grid = (cave == undefined) ? new Cave(width, height) : cave;
-		caveGridView = new CaveGridView(width, height, tileSize, border);
-		caveGridView.draw(grid); 	
+		caveView = new CaveView(width, height, tileSize, border);
+		caveView.draw(grid); 	
 	}
 }
 
@@ -109,24 +109,24 @@ CaveViewModel.prototype.validateDimensions = function()
 
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
 {
-	var gridX = caveGridView.getGridX(pixelX);
-	var gridY = caveGridView.getGridY(pixelY);
+	var gridX = caveView.getGridX(pixelX);
+	var gridY = caveView.getGridY(pixelY);
 
-	if (caveGridView.isMouseDown && grid.withinLimits(gridX, gridY))
+	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
-		caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
 	}
 }
 
 CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY) 
 {
-	caveGridView.isMouseDown = true;
-	var gridX = caveGridView.getGridX(pixelX);
-	var gridY = caveGridView.getGridY(pixelY);
+	caveView.isMouseDown = true;
+	var gridX = caveView.getGridX(pixelX);
+	var gridY = caveView.getGridY(pixelY);
 	if (grid.withinLimits(gridX, gridY))
 	{
-		caveGridView.applyBrushAtPosition(currentBrush, gridX, gridY);
-		caveGridView.paintLineMode = true;
+		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		caveView.paintLineMode = true;
 	}   
 
 	if (brushSize != lastUsedBrushSize)
@@ -138,8 +138,8 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 
 CaveViewModel.prototype.finishPainting = function() 
 {
-	caveGridView.isMouseDown = false;
-	caveGridView.paintLineMode = false; 
+	caveView.isMouseDown = false;
+	caveView.paintLineMode = false; 
 }
 
 CaveViewModel.prototype.getCaveString = function()
