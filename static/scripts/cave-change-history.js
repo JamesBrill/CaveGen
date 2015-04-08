@@ -1,12 +1,14 @@
 function CaveChangeHistory() 
 {
 	this.changes = [];
-	this.currentChangeIndex;
+	this.currentChangeIndex = -1;
 }
 
 CaveChangeHistory.prototype.numberOfChanges = function() { return this.changes.length; }
 
 CaveChangeHistory.prototype.lastChange = function() { return this.changes[this.numberOfChanges - 1]; }
+
+CaveChangeHistory.prototype.getTileChanges = function(index) { return this.changes[index].tileChanges; }
 
 CaveChangeHistory.prototype.isLastChangeARegeneration = function()
 {
@@ -35,4 +37,18 @@ CaveChangeHistory.prototype.cullHistory = function()
         this.changes.splice(0, numberOfChangesToRemove);
         this.currentChangeIndex -= numberOfChangesToRemove;
     }
+}
+
+CaveChangeHistory.prototype.addChange = function(change)
+{
+	var lastChange = (this.numberOfChanges() > 0) ? this.lastChange() : null;
+	// This clause prevents duplicate changes and 'non-changes' from being added to the change history.
+	// Duplicate changes occur when duplicate mouse events are fired off rapidly (and erroneously).
+	if ((lastChange != null && !lastChange.equals(change) && change.hasEffect()) || lastChange == null)
+	{
+		this.changes = this.changes.slice(0, this.currentChangeIndex + 1);
+	    this.changes.push(change);
+	    this.currentChangeIndex++;
+	    this.cullChangeHistory();
+	}
 }
