@@ -24,6 +24,7 @@ function CaveViewModel()
 	this.caveHeight = ko.observable(40);
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
+	this.changeHistory = new CaveChangeHistory();
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -194,4 +195,73 @@ CaveViewModel.prototype.loadCave = function(caveName, caveString)
 	this.caveWidth(grid.width);
 	this.caveHeight(grid.height);
 	this.updateDimensions(grid);
+}
+
+// Builds CaveChange of entire cave that's ready to accommodate a new cave with different dimensions
+CaveViewModel.prototype.takeSnapshot = function(change)
+{
+    for (var i = 0; i < grid.width; i++)
+    {
+        for (var j = 0; j < grid.height; j++)
+        {
+            this.addTileChange(change, i, j, grid.getTileAtCoordinates(i, j), grid.getTileAtCoordinates(i, j));
+        }
+    }
+}
+
+CaveViewModel.prototype.addTileChange = function(change, x, y, before, after)
+{
+    var tileChange = new TileChange(x, y, before, after);
+    change.addTileChange(tileChange);
+}
+
+CaveViewModel.prototype.mergeSnapshots = function()
+{
+    if (this.changeHistory.numberOfChanges() == 0)
+    {
+        console.log("Change history is empty.");
+    }
+    var lastChange = this.changeHistory.lastChange();
+    for (var i = 0; i < grid.width; i++)
+    {
+        for (var j = 0; j < grid.height; j++)
+        {
+            lastChange.mergeTileChanges(i, j, grid.getTileAtCoordinates(i, j));
+        }
+    }
+}
+
+CaveViewModel.prototype.undo = function()
+{
+    this.applyChange(this.changeHistory.currentChangeIndex, true);
+    this.changeHistory.currentChangeIndex = Math.max(-1, this.changeHistory.currentChangeIndex - 1);
+}
+
+CaveViewModel.prototype.redo = function()
+{
+    this.applyChange(this.changeHistory.currentChangeIndex + 1, false);
+    this.changeHistory.currentChangeIndex = Math.min(this.changeHistory.numberOfChanges - 1, 
+    												 this.changeHistory.currentChangeIndex + 1);
+}
+
+CaveViewModel.prototype.applyChange = function(changeIndex, reversed)
+{
+    if (changeIndex < 0 || changeIndex >= this.changeHistory.numberOfChanges()) return;
+
+    var tileChanges = this.changeHistory.getTileChanges(changeIndex);
+    for (var i = 0; i < tileChanges.length; i++) 
+    {
+    	var x = tileChanges[i].xCoordinate;
+    	var y = tileChanges[i].yCoordinate;
+    	if (grid.withinLimits(x, y))
+    	{
+    		var tile = reversed ? tileChanges[i].before : tileChanges[i].after;
+    		grid.setTileAtCoordinates(x, y, tile);
+    	}
+    }
+}
+
+CaveViewModel.prototype.recordChange = function(change)
+{
+	this.changeHistory.addChange(change);
 }
