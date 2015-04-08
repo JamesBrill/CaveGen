@@ -47,19 +47,7 @@ CaveChange.prototype.addTileChange = function(tileChange)
     if (matchingChanges.length > 0)
     {
         var merger = matchingChanges[0];
-        var indexesOfMatchingChangesToRemove = [];
-        for (var i = 0; i < this.tileChanges.length; i++) 
-        {
-            if ($.inArray(this.tileChanges[i], matchingChanges))
-            {
-                indexesOfMatchingChangesToRemove.push(i);
-            }
-        }
-        for (var i = 0; i < indexesOfMatchingChangesToRemove.length; i++) 
-        {
-            var index = indexesOfMatchingChangesToRemove[i].index;
-            this.tileChanges.splice(index, 1);
-        }
+        this.removeChanges(matchingChanges);
 
         tileChange = new TileChange(tileChange.xCoordinate, 
                                     tileChange.yCoordinate, 
@@ -91,19 +79,7 @@ CaveChange.prototype.hasEffect = function()
         }
     }
 
-    var indexesOfIneffectiveChangesToRemove = [];
-    for (var i = 0; i < this.tileChanges.length; i++) 
-    {
-        if ($.inArray(this.tileChanges[i], matchingChanges))
-        {
-            indexesOfIneffectiveChangesToRemove.push(i);
-        }
-    }
-    for (var i = 0; i < indexesOfIneffectiveChangesToRemove.length; i++) 
-    {
-        var index = indexesOfIneffectiveChangesToRemove[i].index;
-        this.tileChanges.splice(index, 1);
-    }
+    this.removeChanges(ineffectiveChanges);
     return hasEffect;
 }
 
@@ -127,4 +103,21 @@ CaveChange.prototype.equals = function(other)
         }
     }
     return true;
+}
+
+CaveChange.prototype.removeChanges = function(changes)
+{
+    var indexesOfChangesToRemove = [];
+    for (var i = 0; i < this.tileChanges.length; i++) 
+    {
+        if ($.inArray(this.tileChanges[i], changes))
+        {
+            indexesOfChangesToRemove.push(i);
+        }
+    }
+    for (var i = 0; i < indexesOfChangesToRemove.length; i++) 
+    {
+        var index = indexesOfChangesToRemove[i].index;
+        this.tileChanges.splice(index, 1);
+    }    
 }
