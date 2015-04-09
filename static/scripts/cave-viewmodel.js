@@ -197,6 +197,16 @@ CaveViewModel.prototype.loadCave = function(caveName, caveString)
 	this.updateDimensions(grid);
 }
 
+CaveViewModel.prototype.undo = function()
+{
+
+}
+
+CaveViewModel.prototype.redo = function()
+{
+
+}
+
 // Builds CaveChange of entire cave that's ready to accommodate a new cave with different dimensions
 CaveViewModel.prototype.takeSnapshot = function(change)
 {
@@ -231,13 +241,13 @@ CaveViewModel.prototype.mergeSnapshots = function()
     }
 }
 
-CaveViewModel.prototype.undo = function()
+CaveViewModel.prototype.undoChange = function()
 {
     this.applyChange(this.changeHistory.currentChangeIndex, true);
     this.changeHistory.currentChangeIndex = Math.max(-1, this.changeHistory.currentChangeIndex - 1);
 }
 
-CaveViewModel.prototype.redo = function()
+CaveViewModel.prototype.redoChange = function()
 {
     this.applyChange(this.changeHistory.currentChangeIndex + 1, false);
     this.changeHistory.currentChangeIndex = Math.min(this.changeHistory.numberOfChanges - 1, 
