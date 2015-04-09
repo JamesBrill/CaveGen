@@ -29,34 +29,31 @@ function CaveViewModel()
 
 CaveViewModel.prototype.updateDimensions = function(cave)
 {
-	if (window.confirm("Are you sure? This will erase all changes."))
+	this.validateDimensions(width, height);	
+	var width = this.caveWidth();
+	var height = this.caveHeight();
+	var widthHeightRatio = width / height;
+	var border;
+
+	if (widthHeightRatio > 1)
 	{
-		this.validateDimensions(width, height);	
-		var width = this.caveWidth();
-		var height = this.caveHeight();
-		var widthHeightRatio = width / height;
-		var border;
-
-		if (widthHeightRatio > 1)
-		{
-			var displayWidth = CAVE_DISPLAY_SIZE / widthHeightRatio;
-			var borderThickness = (CAVE_DISPLAY_SIZE - displayWidth) / 2;
-			border = { top: borderThickness, left: 0 };
-		}
-		else
-		{
-			var displayHeight = CAVE_DISPLAY_SIZE * widthHeightRatio;
-			var borderThickness = (CAVE_DISPLAY_SIZE - displayHeight) / 2;
-			border = { top: 0, left: borderThickness };
-		}
-
-		var largestDimension = Math.max(width, height);
-		var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 	
-
-		grid = (cave == undefined) ? new Cave(width, height) : cave;
-		caveView = new CaveView(width, height, tileSize, border);
-		caveView.draw(grid); 	
+		var displayWidth = CAVE_DISPLAY_SIZE / widthHeightRatio;
+		var borderThickness = (CAVE_DISPLAY_SIZE - displayWidth) / 2;
+		border = { top: borderThickness, left: 0 };
 	}
+	else
+	{
+		var displayHeight = CAVE_DISPLAY_SIZE * widthHeightRatio;
+		var borderThickness = (CAVE_DISPLAY_SIZE - displayHeight) / 2;
+		border = { top: 0, left: borderThickness };
+	}
+
+	var largestDimension = Math.max(width, height);
+	var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 	
+
+	grid = (cave == undefined) ? new Cave(width, height) : cave;
+	caveView = new CaveView(width, height, tileSize, border);
+	caveView.draw(grid); 
 }
 
 CaveViewModel.prototype.validateDimensions = function()
