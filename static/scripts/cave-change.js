@@ -1,9 +1,9 @@
-function CaveChange() 
+function CaveChange(oldDimensions, newDimensions, regeneration) 
 {
     this.tileChanges = [];
-    this.oldDimensions;
-    this.newDimensions;
-    this.regeneration = false;
+    this.oldDimensions = oldDimensions;
+    this.newDimensions = newDimensions;
+    this.regeneration = regeneration;
 }
 
 CaveChange.prototype.mergeTileChanges = function(x, y, tile)
