@@ -238,7 +238,6 @@ CaveViewModel.prototype.undo = function()
     else
     {
         caveViewModel.undoChange();
-        caveViewModel.updateDimensions(grid);
     }
 }
 
@@ -254,7 +253,6 @@ CaveViewModel.prototype.redo = function()
     else
     {
         caveViewModel.redoChange();
-        caveViewModel.updateDimensions(grid);
     }
 }
 
@@ -310,18 +308,21 @@ CaveViewModel.prototype.applyChange = function(changeIndex, reversed)
     if (changeIndex < 0 || changeIndex >= this.changeHistory.numberOfChanges()) return;
 
     var tileChanges = this.changeHistory.getTileChanges(changeIndex);
+    var paintedPositions = [];
     for (var i = 0; i < tileChanges.length; i++) 
     {
     	var x = tileChanges[i].xCoordinate;
     	var y = tileChanges[i].yCoordinate;
     	if (grid.withinLimits(x, y))
     	{
-    		var symbol = reversed ? tileChanges[i].before : tileChanges[i].after;
-    		var fileName = TileUtils.getFileNameFromSymbol(symbol);
-    		var tile = { fileName: fileName, symbol: symbol };
+			var symbol = reversed ? tileChanges[i].before : tileChanges[i].after;
+			var fileName = TileUtils.getFileNameFromSymbol(symbol);
+			var tile = { fileName: fileName, symbol: symbol };
+			paintedPositions.push({ x: x, y: y, brush: tile });
     		grid.setTileAtCoordinates(x, y, tile);
     	}
     }
+    caveView.paintPositions(paintedPositions);
 }
 
 CaveViewModel.prototype.recordChange = function(change)

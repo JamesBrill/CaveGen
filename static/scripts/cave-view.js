@@ -92,3 +92,11 @@ CaveView.prototype.drawRectangularCursor = function(brush, x, y, caveChange)
 		}
 	}
 }
+
+CaveView.prototype.paintPositions = function(paintedPositions)
+{
+	for (var i = 0; i < paintedPositions.length; i++) 
+	{
+		this.drawAtGridCoordinates(paintedPositions[i].x, paintedPositions[i].y, paintedPositions[i].brush);
+	}
+}
