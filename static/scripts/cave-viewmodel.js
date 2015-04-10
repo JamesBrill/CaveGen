@@ -220,12 +220,34 @@ CaveViewModel.prototype.loadCave = function(caveName, caveString)
 
 CaveViewModel.prototype.undo = function()
 {
-
+    if (caveViewModel.changeHistory.isUndoingARegeneration())
+    {
+        var regeneratedCave = caveViewModel.changeHistory.currentChange();
+        var newWidth = regeneratedCave.oldDimensions.x;
+        var newHeight = regeneratedCave.oldDimensions.y;
+        caveViewModel.applyRegenerationFromChangeHistory(newWidth, newHeight, true);
+    }
+    else
+    {
+        caveViewModel.undoChange();
+        caveViewModel.updateDimensions(grid);
+    }
 }
 
 CaveViewModel.prototype.redo = function()
 {
-
+    if (caveViewModel.changeHistory.isRedoingARegeneration())
+    {
+        var regeneratedCave = caveViewModel.changeHistory.currentChange();
+        var newWidth = regeneratedCave.newDimensions.x;
+        var newHeight = regeneratedCave.newDimensions.y;
+        caveViewModel.applyRegenerationFromChangeHistory(newWidth, newHeight, false);
+    }
+    else
+    {
+        caveViewModel.redoChange();
+        caveViewModel.updateDimensions(grid);
+    }
 }
 
 // Builds CaveChange of entire cave that's ready to accommodate a new cave with different dimensions
@@ -295,4 +317,23 @@ CaveViewModel.prototype.applyChange = function(changeIndex, reversed)
 CaveViewModel.prototype.recordChange = function(change)
 {
 	this.changeHistory.addChange(change);
+}
+
+CaveViewModel.prototype.applyRegenerationFromChangeHistory = function(newWidth, newHeight, reverse)
+{
+	this.caveWidth(newWidth);
+	this.caveHeight(newHeight);
+	grid.grid = grid.createGrid(newWidth, newHeight);
+
+    if (reverse)
+    {
+        this.undoChange();
+    }
+    else
+    {
+        this.redoChange();
+    }
+
+    this.updateDimensions(grid);
+    caveView.paintLineMode = false;
 }
