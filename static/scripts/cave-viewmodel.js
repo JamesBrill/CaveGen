@@ -25,6 +25,8 @@ function CaveViewModel()
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
 	this.changeHistory = new CaveChangeHistory();
+	this.currentChange = new CaveChange({ x: this.caveWidth(), y: this.caveHeight() }, 
+										{ x: this.caveWidth(), y: this.caveHeight() });
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -136,6 +138,12 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 
 CaveViewModel.prototype.finishPainting = function() 
 {
+	if (caveView.isMouseDown)
+	{
+		this.recordChange(this.currentChange);
+		this.currentChange = new CaveChange({ x: this.caveWidth(), y: this.caveHeight() }, 
+											{ x: this.caveWidth(), y: this.caveHeight() });	
+	}
 	caveView.isMouseDown = false;
 	caveView.paintLineMode = false; 
 }
