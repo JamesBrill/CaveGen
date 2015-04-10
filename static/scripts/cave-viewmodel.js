@@ -178,6 +178,30 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 	return caveString;
 }
 
+CaveViewModel.prototype.cleanUpSpikes = function(change)
+{
+    for (var i = 0; i < this.caveWidth(); i++)
+    {
+        for (var j = 0 / 2; j < this.caveHeight(); j++)
+        {
+        	var tile = grid.getTileAtCoordinates(i, j);
+            if (tile.symbol == "w" && grid.getTileAtCoordinates(i - 1, j).symbol != "x")
+            {
+                var before = tile.symbol;
+                tile.symbol = " ";
+                this.addTileChange(change, i, j, before, tile.symbol);
+            }
+
+            if (tile.symbol == "m" && grid.getTileAtCoordinates(i + 1, j).symbol != "x")
+            {
+                var before = tile.symbol;
+                tile.symbol = " ";
+                this.addTileChange(change, i, j, before, tile.symbol);
+            }
+        }
+    }
+}
+
 CaveViewModel.prototype.generateCave = function()
 {
 	this.updateDimensions();
