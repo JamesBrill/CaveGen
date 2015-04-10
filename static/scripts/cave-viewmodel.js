@@ -301,7 +301,7 @@ CaveViewModel.prototype.undoChange = function()
 CaveViewModel.prototype.redoChange = function()
 {
     this.applyChange(this.changeHistory.currentChangeIndex + 1, false);
-    this.changeHistory.currentChangeIndex = Math.min(this.changeHistory.numberOfChanges - 1, 
+    this.changeHistory.currentChangeIndex = Math.min(this.changeHistory.numberOfChanges() - 1, 
     												 this.changeHistory.currentChangeIndex + 1);
 }
 
