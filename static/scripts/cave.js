@@ -50,7 +50,7 @@ Cave.prototype.setTileAtCoordinates = function(x, y, tile)
 
 Cave.prototype.applyBrushAtPosition = function(brush, position)
 {
-	if (this.grid[position.x][position.y] != brush.symbol)
+	if (this.grid[position.x][position.y].symbol != brush.symbol)
 	{
 		this.grid[position.x][position.y] = brush;
 		return true;
