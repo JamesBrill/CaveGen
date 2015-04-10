@@ -114,7 +114,7 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		caveView.applyBrushAtPosition(currentBrush, gridX, gridY, this.currentChange);
 	}
 }
 
@@ -125,7 +125,7 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 	var gridY = caveView.getGridY(pixelY);
 	if (grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		caveView.applyBrushAtPosition(currentBrush, gridX, gridY, this.currentChange);
 		caveView.paintLineMode = true;
 	}   
 
@@ -316,7 +316,9 @@ CaveViewModel.prototype.applyChange = function(changeIndex, reversed)
     	var y = tileChanges[i].yCoordinate;
     	if (grid.withinLimits(x, y))
     	{
-    		var tile = reversed ? tileChanges[i].before : tileChanges[i].after;
+    		var symbol = reversed ? tileChanges[i].before : tileChanges[i].after;
+    		var fileName = TileUtils.getFileNameFromSymbol(symbol);
+    		var tile = { fileName: fileName, symbol: symbol };
     		grid.setTileAtCoordinates(x, y, tile);
     	}
     }

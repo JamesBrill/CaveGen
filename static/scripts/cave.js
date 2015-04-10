@@ -48,6 +48,11 @@ Cave.prototype.setTileAtCoordinates = function(x, y, tile)
 	this.grid[x][y] = tile;
 }
 
+Cave.prototype.getSymbolFromPosition = function(position)
+{
+	return this.getTileAtCoordinates(position.x, position.y).symbol;
+}
+
 Cave.prototype.applyBrushAtPosition = function(brush, position)
 {
 	if (this.grid[position.x][position.y].symbol != brush.symbol)
