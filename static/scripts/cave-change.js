@@ -117,7 +117,7 @@ CaveChange.prototype.removeChanges = function(changes)
     }
     for (var i = 0; i < indexesOfChangesToRemove.length; i++) 
     {
-        var index = indexesOfChangesToRemove[i].index;
+        var index = indexesOfChangesToRemove[i];
         this.tileChanges.splice(index, 1);
     }    
 }
