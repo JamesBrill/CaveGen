@@ -19,14 +19,21 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * favicon.ico
 * Validate tiles (e.g. number of Hannahs, enemies, doors, etc.)
 * Zoom and pan
+* Spike brushes
+* Option to toggle terrain images/grey rectangles 
 
 ## Coming next!
-* Undo/Redo buttons
 * Cursor
 
 
 ## Changelog
-### Version 1.0
+### Version 1.0.1
+* Undo/Redo buttons
+* Improved performance when painting in larger caves
+* Terrain images replaced with grey rectangles to make undoing/redoing "generations" faster
+* Images slightly reduced in size to make them look better in larger caves
+
+### Version 1.0.0
 * A "canvas" where the user can build their cave.
 * A "palette" of cave tiles. The user picks a cave tile from the palette and can then start painting that tile on the canvas. This includes all the tiles available in HATPC, as well as an eraser.
 * A slider to adjust the size of the brush used to paint the tiles. Currently only square brushes are available and have sizes ranging from 1 to 6 tiles.
