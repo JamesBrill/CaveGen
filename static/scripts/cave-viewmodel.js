@@ -29,7 +29,6 @@ function CaveViewModel()
 
 CaveViewModel.prototype.updateDimensions = function(cave)
 {
-	this.validateDimensions();	
 	var width = this.caveWidth();
 	var height = this.caveHeight();
 	var border = getBorder(width, height);
@@ -86,7 +85,9 @@ CaveViewModel.prototype.validateDimensions = function()
 	if (validationReport != "")
 	{
 		alert(validationReport);
+		return false;
 	}
+	return true;
 }
 
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
@@ -168,10 +169,13 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 
 CaveViewModel.prototype.generateCave = function()
 {
-	this.changeController.addGenerateCaveChange();
-	this.updateDimensions();
-	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
-	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
+	if (this.validateDimensions())
+	{	
+		this.changeController.addGenerateCaveChange();
+		this.updateDimensions();
+		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
+		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
+	}
 }
 
 CaveViewModel.prototype.loadCave = function(caveName, caveString)
