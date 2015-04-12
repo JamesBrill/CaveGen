@@ -25,8 +25,7 @@ function CaveViewModel()
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
 	this.changeHistory = new CaveChangeHistory();
-	this.currentChange = new CaveChange({ x: this.caveWidth(), y: this.caveHeight() }, 
-										{ x: this.caveWidth(), y: this.caveHeight() });
+	this.currentChange = new PaintedLineChange();
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -141,8 +140,7 @@ CaveViewModel.prototype.finishPainting = function()
 	if (caveView.isMouseDown)
 	{
 		this.recordChange(this.currentChange);
-		this.currentChange = new CaveChange({ x: this.caveWidth(), y: this.caveHeight() }, 
-											{ x: this.caveWidth(), y: this.caveHeight() });	
+		this.currentChange = new PaintedLineChange();	
 	}
 	caveView.isMouseDown = false;
 	caveView.paintLineMode = false; 
@@ -256,7 +254,7 @@ CaveViewModel.prototype.redo = function()
     }
 }
 
-// Builds CaveChange of entire cave that's ready to accommodate a new cave with different dimensions
+// Builds PaintedLineChange of entire cave that's ready to accommodate a new cave with different dimensions
 CaveViewModel.prototype.takeSnapshot = function(change)
 {
     for (var i = 0; i < grid.width; i++)

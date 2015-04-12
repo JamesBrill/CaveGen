@@ -1,35 +1,9 @@
-function CaveChange(oldDimensions, newDimensions, regeneration) 
+function PaintedLineChange() 
 {
     this.tileChanges = [];
-    this.oldDimensions = oldDimensions;
-    this.newDimensions = newDimensions;
-    this.regeneration = regeneration || false;
 }
 
-CaveChange.prototype.mergeTileChanges = function(x, y, tile)
-{
-    var matchingChange;
-    for (var i = 0; i < this.tileChanges.length; i++) 
-    {
-        if (this.tileChanges[i].xCoordinate == x && this.tileChanges[i].yCoordinate == y)
-        {
-            matchingChange = this.tileChanges[i];
-            break;
-        }
-    }
-
-    if (matchingChanges)
-    {
-        matchingChanges.after = tile;
-    }
-    else
-    {
-        var tileChange = new TileChange(x, y, tile, tile);
-        this.tileChanges.push(tileChange);
-    }
-}
-
-CaveChange.prototype.addTileChange = function(tileChange)
+PaintedLineChange.prototype.addTileChange = function(tileChange)
 {
     // This filthy code is to get Undo/Redo to work with Spike Digger. It finds pairs like (Terrain, DownSpike)
     // when given a (DownSpike, Space) pair and merges them together into (Terrain, Space). It basically wipes
@@ -58,12 +32,8 @@ CaveChange.prototype.addTileChange = function(tileChange)
 }
     
 // Returns true if not all TileChanges change a tile from one type back to that same type again 
-CaveChange.prototype.hasEffect = function()
+PaintedLineChange.prototype.hasEffect = function()
 {
-    if (this.regeneration)
-    {
-        return true;
-    }
     var hasEffect = false;
     var ineffectiveChanges = [];
     for (var i = 0; i < this.tileChanges.length; i++) 
@@ -83,7 +53,7 @@ CaveChange.prototype.hasEffect = function()
     return hasEffect;
 }
 
-CaveChange.prototype.equals = function(other)
+PaintedLineChange.prototype.equals = function(other)
 {
     if (!other)
     {
@@ -105,7 +75,7 @@ CaveChange.prototype.equals = function(other)
     return true;
 }
 
-CaveChange.prototype.removeChanges = function(changes)
+PaintedLineChange.prototype.removeChanges = function(changes)
 {
     var indexesOfChangesToRemove = [];
     for (var i = 0; i < this.tileChanges.length; i++) 
