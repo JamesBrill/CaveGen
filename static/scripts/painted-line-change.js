@@ -55,7 +55,7 @@ PaintedLineChange.prototype.hasEffect = function()
 
 PaintedLineChange.prototype.equals = function(other)
 {
-    if (!other)
+    if (!other || !(other instanceof PaintedLineChange))
     {
         return false;
     }

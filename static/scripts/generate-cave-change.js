@@ -31,7 +31,7 @@ GenerateCaveChange.prototype.hasEffect = function()
 
 GenerateCaveChange.prototype.equals = function(other)
 {
-    if (!other)
+    if (!other || !(other instanceof GenerateCaveChange))
     {
         return false;
     }
