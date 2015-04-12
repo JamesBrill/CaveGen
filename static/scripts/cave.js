@@ -12,7 +12,7 @@ Cave.prototype.rebuildCaveFromCoordinates = function(x, y)
 
 Cave.prototype.rebuildCaveFromGrid = function(grid)
 {
-	this.grid = grid;
+	this.grid = grid.clone();
 	this.width = grid[0].length;
 	this.height = grid.length;	
 }
@@ -63,6 +63,8 @@ Cave.prototype.getSymbolFromPosition = function(position)
 {
 	return this.getTileAtCoordinates(position.x, position.y).symbol;
 }
+
+Cave.prototype.getGridClone = function() { return this.grid.clone(); }
 
 Cave.prototype.applyBrushAtPosition = function(brush, position)
 {

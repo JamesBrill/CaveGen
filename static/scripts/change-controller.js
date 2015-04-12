@@ -9,10 +9,9 @@ ChangeController.prototype.resetCurrentPaintedLineChange = function()
 	this.currentPaintedLineChange = new PaintedLineChange();	
 }
 
-// Does not use clone of grid - assumes grid is about to be regenerated
 ChangeController.prototype.buildGenerateCaveChange = function()
 {
-	var preGenerationSnapshot = grid.grid; // TODO: less silly name
+	var preGenerationSnapshot = grid.getGridClone();
 	var postGenerationWidth = caveViewModel.caveWidth();
 	var postGenerationHeight = caveViewModel.caveHeight();
 	return new GenerateCaveChange(preGenerationSnapshot, postGenerationWidth, postGenerationHeight);
