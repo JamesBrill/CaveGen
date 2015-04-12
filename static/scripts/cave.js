@@ -13,8 +13,8 @@ Cave.prototype.rebuildCaveFromCoordinates = function(x, y)
 Cave.prototype.rebuildCaveFromGrid = function(grid)
 {
 	this.grid = grid.clone();
-	this.width = grid[0].length;
-	this.height = grid.length;	
+	this.width = grid.length;
+	this.height = grid[0].length;	
 }
 
 Cave.prototype.rebuildCaveFromCaveString = function(caveString)
