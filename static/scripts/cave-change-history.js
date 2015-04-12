@@ -6,11 +6,19 @@ function CaveChangeHistory()
 
 CaveChangeHistory.prototype.numberOfChanges = function() { return this.changes.length; }
 
-CaveChangeHistory.prototype.currentChange = function() { return this.changes[this.currentChangeIndex]; }
+CaveChangeHistory.prototype.currentChange = function() 
+{ 
+    this.currentChangeIndex = Math.max(0, this.currentChangeIndex);
+    return this.changes[this.currentChangeIndex]; 
+}
+
+CaveChangeHistory.prototype.atBeginningOfHistory = function() { return this.currentChangeIndex == -1; }
+
+CaveChangeHistory.prototype.atEndOfHistory = function() { return this.currentChangeIndex == (this.changes.length - 1); }
 
 CaveChangeHistory.prototype.rollBackCurrentChange = function() 
 { 
-    this.currentChangeIndex = Math.max(0, this.currentChangeIndex - 1); 
+    this.currentChangeIndex = Math.max(-1, this.currentChangeIndex - 1); 
 }
 
 CaveChangeHistory.prototype.rollForwardCurrentChange = function() 

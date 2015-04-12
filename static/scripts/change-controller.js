@@ -41,12 +41,18 @@ ChangeController.prototype.getCurrentChange = function()
 
 ChangeController.prototype.applyUndo = function()
 {
-	this.applyChange(true);
+	if (!this.changeHistory.atBeginningOfHistory())
+	{
+		this.applyChange(true);
+	}
 }
 
 ChangeController.prototype.applyRedo = function()
 {
-	this.applyChange(false);
+	if (!this.changeHistory.atEndOfHistory())
+	{
+		this.applyChange(false);
+	}
 }
 
 ChangeController.prototype.applyChange = function(isUndo)
