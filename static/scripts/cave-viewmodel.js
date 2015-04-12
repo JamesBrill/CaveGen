@@ -332,7 +332,7 @@ CaveViewModel.prototype.applyRegenerationFromChangeHistory = function(newWidth, 
 {
 	this.caveWidth(newWidth);
 	this.caveHeight(newHeight);
-	grid.grid = grid.createGrid(newWidth, newHeight);
+	grid.rebuildCave(newWidth, newHeight);
 
     if (reverse)
     {

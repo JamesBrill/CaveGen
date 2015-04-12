@@ -1,8 +1,13 @@
 var Cave = function(width, height)
 {
-	this.grid = this.createGrid(width, height);
-	this.width = width;
-	this.height = height;
+	this.rebuildCave(width, height);
+}
+
+Cave.prototype.rebuildCave = function(x, y)
+{
+	this.grid = this.createGrid(x, y);
+	this.width = x;
+	this.height = y;
 }
 
 Cave.prototype.createGrid = function(x, y)
