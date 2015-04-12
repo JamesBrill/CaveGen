@@ -40,14 +40,22 @@ CaveChangeHistory.prototype.cullHistory = function()
 
 CaveChangeHistory.prototype.addChange = function(change)
 {
-	var currentChange = (this.numberOfChanges() > 0) ? this.currentChange() : null;
-	// This clause prevents duplicate changes and 'non-changes' from being added to the change history.
-	// Duplicate changes occur when duplicate mouse events are fired off rapidly (and erroneously).
-	if ((currentChange != null && !currentChange.equals(change) && change.hasEffect()) || currentChange == null)
+	if (this.currentChangeIndex == -1)
 	{
-		this.changes = this.changes.slice(0, this.currentChangeIndex + 1);
-	    this.changes.push(change);
-	    this.currentChangeIndex++;
-	    this.cullHistory();
+		this.changes = [change];
+		this.currentChangeIndex = 0;
+	}
+	else
+	{
+		var currentChange = (this.numberOfChanges() > 0) ? this.currentChange() : null;
+		// This clause prevents duplicate changes and 'non-changes' from being added to the change history.
+		// Duplicate changes occur when duplicate mouse events are fired off rapidly (and erroneously).
+		if ((currentChange != null && !currentChange.equals(change) && change.hasEffect()) || currentChange == null)
+		{
+			this.changes = this.changes.slice(0, this.currentChangeIndex + 1);
+		    this.changes.push(change);
+		    this.currentChangeIndex++;
+		    this.cullHistory();
+		}
 	}
 }
