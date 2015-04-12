@@ -18,7 +18,7 @@ GenerateCaveChange.prototype.hasEffect = function()
 
 	for (var i = 0; i < this.preGenerationWidth; i++) 
 	{
-		for (var i = 0; i < this.preGenerationHeight; i++) 
+		for (var j = 0; j < this.preGenerationHeight; j++) 
 		{
 			if (this.preGenerationSnapshot[i][j].symbol != 'x')
 			{
@@ -46,7 +46,7 @@ GenerateCaveChange.prototype.equals = function(other)
 
 	for (var i = 0; i < this.preGenerationWidth; i++) 
 	{
-		for (var i = 0; i < this.preGenerationHeight; i++) 
+		for (var j = 0; j < this.preGenerationHeight; j++) 
 		{
 			if (this.preGenerationSnapshot[i][j] != other.preGenerationSnapshot[i][j])
 			{
