@@ -20,25 +20,6 @@ CaveChangeHistory.prototype.rollForwardCurrentChange = function()
 
 CaveChangeHistory.prototype.getTileChanges = function(index) { return this.changes[index].tileChanges; }
 
-CaveChangeHistory.prototype.isLastChangeARegeneration = function()
-{
-    if (this.numberOfChanges() == 0)
-    {
-        return false;
-    }
-    return this.lastChange().regeneration;
-}
-
-CaveChangeHistory.prototype.isUndoingARegeneration = function()
-{
-    return this.currentChangeIndex >= 0 && this.changes[this.currentChangeIndex].regeneration;
-}
-
-CaveChangeHistory.prototype.isRedoingARegeneration = function()
-{
-    return (this.currentChangeIndex + 1) < this.changes.length && this.changes[this.currentChangeIndex + 1].regeneration;
-}
-
 CaveChangeHistory.prototype.cullHistory = function()
 {
     if (this.numberOfChanges() > 100)
