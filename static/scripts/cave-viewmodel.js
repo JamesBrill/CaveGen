@@ -24,8 +24,7 @@ function CaveViewModel()
 	this.caveHeight = ko.observable(40);
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
-	this.changeHistory = new CaveChangeHistory();
-	this.currentChange = new PaintedLineChange();
+	this.changeController = new ChangeController();
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -97,7 +96,7 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY, this.currentChange);
+		this.changeController.addTileChange(currentBrush, gridX, gridY);
 	}
 }
 
@@ -108,7 +107,7 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 	var gridY = caveView.getGridY(pixelY);
 	if (grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY, this.currentChange);
+		this.changeController.addTileChange(currentBrush, gridX, gridY);
 		caveView.paintLineMode = true;
 	}   
 
@@ -123,8 +122,7 @@ CaveViewModel.prototype.finishPainting = function()
 {
 	if (caveView.isMouseDown)
 	{
-		this.recordChange(this.currentChange);
-		this.currentChange = new PaintedLineChange();	
+		this.changeController.addPaintedLineChange();	
 	}
 	caveView.isMouseDown = false;
 	caveView.paintLineMode = false; 
@@ -168,32 +166,9 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 	return caveString;
 }
 
-CaveViewModel.prototype.cleanUpSpikes = function(change)
-{
-    for (var i = 0; i < this.caveWidth(); i++)
-    {
-        for (var j = 0 / 2; j < this.caveHeight(); j++)
-        {
-        	var tile = grid.getTileAtCoordinates(i, j);
-            if (tile.symbol == "w" && grid.getTileAtCoordinates(i - 1, j).symbol != "x")
-            {
-                var before = tile.symbol;
-                tile.symbol = " ";
-                this.addTileChange(change, i, j, before, tile.symbol);
-            }
-
-            if (tile.symbol == "m" && grid.getTileAtCoordinates(i + 1, j).symbol != "x")
-            {
-                var before = tile.symbol;
-                tile.symbol = " ";
-                this.addTileChange(change, i, j, before, tile.symbol);
-            }
-        }
-    }
-}
-
 CaveViewModel.prototype.generateCave = function()
 {
+	this.changeController.addGenerateCaveChange();
 	this.updateDimensions();
 	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
 	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
@@ -201,132 +176,20 @@ CaveViewModel.prototype.generateCave = function()
 
 CaveViewModel.prototype.loadCave = function(caveName, caveString)
 {
-	grid.buildGridFromCaveString(caveString);
+	grid.rebuildCaveFromCaveString(caveString);
 	this.caveName(caveName);
 	this.caveWidth(grid.width);
 	this.caveHeight(grid.height);
 	this.updateDimensions(grid);
+	this.changeController = new ChangeController();
 }
 
 CaveViewModel.prototype.undo = function()
 {
-    if (caveViewModel.changeHistory.isUndoingARegeneration())
-    {
-        var regeneratedCave = caveViewModel.changeHistory.currentChange();
-        var newWidth = regeneratedCave.oldDimensions.x;
-        var newHeight = regeneratedCave.oldDimensions.y;
-        caveViewModel.applyRegenerationFromChangeHistory(newWidth, newHeight, true);
-    }
-    else
-    {
-        caveViewModel.undoChange();
-    }
+	this.changeController.applyUndo();
 }
 
 CaveViewModel.prototype.redo = function()
 {
-    if (caveViewModel.changeHistory.isRedoingARegeneration())
-    {
-        var regeneratedCave = caveViewModel.changeHistory.currentChange();
-        var newWidth = regeneratedCave.newDimensions.x;
-        var newHeight = regeneratedCave.newDimensions.y;
-        caveViewModel.applyRegenerationFromChangeHistory(newWidth, newHeight, false);
-    }
-    else
-    {
-        caveViewModel.redoChange();
-    }
-}
-
-// Builds PaintedLineChange of entire cave that's ready to accommodate a new cave with different dimensions
-CaveViewModel.prototype.takeSnapshot = function(change)
-{
-    for (var i = 0; i < grid.width; i++)
-    {
-        for (var j = 0; j < grid.height; j++)
-        {
-            this.addTileChange(change, i, j, grid.getTileAtCoordinates(i, j), grid.getTileAtCoordinates(i, j));
-        }
-    }
-}
-
-CaveViewModel.prototype.addTileChange = function(change, x, y, before, after)
-{
-    var tileChange = new TileChange(x, y, before, after);
-    change.addTileChange(tileChange);
-}
-
-CaveViewModel.prototype.mergeSnapshots = function()
-{
-    if (this.changeHistory.numberOfChanges() == 0)
-    {
-        console.log("Change history is empty.");
-    }
-    var lastChange = this.changeHistory.lastChange();
-    for (var i = 0; i < grid.width; i++)
-    {
-        for (var j = 0; j < grid.height; j++)
-        {
-            lastChange.mergeTileChanges(i, j, grid.getTileAtCoordinates(i, j));
-        }
-    }
-}
-
-CaveViewModel.prototype.undoChange = function()
-{
-    this.applyChange(this.changeHistory.currentChangeIndex, true);
-    this.changeHistory.currentChangeIndex = Math.max(-1, this.changeHistory.currentChangeIndex - 1);
-}
-
-CaveViewModel.prototype.redoChange = function()
-{
-    this.applyChange(this.changeHistory.currentChangeIndex + 1, false);
-    this.changeHistory.currentChangeIndex = Math.min(this.changeHistory.numberOfChanges() - 1, 
-    												 this.changeHistory.currentChangeIndex + 1);
-}
-
-CaveViewModel.prototype.applyChange = function(changeIndex, reversed)
-{
-    if (changeIndex < 0 || changeIndex >= this.changeHistory.numberOfChanges()) return;
-
-    var tileChanges = this.changeHistory.getTileChanges(changeIndex);
-    var paintedPositions = [];
-    for (var i = 0; i < tileChanges.length; i++) 
-    {
-    	var x = tileChanges[i].xCoordinate;
-    	var y = tileChanges[i].yCoordinate;
-    	if (grid.withinLimits(x, y))
-    	{
-			var symbol = reversed ? tileChanges[i].before : tileChanges[i].after;
-			var fileName = TileUtils.getFileNameFromSymbol(symbol);
-			var tile = { fileName: fileName, symbol: symbol };
-			paintedPositions.push({ x: x, y: y, brush: tile });
-    		grid.setTileAtCoordinates(x, y, tile);
-    	}
-    }
-    caveView.paintPositions(paintedPositions);
-}
-
-CaveViewModel.prototype.recordChange = function(change)
-{
-	this.changeHistory.addChange(change);
-}
-
-CaveViewModel.prototype.applyRegenerationFromChangeHistory = function(newWidth, newHeight, reverse)
-{
-	this.caveWidth(newWidth);
-	this.caveHeight(newHeight);
-	grid.rebuildCave(newWidth, newHeight);
-
-    if (reverse)
-    {
-        this.undoChange();
-    }
-    else
-    {
-        this.redoChange();
-    }
-
-    this.updateDimensions(grid);
-    caveView.paintLineMode = false;
+    this.changeController.applyRedo();
 }

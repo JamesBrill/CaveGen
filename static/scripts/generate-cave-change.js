@@ -1,8 +1,8 @@
 function GenerateCaveChange(preGenerationSnapshot, postGenerationWidth, postGenerationHeight) 
 {
 	this.preGenerationSnapshot = preGenerationSnapshot;
-	this.preGenerationWidth = preGenerationSnapshot.length;
-	this.preGenerationHeight = preGenerationSnapshot[0].length;
+	this.preGenerationWidth = preGenerationSnapshot[0].length;
+	this.preGenerationHeight = preGenerationSnapshot.length;
 	this.postGenerationWidth = postGenerationWidth;
 	this.postGenerationHeight = postGenerationHeight;
 }

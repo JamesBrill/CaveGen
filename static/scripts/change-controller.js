@@ -57,8 +57,8 @@ ChangeController.prototype.applyChange = function(isUndo)
 		this.changeHistory.rollForwardCurrentChange();
 	}
 
-	var currentChange = this.currentChange();
-	if (this.currentChange() == undefined) { return; }
+	var currentChange = this.getCurrentChange();
+	if (currentChange == undefined) { return; }
 
 	if (currentChange instanceof PaintedLineChange)
 	{
@@ -101,10 +101,10 @@ ChangeController.prototype.applyGenerateCaveChange = function(currentChange, isU
 	{
 		var width = currentChange.preGenerationWidth;
 		var height = currentChange.preGenerationHeight;
-		var border = getBorder();
+		var border = getBorder(width, height);
 		var tileSize = getTileSize(width, height);	
 
-		grid = currentChange.preGenerationSnapshot();
+		grid.rebuildCaveFromGrid(currentChange.preGenerationSnapshot);
 		caveView = new CaveView(width, height, tileSize, border);
 		caveView.draw(grid); 
 	}
@@ -112,10 +112,10 @@ ChangeController.prototype.applyGenerateCaveChange = function(currentChange, isU
 	{
 		var width = currentChange.postGenerationWidth;
 		var height = currentChange.postGenerationHeight;
-		var border = getBorder();
+		var border = getBorder(width, height);
 		var tileSize = getTileSize(width, height);	
 
-		grid.rebuildCave(width, height);
+		grid.rebuildCaveFromCoordinates(width, height);
 		caveView = new CaveView(width, height, tileSize, border);
 		caveView.draw(grid); 
 	}
