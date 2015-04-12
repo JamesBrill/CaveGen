@@ -24,38 +24,19 @@ function CaveViewModel()
 	this.caveHeight = ko.observable(40);
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
+	this.changeController = new ChangeController();
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
 {
-	if (window.confirm("Are you sure? This will erase all changes."))
-	{
-		this.validateDimensions(width, height);	
-		var width = this.caveWidth();
-		var height = this.caveHeight();
-		var widthHeightRatio = width / height;
-		var border;
+	var width = this.caveWidth();
+	var height = this.caveHeight();
+	var border = getBorder(width, height);
+	var tileSize = getTileSize(width, height);	
 
-		if (widthHeightRatio > 1)
-		{
-			var displayWidth = CAVE_DISPLAY_SIZE / widthHeightRatio;
-			var borderThickness = (CAVE_DISPLAY_SIZE - displayWidth) / 2;
-			border = { top: borderThickness, left: 0 };
-		}
-		else
-		{
-			var displayHeight = CAVE_DISPLAY_SIZE * widthHeightRatio;
-			var borderThickness = (CAVE_DISPLAY_SIZE - displayHeight) / 2;
-			border = { top: 0, left: borderThickness };
-		}
-
-		var largestDimension = Math.max(width, height);
-		var tileSize = CAVE_DISPLAY_SIZE / largestDimension; 	
-
-		grid = (cave == undefined) ? new Cave(width, height) : cave;
-		caveView = new CaveView(width, height, tileSize, border);
-		caveView.draw(grid); 	
-	}
+	grid = (cave == undefined) ? new Cave(width, height) : cave;
+	caveView = new CaveView(width, height, tileSize, border);
+	caveView.draw(grid); 
 }
 
 CaveViewModel.prototype.validateDimensions = function()
@@ -104,7 +85,9 @@ CaveViewModel.prototype.validateDimensions = function()
 	if (validationReport != "")
 	{
 		alert(validationReport);
+		return false;
 	}
+	return true;
 }
 
 CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixelY) 
@@ -114,7 +97,7 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		this.changeController.addTileChange(currentBrush, gridX, gridY);
 	}
 }
 
@@ -125,7 +108,7 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 	var gridY = caveView.getGridY(pixelY);
 	if (grid.withinLimits(gridX, gridY))
 	{
-		caveView.applyBrushAtPosition(currentBrush, gridX, gridY);
+		this.changeController.addTileChange(currentBrush, gridX, gridY);
 		caveView.paintLineMode = true;
 	}   
 
@@ -138,6 +121,10 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 
 CaveViewModel.prototype.finishPainting = function() 
 {
+	if (caveView.isMouseDown)
+	{
+		this.changeController.addPaintedLineChange();	
+	}
 	caveView.isMouseDown = false;
 	caveView.paintLineMode = false; 
 }
@@ -182,16 +169,31 @@ CaveViewModel.prototype.addMissingDoorAndStartingPosition = function(caveString)
 
 CaveViewModel.prototype.generateCave = function()
 {
-	this.updateDimensions();
-	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
-	_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
+	if (this.validateDimensions())
+	{	
+		this.changeController.addGenerateCaveChange();
+		this.updateDimensions();
+		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
+		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
+	}
 }
 
 CaveViewModel.prototype.loadCave = function(caveName, caveString)
 {
-	grid.buildGridFromCaveString(caveString);
+	grid.rebuildCaveFromCaveString(caveString);
 	this.caveName(caveName);
 	this.caveWidth(grid.width);
 	this.caveHeight(grid.height);
 	this.updateDimensions(grid);
+	this.changeController = new ChangeController();
+}
+
+CaveViewModel.prototype.undo = function()
+{
+	this.changeController.applyUndo();
+}
+
+CaveViewModel.prototype.redo = function()
+{
+    this.changeController.applyRedo();
 }

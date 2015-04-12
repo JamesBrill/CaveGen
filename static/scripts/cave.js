@@ -1,24 +1,23 @@
 var Cave = function(width, height)
 {
-	this.grid = this.createGrid(width, height);
-	this.width = width;
-	this.height = height;
+	this.rebuildCaveFromCoordinates(width, height);
 }
 
-Cave.prototype.createGrid = function(x, y)
+Cave.prototype.rebuildCaveFromCoordinates = function(x, y)
 {
-	var grid = new twoDimensionalArray(x, y);
-	for (var i = 0; i < x; i++)
-	{
-		for (var j = 0; j < y; j++)
-		{
-			grid[i][j] = { fileName: "terrain", symbol: "x" };
-		}
-	}
-	return grid;
+	this.grid = this.createGrid(x, y);
+	this.width = x;
+	this.height = y;
 }
 
-Cave.prototype.buildGridFromCaveString = function(caveString)
+Cave.prototype.rebuildCaveFromGrid = function(grid)
+{
+	this.grid = grid.clone();
+	this.width = grid.length;
+	this.height = grid[0].length;	
+}
+
+Cave.prototype.rebuildCaveFromCaveString = function(caveString)
 {
 	var caveLines = caveString.split("\n");
 	caveLines.splice(0, 4);
@@ -37,6 +36,18 @@ Cave.prototype.buildGridFromCaveString = function(caveString)
 	}
 }
 
+Cave.prototype.createGrid = function(x, y)
+{
+	var grid = new twoDimensionalArray(x, y);
+	for (var i = 0; i < x; i++)
+	{
+		for (var j = 0; j < y; j++)
+		{
+			grid[i][j] = { fileName: "terrain", symbol: "x" };
+		}
+	}
+	return grid;
+}
 
 Cave.prototype.getTileAtCoordinates = function(x, y)
 {
@@ -48,9 +59,16 @@ Cave.prototype.setTileAtCoordinates = function(x, y, tile)
 	this.grid[x][y] = tile;
 }
 
+Cave.prototype.getSymbolFromPosition = function(position)
+{
+	return this.getTileAtCoordinates(position.x, position.y).symbol;
+}
+
+Cave.prototype.getGridClone = function() { return this.grid.clone(); }
+
 Cave.prototype.applyBrushAtPosition = function(brush, position)
 {
-	if (this.grid[position.x][position.y] != brush.symbol)
+	if (this.grid[position.x][position.y].symbol != brush.symbol)
 	{
 		this.grid[position.x][position.y] = brush;
 		return true;

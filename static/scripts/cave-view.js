@@ -34,13 +34,27 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
 	this.context.clearRect(x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
-	var image = new Image();
-	var context = this.context;
-	image.onload = function()
+	var left = x * view.tileSize + view.border.left;
+	var top = y * view.tileSize + view.border.top;
+	var size = view.tileSize;
+	var offset = 0.05 * size;
+	if (tile.symbol == 'x')
 	{
-		context.drawImage(image, x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
+		this.context.beginPath();
+		this.context.rect(left + offset, top + offset, size - 2 * offset, size - 2 * offset);
+		this.context.fillStyle = 'gray';
+		this.context.fill();
 	}
-	image.src = "images/" + tile.fileName + ".png";
+	else
+	{
+		var image = new Image();
+		var context = this.context;
+		image.onload = function()
+		{
+			context.drawImage(image, left + offset, top + offset, size - 2 * offset, size - 2 * offset);
+		}
+		image.src = "images/" + tile.fileName + ".png";
+	}
 }
 
 CaveView.prototype.getGridX = function(pixelX)
@@ -55,7 +69,7 @@ CaveView.prototype.getGridY = function(pixelY)
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
-CaveView.prototype.applyBrushAtPosition = function(brush, column, row)
+CaveView.prototype.applyBrushAtPosition = function(brush, column, row, caveChange)
 {
 	var currentPoint = { x: column, y: row };
 
@@ -66,25 +80,37 @@ CaveView.prototype.applyBrushAtPosition = function(brush, column, row)
 		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
 		for (var i = 0; i < positions.length; i++)
 		{
-			this.drawRectangularCursor(brush, positions[i].x, positions[i].y);
+			this.drawRectangularCursor(brush, positions[i].x, positions[i].y, caveChange);
 		}
 	}
 	else
 	{
-		this.drawRectangularCursor(brush, column, row);
+		this.drawRectangularCursor(brush, column, row, caveChange);
 	}
 	this.previousPaintedPoint = currentPoint;
 }
 
-CaveView.prototype.drawRectangularCursor = function(brush, x, y)
+CaveView.prototype.drawRectangularCursor = function(brush, x, y, caveChange)
 {
 	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
 	for (var i = 0; i < cursorPositions.length; i++)
 	{
+		var before = grid.getSymbolFromPosition(cursorPositions[i]);
 		var tilesChanged = grid.applyBrushAtPosition(brush, cursorPositions[i]);
 		if (tilesChanged)
 		{
 			this.drawAtGridCoordinates(cursorPositions[i].x, cursorPositions[i].y, brush);
+			var after = grid.getSymbolFromPosition(cursorPositions[i]);
+			var tileChange = new TileChange(cursorPositions[i].x, cursorPositions[i].y, before, after);
+			caveChange.addTileChange(tileChange);
 		}
+	}
+}
+
+CaveView.prototype.paintPositions = function(paintedPositions)
+{
+	for (var i = 0; i < paintedPositions.length; i++) 
+	{
+		this.drawAtGridCoordinates(paintedPositions[i].x, paintedPositions[i].y, paintedPositions[i].brush);
 	}
 }
