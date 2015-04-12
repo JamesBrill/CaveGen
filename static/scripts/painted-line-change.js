@@ -60,7 +60,7 @@ PaintedLineChange.prototype.equals = function(other)
         return false;
     }
 
-    if (this.tileChanges.length != otherTileChanges.tileChanges.length)
+    if (this.tileChanges.length != other.tileChanges.length)
     {
         return false;
     }
@@ -78,11 +78,13 @@ PaintedLineChange.prototype.equals = function(other)
 PaintedLineChange.prototype.removeChanges = function(changes)
 {
     var indexesOfChangesToRemove = [];
+    var offset = 0;
     for (var i = 0; i < this.tileChanges.length; i++) 
     {
-        if ($.inArray(this.tileChanges[i], changes))
+        if ($.inArray(this.tileChanges[i], changes) !== -1)
         {
-            indexesOfChangesToRemove.push(i);
+            indexesOfChangesToRemove.push(i - offset);
+            offset++;
         }
     }
     for (var i = 0; i < indexesOfChangesToRemove.length; i++) 
