@@ -34,13 +34,27 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
 	this.context.clearRect(x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
-	var image = new Image();
-	var context = this.context;
-	image.onload = function()
+	if (tile.symbol == 'x')
 	{
-		context.drawImage(image, x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
+		var left = x * view.tileSize + view.border.left;
+		var top = y * view.tileSize + view.border.top;
+		var size = view.tileSize;
+		var offset = 0.05 * size;
+		this.context.beginPath();
+		this.context.rect(left + offset, top + offset, size - 2 * offset, size - 2 * offset);
+		this.context.fillStyle = 'gray';
+		this.context.fill();
 	}
-	image.src = "images/" + tile.fileName + ".png";
+	else
+	{
+		var image = new Image();
+		var context = this.context;
+		image.onload = function()
+		{
+			context.drawImage(image, x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
+		}
+		image.src = "images/" + tile.fileName + ".png";
+	}
 }
 
 CaveView.prototype.getGridX = function(pixelX)
