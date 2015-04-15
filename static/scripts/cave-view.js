@@ -41,16 +41,17 @@ CaveView.prototype.drawLines = function()
 {
 	var view = this;
 	var offset = view.tileSize;
+	this.context.fillStyle = "white";
 	for (var i = 1; i < this.width; i++) 
 	{
 		var x = i * view.tileSize + view.border.left;
-		view.plotLine(x, view.border.top + offset, x, view.height * view.tileSize + view.border.top - offset)
+		this.context.fillRect(x, view.border.top + offset, 1, view.height * view.tileSize - 2 * offset);
 	}
 
 	for (var i = 1; i < this.height; i++) 
 	{
 		var y = i * view.tileSize + view.border.top;
-		view.plotLine(view.border.left + offset, y, view.width * view.tileSize + view.border.left - offset, y);
+		this.context.fillRect(view.border.left + offset, y, view.width * view.tileSize - 2 * offset, 1);
 	}
 }
 
@@ -177,6 +178,12 @@ CaveView.prototype.outOfBounds = function(x, y)
 }
 
 CaveView.prototype.setPixel = function(x, y)
+{
+	this.context.fillStyle = "white";
+	this.context.fillRect(x, y, 1, 1);
+}
+
+CaveView.prototype.setPixelWithNoAntiAliasing = function(x, y)
 {
 	this.context.putImageData(this.whitePixelId, x, y);
 }
