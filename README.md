@@ -27,6 +27,9 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 
 
 ## Changelog
+### Version 1.0.2
+* White lines between tiles on the cave grid to make measuring distances easier
+
 ### Version 1.0.1
 * Undo/Redo buttons
 * Improved performance when painting in larger caves
