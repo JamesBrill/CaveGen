@@ -68,6 +68,13 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 		this.context.fillStyle = 'gray';
 		this.context.fill();
 	}
+	else if (tile.symbol == ' ')
+	{
+		this.context.beginPath();
+		this.context.rect(left + offset, top + offset, size - offset, size - offset);
+		this.context.fillStyle = 'black';
+		this.context.fill();		
+	}
 	else
 	{
 		var image = new Image();
