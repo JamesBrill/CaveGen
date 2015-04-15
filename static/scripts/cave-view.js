@@ -64,28 +64,35 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 	var offset = 1;
 	if (tile.symbol == 'x')
 	{
-		this.context.beginPath();
-		this.context.rect(left + offset, top + offset, size - offset, size - offset);
-		this.context.fillStyle = 'gray';
-		this.context.fill();
+		this.drawSquare(left, top, offset, size, "gray");
 	}
 	else if (tile.symbol == ' ')
 	{
-		this.context.beginPath();
-		this.context.rect(left + offset, top + offset, size - offset, size - offset);
-		this.context.fillStyle = 'black';
-		this.context.fill();		
+		this.drawSquare(left, top, offset, size, "black");	
 	}
 	else
 	{
-		var image = new Image();
-		var context = this.context;
-		image.onload = function()
-		{
-			context.drawImage(image, left + offset, top + offset, size - offset, size - offset);
-		}
-		image.src = "images/" + tile.fileName + ".png";
+		this.drawImage(left, top, offset, size, tile.fileName);
 	}
+}
+
+CaveView.prototype.drawSquare= function(left, top, offset, size, colour)
+{
+	this.context.beginPath();
+	this.context.rect(left + offset, top + offset, size - offset, size - offset);
+	this.context.fillStyle = colour;
+	this.context.fill();		
+}
+
+CaveView.prototype.drawImage = function(left, top, offset, size, fileName)
+{
+	var image = new Image();
+	var context = this.context;
+	image.onload = function()
+	{
+		context.drawImage(image, left + offset, top + offset, size - offset, size - offset);
+	}
+	image.src = "images/" + fileName + ".png";	
 }
 
 CaveView.prototype.getGridX = function(pixelX)
