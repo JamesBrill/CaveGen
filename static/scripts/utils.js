@@ -29,5 +29,5 @@ var getBorder = function(caveWidth, caveHeight)
 var getTileSize = function(caveWidth, caveHeight)
 {
 	var largestDimension = Math.max(caveWidth, caveHeight);
-	return CAVE_DISPLAY_SIZE / largestDimension; 
+	return Math.floor(CAVE_DISPLAY_SIZE / largestDimension); 
 }
