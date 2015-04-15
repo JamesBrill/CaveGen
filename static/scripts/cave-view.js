@@ -61,36 +61,35 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 	var left = x * view.tileSize + view.border.left;
 	var top = y * view.tileSize + view.border.top;
 	var size = view.tileSize;
-	var offset = 1;
 	if (tile.symbol == 'x')
 	{
-		this.drawSquare(left, top, offset, size, "gray");
+		this.drawSquare(left, top, size, "gray");
 	}
 	else if (tile.symbol == ' ')
 	{
-		this.drawSquare(left, top, offset, size, "black");	
+		this.drawSquare(left, top, size, "black");	
 	}
 	else
 	{
-		this.drawImage(left, top, offset, size, tile.fileName);
+		this.drawImage(left, top, size, tile.fileName);
 	}
 }
 
-CaveView.prototype.drawSquare= function(left, top, offset, size, colour)
+CaveView.prototype.drawSquare= function(left, top, size, colour)
 {
 	this.context.beginPath();
-	this.context.rect(left + offset, top + offset, size - offset, size - offset);
+	this.context.rect(left + 1, top + 1, size - 1, size - 1);
 	this.context.fillStyle = colour;
 	this.context.fill();		
 }
 
-CaveView.prototype.drawImage = function(left, top, offset, size, fileName)
+CaveView.prototype.drawImage = function(left, top, size, fileName)
 {
 	var image = new Image();
 	var context = this.context;
 	image.onload = function()
 	{
-		context.drawImage(image, left + offset, top + offset, size - offset, size - offset);
+		context.drawImage(image, left + 1, top + 1, size - 1, size - 1);
 	}
 	image.src = "images/" + fileName + ".png";	
 }
