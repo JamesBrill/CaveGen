@@ -60,11 +60,11 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 	var left = x * view.tileSize + view.border.left;
 	var top = y * view.tileSize + view.border.top;
 	var size = view.tileSize;
-	var offset = 0.05 * size;
+	var offset = 1;
 	if (tile.symbol == 'x')
 	{
 		this.context.beginPath();
-		this.context.rect(left + offset, top + offset, size - 2 * offset, size - 2 * offset);
+		this.context.rect(left + offset, top + offset, size - offset, size - offset);
 		this.context.fillStyle = 'gray';
 		this.context.fill();
 	}
@@ -74,7 +74,7 @@ CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 		var context = this.context;
 		image.onload = function()
 		{
-			context.drawImage(image, left + offset, top + offset, size - 2 * offset, size - 2 * offset);
+			context.drawImage(image, left + offset, top + offset, size - offset, size - offset);
 		}
 		image.src = "images/" + tile.fileName + ".png";
 	}
