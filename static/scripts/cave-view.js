@@ -21,6 +21,7 @@ CaveView.prototype.draw = function(gridModel)
 	this.context.rect(0, 0, this.canvas.width, this.canvas.height);
 	this.context.fillStyle = 'black';
 	this.context.fill();
+	this.drawLines();
 	for (var i = 0; i < this.width; i++)
 	{
 		for (var j = 0; j < this.height; j++)
@@ -28,33 +29,64 @@ CaveView.prototype.draw = function(gridModel)
 			this.drawAtGridCoordinates(i, j, gridModel.getTileAtCoordinates(i, j));
 		}
 	}
+
+}
+
+CaveView.prototype.drawLines = function()
+{
+	var view = this;
+	var offset = view.tileSize;
+	this.context.fillStyle = "white";
+	for (var i = 1; i < this.width; i++) 
+	{
+		var x = i * view.tileSize + view.border.left;
+		this.context.fillRect(x, view.border.top + offset, 1, view.height * view.tileSize - 2 * offset);
+	}
+
+	for (var i = 1; i < this.height; i++) 
+	{
+		var y = i * view.tileSize + view.border.top;
+		this.context.fillRect(view.border.left + offset, y, view.width * view.tileSize - 2 * offset, 1);
+	}
 }
 
 CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
-	this.context.clearRect(x * view.tileSize + view.border.left, y * view.tileSize + view.border.top, view.tileSize, view.tileSize);
 	var left = x * view.tileSize + view.border.left;
 	var top = y * view.tileSize + view.border.top;
 	var size = view.tileSize;
-	var offset = 0.05 * size;
 	if (tile.symbol == 'x')
 	{
-		this.context.beginPath();
-		this.context.rect(left + offset, top + offset, size - 2 * offset, size - 2 * offset);
-		this.context.fillStyle = 'gray';
-		this.context.fill();
+		this.drawSquare(left, top, size, "gray");
+	}
+	else if (tile.symbol == ' ')
+	{
+		this.drawSquare(left, top, size, "black");	
 	}
 	else
 	{
-		var image = new Image();
-		var context = this.context;
-		image.onload = function()
-		{
-			context.drawImage(image, left + offset, top + offset, size - 2 * offset, size - 2 * offset);
-		}
-		image.src = "images/" + tile.fileName + ".png";
+		this.drawImage(left, top, size, tile.fileName);
 	}
+}
+
+CaveView.prototype.drawSquare= function(left, top, size, colour)
+{
+	this.context.beginPath();
+	this.context.rect(left + 1, top + 1, size - 1, size - 1);
+	this.context.fillStyle = colour;
+	this.context.fill();		
+}
+
+CaveView.prototype.drawImage = function(left, top, size, fileName)
+{
+	var image = new Image();
+	var context = this.context;
+	image.onload = function()
+	{
+		context.drawImage(image, left + 1, top + 1, size - 1, size - 1);
+	}
+	image.src = "images/" + fileName + ".png";	
 }
 
 CaveView.prototype.getGridX = function(pixelX)
