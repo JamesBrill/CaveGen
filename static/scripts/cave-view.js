@@ -152,10 +152,14 @@ CaveView.prototype.drawSquareOutline = function(column, row, colour)
 	{
 		colour = "#FFFFFF";
 	}
-	var top = (row - Math.floor(brushSize / 2)) * this.tileSize + this.border.top;
-	var left = (column - Math.floor(brushSize / 2)) * this.tileSize + this.border.left;
-	var bottom = top + brushSize * this.tileSize;
-	var right = left + brushSize * this.tileSize;
+	var unboundedTop = (row - Math.floor(brushSize / 2)) * this.tileSize + this.border.top;
+	var unboundedLeft = (column - Math.floor(brushSize / 2)) * this.tileSize + this.border.left;
+	var unboundedBottom = unboundedTop + brushSize * this.tileSize;
+	var unboundedRight = unboundedLeft + brushSize * this.tileSize;
+	var top = Math.max(unboundedTop, this.border.top + this.tileSize);
+	var left = Math.max(unboundedLeft, this.border.left + this.tileSize);
+	var bottom = Math.min(unboundedBottom, this.border.top + this.tileSize * (this.height - 1));
+	var right = Math.min(unboundedRight, this.border.left + this.tileSize * (this.width - 1));
 
 	this.linePainter.setColour(colour);
 	this.linePainter.plotVerticalLine(left, top, bottom);
