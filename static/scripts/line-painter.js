@@ -1,9 +1,6 @@
-function LinePainter(context, tileSize, border)
+function LinePainter(context)
 {
-	this.context = context;
-	this.tileSize = tileSize;
-	this.border = border;
-	this.pixel = this.context.createImageData(1, 1);
+	this.pixel = context.createImageData(1, 1);
 	this.pixel.data[0] = 255;
 	this.pixel.data[1] = 255;
 	this.pixel.data[2] = 255;
@@ -12,7 +9,7 @@ function LinePainter(context, tileSize, border)
 
 LinePainter.prototype.setColour = function(colour)
 {
-	this.context.fillStyle = colour;
+	caveView.context.fillStyle = colour;
 	var rgb = this.hexToRgb(colour);
 	this.pixel.data[0] = rgb.r;
 	this.pixel.data[1] = rgb.g;
@@ -32,20 +29,20 @@ LinePainter.prototype.hexToRgb = function(hex)
 
 LinePainter.prototype.plotVerticalLine = function(x, y0, y1)
 {
-	this.context.fillRect(x, y0, 1, y1 - y0 + 1);	
+	caveView.context.fillRect(x, y0, 1, y1 - y0 + 1);	
 }
 
 LinePainter.prototype.plotHorizontalLine = function(x0, x1, y)
 {
-	this.context.fillRect(x0, y, x1 - x0 + 1, 1);	
+	caveView.context.fillRect(x0, y, x1 - x0 + 1, 1);	
 }
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)
 {
-	this.context.beginPath(); // Could boost performance by separating this call
-	this.context.moveTo(x0, y0);
-	this.context.lineTo(x1, y1);	
-	this.context.stroke();
+	caveView.context.beginPath(); // Could boost performance by separating this call
+	caveView.context.moveTo(x0, y0);
+	caveView.context.lineTo(x1, y1);	
+	caveView.context.stroke();
 }
 
 LinePainter.prototype.plotLineWithNoAntiAliasing = function(x0, y0, x1, y1)
@@ -74,12 +71,12 @@ LinePainter.prototype.plotLineWithNoAntiAliasing = function(x0, y0, x1, y1)
 
 LinePainter.prototype.outOfBounds = function(x, y)
 {
-	var xLimit = (this.width - 1) * this.tileSize + this.border.left;
-	var yLimit = (this.height - 1) * this.tileSize + this.border.top;
+	var xLimit = (caveView.width - 1) * caveView.tileSize + caveView.border.left;
+	var yLimit = (caveView.height - 1) * caveView.tileSize + caveView.border.top;
 	return (x < 0 || y < 0 || x > xLimit || y > yLimit);
 }
 
 LinePainter.prototype.setPixelWithNoAntiAliasing = function(x, y)
 {
-	this.context.putImageData(this.pixel, x, y);
+	caveView.context.putImageData(this.pixel, x, y);
 }

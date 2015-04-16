@@ -13,7 +13,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.context = this.canvas.getContext("2d");
 	this.paintLineMode = false;
 	this.isMouseDown = false;
-	this.linePainter = new LinePainter(this.context, this.tileSize, this.border);
+	this.linePainter = new LinePainter(this.context);
 }
 
 CaveView.prototype.draw = function(gridModel)
