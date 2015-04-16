@@ -146,16 +146,17 @@ CaveView.prototype.drawCursor = function(column, row)
 	this.drawSquareOutline(column, row, "#FF0000");
 }
 
-CaveView.prototype.drawSquareOutline = function(column, row, colour)
+CaveView.prototype.drawSquareOutline = function(column, row, colour, previousCursorSize)
 {
 	if (colour == undefined)
 	{
 		colour = "#FFFFFF";
 	}
-	var unboundedTop = (row - Math.floor(brushSize / 2)) * this.tileSize + this.border.top;
-	var unboundedLeft = (column - Math.floor(brushSize / 2)) * this.tileSize + this.border.left;
-	var unboundedBottom = unboundedTop + brushSize * this.tileSize;
-	var unboundedRight = unboundedLeft + brushSize * this.tileSize;
+	var squareSize = (previousCursorSize == undefined) ? brushSize : previousCursorSize;
+	var unboundedTop = (row - Math.floor(squareSize / 2)) * this.tileSize + this.border.top;
+	var unboundedLeft = (column - Math.floor(squareSize / 2)) * this.tileSize + this.border.left;
+	var unboundedBottom = unboundedTop + squareSize * this.tileSize;
+	var unboundedRight = unboundedLeft + squareSize * this.tileSize;
 	var top = Math.max(unboundedTop, this.border.top + this.tileSize);
 	var left = Math.max(unboundedLeft, this.border.left + this.tileSize);
 	var bottom = Math.min(unboundedBottom, this.border.top + this.tileSize * (this.height - 1));

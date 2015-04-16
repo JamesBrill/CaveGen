@@ -26,6 +26,7 @@ function CaveViewModel()
 	this.waterType = ko.observable("clear"); 
 	this.changeController = new ChangeController();
 	this.previousCursorPosition = { x: 1, y: 1 };
+	this.previousCursorSize = -1;
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -137,6 +138,11 @@ CaveViewModel.prototype.finishPainting = function()
 
 CaveViewModel.prototype.updateCursor = function(x, y)
 {
+	if (this.previousCursorSize != brushSize)
+	{
+		caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y, 
+									"#FFFFFF", this.previousCursorSize);		
+	}
 	caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y);
 	caveView.drawCursor(x, y);
 	this.previousCursorPosition = { x: x, y: y };	
