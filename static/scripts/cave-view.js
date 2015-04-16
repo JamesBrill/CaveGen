@@ -30,7 +30,6 @@ CaveView.prototype.draw = function(gridModel)
 			this.drawAtGridCoordinates(i, j, gridModel.getTileAtCoordinates(i, j));
 		}
 	}
-
 }
 
 CaveView.prototype.drawMeasuringGrid = function()
@@ -41,14 +40,14 @@ CaveView.prototype.drawMeasuringGrid = function()
 	for (var i = 1; i < this.width; i++) 
 	{
 		var x = i * view.tileSize + view.border.left;
-		this.linePainter.plotLine(x, view.border.top + offset, x, 
+		this.linePainter.plotVerticalLine(x, view.border.top + offset,  
 			view.border.top + view.height * view.tileSize - offset);
 	}
 
 	for (var i = 1; i < this.height; i++) 
 	{
 		var y = i * view.tileSize + view.border.top;
-		this.linePainter.plotLine(view.border.left + offset, y, 
+		this.linePainter.plotHorizontalLine(view.border.left + offset,  
 			view.border.left + view.width * view.tileSize - offset, y);
 	}
 }

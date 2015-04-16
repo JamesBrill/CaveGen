@@ -8,6 +8,14 @@ function LinePainter(context, tileSize, border)
 	this.whitePixelId.data[3] = 255;
 	this.tileSize = tileSize;
 	this.border = border;
+LinePainter.prototype.plotVerticalLine = function(x, y0, y1)
+{
+	this.context.fillRect(x, y0, 1, y1 - y0 + 1);	
+}
+
+LinePainter.prototype.plotHorizontalLine = function(x0, x1, y)
+{
+	this.context.fillRect(x0, y, x1 - x0 + 1, 1);	
 }
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)
