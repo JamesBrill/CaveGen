@@ -27,6 +27,7 @@ function CaveViewModel()
 	this.changeController = new ChangeController();
 	this.previousCursorPosition = { x: 1, y: 1 };
 	this.previousCursorSize = -1;
+	this.currentCursorSize = -1;
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -142,10 +143,12 @@ CaveViewModel.prototype.updateCursor = function(x, y)
 	{
 		caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y, 
 									"#FFFFFF", this.previousCursorSize);		
+		this.previousCursorSize = brushSize;
 	}
 	caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y);
 	caveView.drawCursor(x, y);
 	this.previousCursorPosition = { x: x, y: y };	
+	this.currentCursorSize = brushSize;
 }
 
 CaveViewModel.prototype.getCaveString = function()
