@@ -1,4 +1,4 @@
-function LinePainter(context)
+function LinePainter(context, tileSize, border)
 {
 	this.context = context;
 	this.whitePixelId = this.context.createImageData(1, 1);
@@ -6,6 +6,8 @@ function LinePainter(context)
 	this.whitePixelId.data[1] = 255;
 	this.whitePixelId.data[2] = 255;
 	this.whitePixelId.data[3] = 255;
+	this.tileSize = tileSize;
+	this.border = border;
 }
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)
