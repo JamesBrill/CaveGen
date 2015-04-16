@@ -10,6 +10,11 @@ function LinePainter(context)
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)
 {
+	this.context.fillRect(x0, y0, x1 - x0 + 1, y1 - y0 + 1);	
+}
+
+LinePainter.prototype.plotLineWithNoAntiAliasing = function(x0, y0, x1, y1)
+{
 	var dx =  Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	var dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
 	var err = dx + dy, e2;                                   

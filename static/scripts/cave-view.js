@@ -13,6 +13,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.context = this.canvas.getContext("2d");
 	this.paintLineMode = false;
 	this.isMouseDown = false;
+	this.linePainter = new LinePainter(this.context);
 }
 
 CaveView.prototype.draw = function(gridModel)
@@ -40,13 +41,15 @@ CaveView.prototype.drawLines = function()
 	for (var i = 1; i < this.width; i++) 
 	{
 		var x = i * view.tileSize + view.border.left;
-		this.context.fillRect(x, view.border.top + offset, 1, view.height * view.tileSize - 2 * offset);
+		this.linePainter.plotLine(x, view.border.top + offset, x, 
+			view.border.top + view.height * view.tileSize - offset);
 	}
 
 	for (var i = 1; i < this.height; i++) 
 	{
 		var y = i * view.tileSize + view.border.top;
-		this.context.fillRect(view.border.left + offset, y, view.width * view.tileSize - 2 * offset, 1);
+		this.linePainter.plotLine(view.border.left + offset, y, 
+			view.border.left + view.width * view.tileSize - offset, y);
 	}
 }
 
