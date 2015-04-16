@@ -22,7 +22,7 @@ CaveView.prototype.draw = function(gridModel)
 	this.context.rect(0, 0, this.canvas.width, this.canvas.height);
 	this.context.fillStyle = 'black';
 	this.context.fill();
-	this.drawLines();
+	this.drawMeasuringGrid();
 	for (var i = 0; i < this.width; i++)
 	{
 		for (var j = 0; j < this.height; j++)
@@ -33,7 +33,7 @@ CaveView.prototype.draw = function(gridModel)
 
 }
 
-CaveView.prototype.drawLines = function()
+CaveView.prototype.drawMeasuringGrid = function()
 {
 	var view = this;
 	var offset = view.tileSize;
