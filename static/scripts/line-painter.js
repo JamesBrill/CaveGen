@@ -1,13 +1,35 @@
 function LinePainter(context, tileSize, border)
 {
 	this.context = context;
-	this.whitePixelId = this.context.createImageData(1, 1);
-	this.whitePixelId.data[0] = 255;
-	this.whitePixelId.data[1] = 255;
-	this.whitePixelId.data[2] = 255;
-	this.whitePixelId.data[3] = 255;
 	this.tileSize = tileSize;
 	this.border = border;
+	this.pixel = this.context.createImageData(1, 1);
+	this.pixel.data[0] = 255;
+	this.pixel.data[1] = 255;
+	this.pixel.data[2] = 255;
+	this.pixel.data[3] = 255;
+}
+
+LinePainter.prototype.setColour = function(colour)
+{
+	this.context.fillStyle = colour;
+	var rgb = this.hexToRgb(colour);
+	this.pixel.data[0] = rgb.r;
+	this.pixel.data[1] = rgb.g;
+	this.pixel.data[2] = rgb.b;
+}
+
+LinePainter.prototype.hexToRgb = function(hex) 
+{
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? 
+    {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 LinePainter.prototype.plotVerticalLine = function(x, y0, y1)
 {
 	this.context.fillRect(x, y0, 1, y1 - y0 + 1);	
@@ -56,5 +78,5 @@ LinePainter.prototype.outOfBounds = function(x, y)
 
 LinePainter.prototype.setPixelWithNoAntiAliasing = function(x, y)
 {
-	this.context.putImageData(this.whitePixelId, x, y);
+	this.context.putImageData(this.pixel, x, y);
 }
