@@ -25,7 +25,7 @@ function CaveViewModel()
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
 	this.changeController = new ChangeController();
-	this.previousCursorPosition = { x: -1, y: -1 };
+	this.previousCursorPosition = { x: 1, y: 1 };
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
