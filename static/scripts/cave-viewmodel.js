@@ -100,7 +100,8 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	{
 		this.changeController.addTileChange(currentBrush, gridX, gridY);
 	}
-	if (gridX != this.previousCursorPosition.x || gridY != this.previousCursorPosition.y)
+	if (grid.withinLimits(gridX, gridY) && 
+	   (gridX != this.previousCursorPosition.x || gridY != this.previousCursorPosition.y))
 	{
 		this.updateCursor(gridX, gridY);
 	}
