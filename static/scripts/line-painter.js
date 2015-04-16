@@ -42,7 +42,10 @@ LinePainter.prototype.plotHorizontalLine = function(x0, x1, y)
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)
 {
-	this.context.fillRect(x0, y0, x1 - x0 + 1, y1 - y0 + 1);	
+	this.context.beginPath(); // Could boost performance by separating this call
+	this.context.moveTo(x0, y0);
+	this.context.lineTo(x1, y1);	
+	this.context.stroke();
 }
 
 LinePainter.prototype.plotLineWithNoAntiAliasing = function(x0, y0, x1, y1)
