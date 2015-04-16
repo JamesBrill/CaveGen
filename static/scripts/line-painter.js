@@ -23,7 +23,7 @@ LinePainter.prototype.plotLineWithNoAntiAliasing = function(x0, y0, x1, y1)
 
 	for (;;)
 	{                                                          
-		this.setPixel(x0, y0);
+		this.setPixelWithNoAntiAliasing(x0, y0);
 		if ((x0 == x1 && y0 == y1) || this.outOfBounds(x0, y0)) break;
 		e2 = 2 * err;
 		if (e2 >= dy) 
@@ -44,12 +44,6 @@ LinePainter.prototype.outOfBounds = function(x, y)
 	var xLimit = (this.width - 1) * this.tileSize + this.border.left;
 	var yLimit = (this.height - 1) * this.tileSize + this.border.top;
 	return (x < 0 || y < 0 || x > xLimit || y > yLimit);
-}
-
-LinePainter.prototype.setPixel = function(x, y)
-{
-	this.context.fillStyle = "white";
-	this.context.fillRect(x, y, 1, 1);
 }
 
 LinePainter.prototype.setPixelWithNoAntiAliasing = function(x, y)
