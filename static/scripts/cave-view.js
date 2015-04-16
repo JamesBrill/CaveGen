@@ -141,6 +141,20 @@ CaveView.prototype.drawTileRectangle = function(brush, x, y, caveChange)
 	}
 }
 
+CaveView.prototype.drawCursor = function(column, row)
+{
+	var top = (row - Math.floor(brushSize / 2)) * this.tileSize + this.border.top;
+	var left = (column - Math.floor(brushSize / 2)) * this.tileSize + this.border.left;
+	var bottom = top + brushSize * this.tileSize;
+	var right = left + brushSize * this.tileSize;
+
+	this.linePainter.setColour("#FF0000");
+	this.linePainter.plotVerticalLine(left, top, bottom);
+	this.linePainter.plotHorizontalLine(left, right, bottom);
+	this.linePainter.plotVerticalLine(right, bottom, top);
+	this.linePainter.plotHorizontalLine(right, left, top);
+}
+
 CaveView.prototype.paintPositions = function(paintedPositions)
 {
 	for (var i = 0; i < paintedPositions.length; i++) 
