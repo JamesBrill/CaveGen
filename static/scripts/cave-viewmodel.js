@@ -98,6 +98,17 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	var gridX = caveView.getGridX(pixelX);
 	var gridY = caveView.getGridY(pixelY);
 
+	if (!grid.withinLimits(gridX, gridY))
+	{		
+		var x = (gridX < 0) ? 0 : ((gridX > this.width - 1) ? this.width - 1 : gridX);
+		var y = (gridY < 0) ? 0 : ((gridY > this.height - 1) ? this.height - 1 : gridY);
+		caveView.previousPaintedPoint = { x: x, y: y };
+	}
+
+	if (caveView.isMouseDown)
+	{
+		caveView.paintLineMode = true;
+	}
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
 		this.changeController.addTileChange(currentBrush, gridX, gridY);

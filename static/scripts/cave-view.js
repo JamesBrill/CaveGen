@@ -11,6 +11,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.canvas.width = this.pixelWidth;
 	this.canvas.height = this.pixelHeight;
 	this.context = this.canvas.getContext("2d");
+	this.previousPaintedPoint = { x: -1, y: -1 };
 	this.paintLineMode = false;
 	this.isMouseDown = false;
 	this.linePainter = new LinePainter(this.context);
