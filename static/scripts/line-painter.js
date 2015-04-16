@@ -1,5 +1,6 @@
-function LinePainter()
+function LinePainter(context)
 {
+	this.context = context;
 	this.whitePixelId = this.context.createImageData(1, 1);
 	this.whitePixelId.data[0] = 255;
 	this.whitePixelId.data[1] = 255;
