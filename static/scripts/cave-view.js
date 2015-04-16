@@ -112,17 +112,17 @@ CaveView.prototype.applyBrushAtPosition = function(brush, column, row, caveChang
 		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
 		for (var i = 0; i < positions.length; i++)
 		{
-			this.drawRectangularCursor(brush, positions[i].x, positions[i].y, caveChange);
+			this.drawTileRectangle(brush, positions[i].x, positions[i].y, caveChange);
 		}
 	}
 	else
 	{
-		this.drawRectangularCursor(brush, column, row, caveChange);
+		this.drawTileRectangle(brush, column, row, caveChange);
 	}
 	this.previousPaintedPoint = currentPoint;
 }
 
-CaveView.prototype.drawRectangularCursor = function(brush, x, y, caveChange)
+CaveView.prototype.drawTileRectangle = function(brush, x, y, caveChange)
 {
 	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
 	for (var i = 0; i < cursorPositions.length; i++)
