@@ -49,6 +49,7 @@ $(document).ready(function ()
 		caveView.canvas.addEventListener("mouseleave", function (event) 
 		{
 			caveViewModel.finishPainting();
+			caveViewModel.previousCursorSize = caveViewModel.currentCursorSize;
 		});
 	}
 

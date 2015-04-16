@@ -25,6 +25,9 @@ function CaveViewModel()
 	this.terrainType = ko.observable("1"); 
 	this.waterType = ko.observable("clear"); 
 	this.changeController = new ChangeController();
+	this.previousCursorPosition = { x: 1, y: 1 };
+	this.previousCursorSize = -1;
+	this.currentCursorSize = -1;
 }
 
 CaveViewModel.prototype.updateDimensions = function(cave)
@@ -95,9 +98,25 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	var gridX = caveView.getGridX(pixelX);
 	var gridY = caveView.getGridY(pixelY);
 
+	if (!grid.withinLimits(gridX, gridY))
+	{		
+		var x = (gridX < 0) ? 0 : ((gridX > this.width - 1) ? this.width - 1 : gridX);
+		var y = (gridY < 0) ? 0 : ((gridY > this.height - 1) ? this.height - 1 : gridY);
+		caveView.previousPaintedPoint = { x: x, y: y };
+	}
+
+	if (caveView.isMouseDown)
+	{
+		caveView.paintLineMode = true;
+	}
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
 		this.changeController.addTileChange(currentBrush, gridX, gridY);
+	}
+	if (grid.withinLimits(gridX, gridY) && 
+	   (gridX != this.previousCursorPosition.x || gridY != this.previousCursorPosition.y))
+	{
+		this.updateCursor(gridX, gridY);
 	}
 }
 
@@ -127,6 +146,20 @@ CaveViewModel.prototype.finishPainting = function()
 	}
 	caveView.isMouseDown = false;
 	caveView.paintLineMode = false; 
+}
+
+CaveViewModel.prototype.updateCursor = function(x, y)
+{
+	if (this.previousCursorSize != brushSize)
+	{
+		caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y, 
+									"#FFFFFF", this.previousCursorSize);		
+		this.previousCursorSize = brushSize;
+	}
+	caveView.drawSquareOutline(this.previousCursorPosition.x, this.previousCursorPosition.y);
+	caveView.drawCursor(x, y);
+	this.previousCursorPosition = { x: x, y: y };	
+	this.currentCursorSize = brushSize;
 }
 
 CaveViewModel.prototype.getCaveString = function()
