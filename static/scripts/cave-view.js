@@ -1,6 +1,6 @@
 var CaveView = function(x, y, tileSize, border)
 {
-	this.location = {x:0, y:0};
+	this.location = { x: 0, y: 0 };
 	this.tileSize = tileSize;
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
 	this.pixelWidth = CAVE_DISPLAY_SIZE;
@@ -143,12 +143,21 @@ CaveView.prototype.drawTileRectangle = function(brush, x, y, caveChange)
 
 CaveView.prototype.drawCursor = function(column, row)
 {
+	this.drawSquareOutline(column, row, "#FF0000");
+}
+
+CaveView.prototype.drawSquareOutline = function(column, row, colour)
+{
+	if (colour == undefined)
+	{
+		colour = "#FFFFFF";
+	}
 	var top = (row - Math.floor(brushSize / 2)) * this.tileSize + this.border.top;
 	var left = (column - Math.floor(brushSize / 2)) * this.tileSize + this.border.left;
 	var bottom = top + brushSize * this.tileSize;
 	var right = left + brushSize * this.tileSize;
 
-	this.linePainter.setColour("#FF0000");
+	this.linePainter.setColour(colour);
 	this.linePainter.plotVerticalLine(left, top, bottom);
 	this.linePainter.plotHorizontalLine(left, right, bottom);
 	this.linePainter.plotVerticalLine(right, bottom, top);
