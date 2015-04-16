@@ -27,6 +27,10 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 
 
 ## Changelog
+### Version 1.1.0
+* Cursor for making it more obvious where the tiles will be painted
+* Fixed a bug where a line that started outside the cave and continued inside would suffer from submarining (i.e. the line would not be continuous if the cursor was moved quickly)
+
 ### Version 1.0.2
 * White lines between tiles on the cave grid to make measuring distances easier
 
