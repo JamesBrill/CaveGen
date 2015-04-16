@@ -36,7 +36,7 @@ CaveView.prototype.drawMeasuringGrid = function()
 {
 	var view = this;
 	var offset = view.tileSize;
-	this.context.fillStyle = "white";
+	this.linePainter.setColour("#FFFFFF");
 	for (var i = 1; i < this.width; i++) 
 	{
 		var x = i * view.tileSize + view.border.left;
