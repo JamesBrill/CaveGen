@@ -7,6 +7,7 @@ var currentBrush;
 var brushSize = 1;
 var lastUsedBrushSize = 0;
 var CAVE_DISPLAY_SIZE = 800;
+var client;
 
 $(document).ready(function () 
 {  
@@ -16,7 +17,8 @@ $(document).ready(function ()
 		caveView = new CaveView(width, height, 20);
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
-		addEventListeners();
+		addMouseEventListeners();
+		addKeyboardEventListeners();
 		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
 		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
@@ -25,7 +27,7 @@ $(document).ready(function ()
 		initBrushSizeSlider();
 	}
 
-	var addEventListeners = function()
+	var addMouseEventListeners = function()
 	{
 		caveView.canvas.addEventListener("mousemove", function (event) 
 		{
@@ -51,6 +53,12 @@ $(document).ready(function ()
 			caveViewModel.finishPainting();
 			caveViewModel.previousCursorSize = caveViewModel.currentCursorSize;
 		});
+	}
+
+	var addKeyboardEventListeners = function()
+	{
+		$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
+		$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
 	}
 
 	var initCopyToClipboardButton = function()
