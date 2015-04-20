@@ -59,6 +59,7 @@ $(document).ready(function ()
 	{
 		$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
 		$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
+		$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
 	}
 
 	var initCopyToClipboardButton = function()
