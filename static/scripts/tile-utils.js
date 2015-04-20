@@ -52,3 +52,15 @@ TileUtils.getFileNameFromSymbol = function(symbol)
 	}
 	console.log("Attempted to get filename from invalid symbol: " + symbol + ".");
 }
+
+TileUtils.getTileFromSymbol = function(symbol)
+{
+	for (var i = 0; i < TileUtils.tileMap.length; i++) 
+	{
+		if (TileUtils.tileMap[i].symbol == symbol)
+		{
+			return TileUtils.tileMap[i];
+		}
+	}	
+	console.log("Attempted to get tile from invalid symbol: " + symbol + ".");	
+}
