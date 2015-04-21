@@ -1,7 +1,50 @@
 # CaveGen
-CaveGen is a level editor for the Flash game "Hannah and the Pirate Caves" (HATPC). This repository contains the web app port of the WPF version, a Windows-exclusive desktop application. The web app is ugly, laggy and buggy right now, but it provides the bare minimum functionality to make a HATPC level and save it between sessions. It's only really usable for smaller, symmetrical levels - I suggest sticking with 40x40 for now. It's going to get better though as it gets polished over time. Levels, or "caves", are currently stored locally via HTML5 Local Storage. One goal is to move away from this to a client-server architecture where you sign in to a server where all caves are stored. Then you could do fancy stuff like sharing caves with other people, rating their caves, collaborating on their caves, maybe even commenting on their caves.
+CaveGen is a level editor for the Flash game "Hannah and the Pirate Caves" (HATPC). This repository contains the web app port of the WPF version, a Windows-exclusive desktop application. Levels, or "caves", are currently stored locally via HTML5 Local Storage. One goal is to move away from this to a client-server architecture where you sign in to a server where all caves are stored. Then you could do fancy stuff like sharing caves with other people, rating their caves, collaborating on their caves, maybe even commenting on their caves.
 
 But for now, the CaveGen web app is just a crude device for quickly making a cave, changing your browser tab to Neopets and testing it. It's not got all the features of the original desktop application yet, but it will grow more robust over time. Thanks to the freedom of drawing on an HTML5 Canvas rather than a rigid WPF grid, the app will eventually be able to do some "fancy stuff" in the future. Not entirely sure what that fancy stuff will be. One idea is for you to click on a tile and CaveGen will show you the sequence of events that would occur if you hit that tile in the game. Let's see how it goes, eh?
+
+## Hotkey guide
+ * **Ctrl+z** Undo
+ * **Ctrl+y** Redo
+ * **Shift+g** Generate
+ * **Shift+s** Save
+ * **x** Terrain
+ * **b** Wooden Crate
+ * **k** Steel Crate
+ * **o** Boulder
+ * **s** Space/Eraser
+ * **Shift+= or +** Treasure
+ * **Shift+6 or ^** Arrow Up
+ * **Shift+, or <** Arrow Left
+ * **Shift+. or >** Arrow Right
+ * **v** Arrow Down
+ * **w** Spike Down
+ * **m** Spike Up
+ * **/** Dynamite
+ * **Shift+\ or |** Steel Dynamite
+ * **=** Platform 
+ * **Shift+2 or “** Ladder
+ * **Shift+# or ~** Water Level
+ * **Shift+1 or !** Water Tap Crate
+ * **Shift+’ or @** Water Crate
+ * **t** Water Start
+ * **.** Air Pocket
+ * **#** Hannah
+ * **Shift+d or D** Door
+ * **n** Tutorial Up
+ * **Shift+9 or (** Tutorial Left
+ * **Shift+0 or )** Tutorial Right
+ * **u** Tutorial Down
+ * **l** Heart Crate
+ * **g** Gem Crate
+ * **z** Secret Area
+ * **1** Enemy 1
+ * **2** Enemy 2
+ * **3** Enemy 3
+ * **4** Enemy 4
+ * **5** Enemy 5
+ * **c** Clone
+ * **0** Shockwave Error
 
 ## Feature backlog
 * Fix graphical glitches in larger/asymmetric caves
@@ -14,13 +57,16 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * Option to toggle terrain images/grey rectangles 
 
 ## Coming next!
-* Hotkeys
+* Bug fix. Undo/Redo with key shortcuts are broken after changes made to the form. Page will try to revert to old values in the form instead of undoing a cave change
 * Port over the spike tools from the desktop version
 * Zoom and pan
 * Apply jQuery styles to the UI controls
 * Align the UI controls more neatly
 
 ## Changelog
+#### Version 1.1.1
+* Hotkeys (see hotkey guide above)
+
 ### Version 1.1.0
 * Cursor for making it more obvious where the tiles will be painted
 * Fixed a bug where a line that started outside the cave and continued inside would suffer from submarining (i.e. the line would not be continuous if the cursor was moved quickly)
