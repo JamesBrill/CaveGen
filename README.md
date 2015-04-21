@@ -4,8 +4,8 @@ CaveGen is a level editor for the Flash game "Hannah and the Pirate Caves" (HATP
 But for now, the CaveGen web app is just a crude device for quickly making a cave, changing your browser tab to Neopets and testing it. It's not got all the features of the original desktop application yet, but it will grow more robust over time. Thanks to the freedom of drawing on an HTML5 Canvas rather than a rigid WPF grid, the app will eventually be able to do some "fancy stuff" in the future. Not entirely sure what that fancy stuff will be. One idea is for you to click on a tile and CaveGen will show you the sequence of events that would occur if you hit that tile in the game. Let's see how it goes, eh?
 
 ## Hotkey guide
- * **Ctrl+z** Undo
- * **Ctrl+y** Redo
+ * **Shift+z** Undo
+ * **Shift+y** Redo
  * **Shift+g** Generate
  * **Shift+s** Save
  * **x** Terrain
@@ -57,13 +57,15 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * Option to toggle terrain images/grey rectangles 
 
 ## Coming next!
-* Bug fix. Undo/Redo with key shortcuts are broken after changes made to the form. Page will try to revert to old values in the form instead of undoing a cave change
 * Port over the spike tools from the desktop version
 * Zoom and pan
 * Apply jQuery styles to the UI controls
 * Align the UI controls more neatly
 
 ## Changelog
+#### Version 1.1.2 (in progress)
+* Bug fix. Undo/Redo with key shortcuts were broken after changes made to the form (name, height, width, etc). Page would try to revert to old values in the form instead of undoing a cave change. Shortcuts now use Shift instead
+
 #### Version 1.1.1
 * Hotkeys (see hotkey guide above)
 
