@@ -60,6 +60,18 @@ $(document).ready(function ()
 		$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
 		$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
 		$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
+		$(document).bind('keydown', 'shift+s', function() { currentBrush = TileUtils.getTileFromSymbol(' '); });
+
+		$('body').keypress(function(e)
+		{
+			var keyPressed = String.fromCharCode(e.which);
+			if (/[xbk+mw\/|=o^<>v\"n()u12345@!~t.zc0#Dlg"]/.test(keyPressed))
+			{
+				currentBrush = TileUtils.getTileFromSymbol(keyPressed);
+			}
+		});
+
+		// TODO: Save/Load?
 	}
 
 	var initCopyToClipboardButton = function()
