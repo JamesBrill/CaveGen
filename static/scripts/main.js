@@ -3,6 +3,7 @@ var height = 40;
 var grid;
 var caveView;
 var caveViewModel;
+var caveStorage;
 var currentBrush;
 var brushSize = 1;
 var lastUsedBrushSize = 0;
@@ -17,12 +18,13 @@ $(document).ready(function ()
 		caveView = new CaveView(width, height, 20);
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
+		caveStorage = new CaveStorage();
 		addMouseEventListeners();
 		addKeyboardEventListeners();
 		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
 		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
-		ko.applyBindings(new CaveStorage(), $('#cave-storage')[0]);
+		ko.applyBindings(caveStorage, $('#cave-storage')[0]);
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		initBrushSizeSlider();
 	}
