@@ -62,7 +62,8 @@ $(document).ready(function ()
 		$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
 		$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
 		$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
-		$(document).bind('keydown', 'shift+s', function() { currentBrush = TileUtils.getTileFromSymbol(' '); });
+		$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });
+		$(document).bind('keydown', 's', function() { currentBrush = TileUtils.getTileFromSymbol(' '); });
 
 		$('body').keypress(function(e)
 		{
@@ -72,8 +73,6 @@ $(document).ready(function ()
 				currentBrush = TileUtils.getTileFromSymbol(keyPressed);
 			}
 		});
-
-		// TODO: Save/Load?
 	}
 
 	var initCopyToClipboardButton = function()
