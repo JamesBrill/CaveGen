@@ -30,10 +30,20 @@ EventListenerBuilder.addMouseEventListeners = function()
 
 EventListenerBuilder.addKeyboardEventListeners = function()
 {
+	EventListenerBuilder.addCommandKeyBindings();
+	EventListenerBuilder.addTileKeyBindings();
+}
+
+EventListenerBuilder.addCommandKeyBindings = function()
+{	
 	$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
 	$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
 	$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
-	$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });
+	$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });	
+}
+
+EventListenerBuilder.addTileKeyBindings = function()
+{
 	$(document).bind('keydown', 's', function() { currentBrush = TileUtils.getTileFromSymbol(' '); });
 
 	$('body').keypress(function(e)
@@ -43,5 +53,5 @@ EventListenerBuilder.addKeyboardEventListeners = function()
 		{
 			currentBrush = TileUtils.getTileFromSymbol(keyPressed);
 		}
-	});
+	});	
 }
