@@ -41,6 +41,11 @@ TileUtils.tileMap =
 	{ fileName: "gem", symbol: "g" }
 ];
 
+TileUtils.isTile = function(symbol)
+{
+	return /[xbk+mw\/|=o^<>v\"n()u12345@!~t.zc0#Dlg"]/.test(symbol);
+}
+
 TileUtils.getFileNameFromSymbol = function(symbol)
 {
 	for (var i = 0; i < TileUtils.tileMap.length; i++) 
@@ -51,4 +56,16 @@ TileUtils.getFileNameFromSymbol = function(symbol)
 		}
 	}
 	console.log("Attempted to get filename from invalid symbol: " + symbol + ".");
+}
+
+TileUtils.getTileFromSymbol = function(symbol)
+{
+	for (var i = 0; i < TileUtils.tileMap.length; i++) 
+	{
+		if (TileUtils.tileMap[i].symbol == symbol)
+		{
+			return TileUtils.tileMap[i];
+		}
+	}	
+	console.log("Attempted to get tile from invalid symbol: " + symbol + ".");	
 }

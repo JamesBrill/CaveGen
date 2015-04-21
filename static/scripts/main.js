@@ -3,10 +3,12 @@ var height = 40;
 var grid;
 var caveView;
 var caveViewModel;
+var caveStorage;
 var currentBrush;
 var brushSize = 1;
 var lastUsedBrushSize = 0;
 var CAVE_DISPLAY_SIZE = 800;
+var client;
 
 $(document).ready(function () 
 {  
@@ -16,41 +18,15 @@ $(document).ready(function ()
 		caveView = new CaveView(width, height, 20);
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
-		addEventListeners();
+		caveStorage = new CaveStorage();
+		EventListenerBuilder.addMouseEventListeners();
+		EventListenerBuilder.addKeyboardEventListeners();
 		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
 		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
-		ko.applyBindings(new CaveStorage(), $('#cave-storage')[0]);
+		ko.applyBindings(caveStorage, $('#cave-storage')[0]);
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		initBrushSizeSlider();
-	}
-
-	var addEventListeners = function()
-	{
-		caveView.canvas.addEventListener("mousemove", function (event) 
-		{
-			var pixelX = event.pageX - this.offsetLeft;
-			var pixelY = event.pageY - this.offsetTop;
-			caveViewModel.continuePaintingAtMousePosition(pixelX, pixelY);
-		});
-
-		caveView.canvas.addEventListener("mousedown", function (event) 
-		{
-			var pixelX = event.pageX - this.offsetLeft;
-			var pixelY = event.pageY - this.offsetTop;
-			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
-		});
-
-		caveView.canvas.addEventListener("mouseup", function (event) 
-		{
-			caveViewModel.finishPainting();
-		});
-
-		caveView.canvas.addEventListener("mouseleave", function (event) 
-		{
-			caveViewModel.finishPainting();
-			caveViewModel.previousCursorSize = caveViewModel.currentCursorSize;
-		});
 	}
 
 	var initCopyToClipboardButton = function()
