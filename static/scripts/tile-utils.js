@@ -41,6 +41,11 @@ TileUtils.tileMap =
 	{ fileName: "gem", symbol: "g" }
 ];
 
+TileUtils.isTile = function(symbol)
+{
+	return /[xbk+mw\/|=o^<>v\"n()u12345@!~t.zc0#Dlg"]/.test(symbol);
+}
+
 TileUtils.getFileNameFromSymbol = function(symbol)
 {
 	for (var i = 0; i < TileUtils.tileMap.length; i++) 

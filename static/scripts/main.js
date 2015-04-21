@@ -65,7 +65,7 @@ $(document).ready(function ()
 		$('body').keypress(function(e)
 		{
 			var keyPressed = String.fromCharCode(e.which);
-			if (/[xbk+mw\/|=o^<>v\"n()u12345@!~t.zc0#Dlg"]/.test(keyPressed))
+			if (TileUtils.isTile(keyPressed))
 			{
 				currentBrush = TileUtils.getTileFromSymbol(keyPressed);
 			}
