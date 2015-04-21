@@ -19,60 +19,14 @@ $(document).ready(function ()
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
 		caveStorage = new CaveStorage();
-		addMouseEventListeners();
-		addKeyboardEventListeners();
+		EventListenerBuilder.addMouseEventListeners();
+		EventListenerBuilder.addKeyboardEventListeners();
 		initCopyToClipboardButton();
 		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
 		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
 		ko.applyBindings(caveStorage, $('#cave-storage')[0]);
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		initBrushSizeSlider();
-	}
-
-	var addMouseEventListeners = function()
-	{
-		caveView.canvas.addEventListener("mousemove", function (event) 
-		{
-			var pixelX = event.pageX - this.offsetLeft;
-			var pixelY = event.pageY - this.offsetTop;
-			caveViewModel.continuePaintingAtMousePosition(pixelX, pixelY);
-		});
-
-		caveView.canvas.addEventListener("mousedown", function (event) 
-		{
-			var pixelX = event.pageX - this.offsetLeft;
-			var pixelY = event.pageY - this.offsetTop;
-			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
-		});
-
-		caveView.canvas.addEventListener("mouseup", function (event) 
-		{
-			caveViewModel.finishPainting();
-		});
-
-		caveView.canvas.addEventListener("mouseleave", function (event) 
-		{
-			caveViewModel.finishPainting();
-			caveViewModel.previousCursorSize = caveViewModel.currentCursorSize;
-		});
-	}
-
-	var addKeyboardEventListeners = function()
-	{
-		$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
-		$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
-		$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
-		$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });
-		$(document).bind('keydown', 's', function() { currentBrush = TileUtils.getTileFromSymbol(' '); });
-
-		$('body').keypress(function(e)
-		{
-			var keyPressed = String.fromCharCode(e.which);
-			if (TileUtils.isTile(keyPressed))
-			{
-				currentBrush = TileUtils.getTileFromSymbol(keyPressed);
-			}
-		});
 	}
 
 	var initCopyToClipboardButton = function()
