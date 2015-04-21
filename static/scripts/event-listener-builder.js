@@ -36,8 +36,8 @@ EventListenerBuilder.addKeyboardEventListeners = function()
 
 EventListenerBuilder.addCommandKeyBindings = function()
 {	
-	$(document).bind('keydown', 'ctrl+z', function() { caveViewModel.undo(); });
-	$(document).bind('keydown', 'ctrl+y', function() { caveViewModel.redo(); });
+	$(document).bind('keydown', 'shift+z', function() { caveViewModel.undo(); });
+	$(document).bind('keydown', 'shift+y', function() { caveViewModel.redo(); });
 	$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
 	$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });	
 }
