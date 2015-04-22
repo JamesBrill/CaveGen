@@ -2,26 +2,26 @@ function SpikePainter() {}
 
 SpikePainter.prototype.getTileFromSpikeDigger = function(row, column)
 {
-    if (grid.getTileAtCoordinates(column, row - 1].symbol == 'x')
+    if (grid.getTileAtCoordinates(column, row - 1).symbol == 'x')
     {
-        if (grid.getTileAtCoordinates(column, row + 1) == 'w' && grid.getTileAtCoordinates(column, row + 2) == 'x')
+        if (grid.getTileAtCoordinates(column, row + 1).symbol == 'w' && grid.getTileAtCoordinates(column, row + 2).symbol == 'x')
         {
-            grid.setTileAtCoordinates(column, row + 1, 'm');
+            grid.setTileAtCoordinates(column, row + 1, TileUtils.getTileFromSymbol('m'));
         }
-        return 'w';
+        return TileUtils.getTileFromSymbol('w');
     }
 
-    if (grid.getTileAtCoordinates(column, row + 1) == 'x')
+    if (grid.getTileAtCoordinates(column, row + 1).symbol == 'x')
     {
-        return 'm';
+        return TileUtils.getTileFromSymbol('m');
     }
 
-    return ' ';
+    return TileUtils.getTileFromSymbol(' ');
 }
 
 SpikePainter.prototype.getTileFromSpikeFiller = function(row, column)
 {
-    if (grid.getTileAtCoordinates(column, row) != ' ')
+    if (grid.getTileAtCoordinates(column, row).symbol != ' ')
     {
         return grid.getTileAtCoordinates(column, row);
     }
@@ -31,12 +31,11 @@ SpikePainter.prototype.getTileFromSpikeFiller = function(row, column)
 
 SpikePainter.prototype.getTileFromSpikeRemover = function(row, column)
 {
-    if (grid.getTileAtCoordinates(column, row) != 'w' && grid.getTileAtCoordinates(column, row) != 'm')
+    if (grid.getTileAtCoordinates(column, row).symbol != 'w' && grid.getTileAtCoordinates(column, row).symbol != 'm')
     {
         return grid.getTileAtCoordinates(column, row);
     }
-    grid.setTileAtCoordinates(column, row, ' ');
-    return ' ';
+    return TileUtils.getTileFromSymbol(' ');
 }
 
 SpikePainter.prototype.cleanUpSpikes = function()
