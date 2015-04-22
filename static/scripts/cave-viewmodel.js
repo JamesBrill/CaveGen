@@ -112,6 +112,7 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
 		this.changeController.addTileChange(currentBrush, gridX, gridY);
+		caveView.spikePainter.cleanUpSpikes();
 	}
 	if (grid.withinLimits(gridX, gridY) && 
 	   (gridX != this.previousCursorPosition.x || gridY != this.previousCursorPosition.y))
@@ -128,6 +129,7 @@ CaveViewModel.prototype.startPaintingAtMousePosition = function(pixelX, pixelY)
 	if (grid.withinLimits(gridX, gridY))
 	{
 		this.changeController.addTileChange(currentBrush, gridX, gridY);
+		caveView.spikePainter.cleanUpSpikes();
 		caveView.paintLineMode = true;
 	}   
 
