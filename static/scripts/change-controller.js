@@ -34,11 +34,6 @@ ChangeController.prototype.addTileChange = function(brush, column, row)
 	caveView.applyBrushAtPosition(brush, column, row, this.currentPaintedLineChange);
 }
 
-ChangeController.prototype.addTileChangeToCurrentLine = function(column, row, before, after)
-{
-	this.currentPaintedLineChange.addTileChange(column, row, before, after);
-}
-
 ChangeController.prototype.getCurrentChange = function()
 {
 	return this.changeHistory.currentChange();
