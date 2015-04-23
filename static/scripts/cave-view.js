@@ -15,7 +15,6 @@ var CaveView = function(x, y, tileSize, border)
 	this.paintLineMode = false;
 	this.isMouseDown = false;
 	this.linePainter = new LinePainter(this.context);
-	this.spikePainter = new SpikePainter();
 }
 
 CaveView.prototype.draw = function(gridModel)
@@ -105,63 +104,12 @@ CaveView.prototype.getGridY = function(pixelY)
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
-CaveView.prototype.applyBrushAtPosition = function(brush, column, row, caveChange)
+CaveView.prototype.applyTileChanges = function(tileChanges)
 {
-	var currentPoint = { x: column, y: row };
-
-	if (this.paintLineMode)
+	for (var i = 0; i < tileChanges.length; i++) 
 	{
-		var lineStart = this.previousPaintedPoint;
-		var lineEnd = currentPoint;
-		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
-		for (var i = 0; i < positions.length; i++)
-		{
-			this.drawTileRectangle(brush, positions[i].x, positions[i].y, caveChange);
-		}
+		this.drawAtGridCoordinates(tileChanges[i].x, tileChanges[i].y, tileChanges[i].after);
 	}
-	else
-	{
-		this.drawTileRectangle(brush, column, row, caveChange);
-	}
-	this.previousPaintedPoint = currentPoint;
-}
-
-CaveView.prototype.drawTileRectangle = function(brush, x, y, caveChange)
-{
-	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
-	for (var i = 0; i < cursorPositions.length; i++)
-	{
-		var tileToDraw = this.getAppropriateBrush(brush, cursorPositions[i].y, cursorPositions[i].x);
-		var before = grid.getSymbolFromPosition(cursorPositions[i]);
-		var tilesChanged = grid.applyBrushAtPosition(tileToDraw, cursorPositions[i]);
-		if (tilesChanged)
-		{
-			this.drawAtGridCoordinates(cursorPositions[i].x, cursorPositions[i].y, tileToDraw);
-			var after = grid.getSymbolFromPosition(cursorPositions[i]);
-			var tileChange = new TileChange(cursorPositions[i].x, cursorPositions[i].y, before, after);
-			caveChange.addTileChange(tileChange);
-		}
-	}
-}
-
-CaveView.prototype.getAppropriateBrush = function(brush, row, column)
-{
-    if (brush.symbol != 'd' && brush.symbol != 'f' && brush.symbol != 'r')
-    {
-        return brush;
-    }
-    
-    if (brush.symbol == 'd')
-    {
-        return this.spikePainter.getTileFromSpikeDigger(row, column);
-    }
-
-    if (brush.symbol == 'f')
-    {
-        return this.spikePainter.getTileFromSpikeFiller(row, column);
-    }
-
-    return this.spikePainter.getTileFromSpikeRemover(row, column);	
 }
 
 CaveView.prototype.drawCursor = function(column, row)
