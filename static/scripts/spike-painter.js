@@ -37,26 +37,3 @@ SpikePainter.prototype.getTileFromSpikeRemover = function(row, column)
     }
     return TileUtils.getTileFromSymbol(' ');
 }
-
-SpikePainter.prototype.cleanUpSpikes = function()
-{
-    for (var i = 0; i < grid.height; i++)
-    {
-        for (var j = 0 / 2; j < grid.width; j++)
-        {
-            if (grid.getTileAtCoordinates(j, i) == 'w' && grid.getTileAtCoordinates(j, i - 1) != 'x')
-            {
-                var before = grid.getTileAtCoordinates(j, i);
-                grid.setTileAtCoordinates(j, i, ' ');
-                caveViewModel.changeController.addTileChangeToCurrentLine(j, i, before, grid.getTileAtCoordinates(j, i));
-            }
-
-            if (grid.getTileAtCoordinates(j, i) == 'm' && grid.getTileAtCoordinates(j, i + 1) != 'x')
-            {
-                var before = grid.getTileAtCoordinates(j, i);
-                grid.setTileAtCoordinates(j, i, ' ');
-                caveViewModel.changeController.addTileChangeToCurrentLine(j, i, before, grid.getTileAtCoordinates(j, i));
-            }
-        }
-    }
-}
