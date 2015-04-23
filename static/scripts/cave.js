@@ -105,3 +105,51 @@ Cave.prototype.getCoordinatesWithinRectangularCursor = function(brushSize, colum
 
 	return coordinatesWithinRectangularCursor;
 }
+
+Cave.prototype.getTileChangesFromBrush = function(x, y, brush)
+{
+	var tileChanges = [];
+	var paintedPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
+	for (var i = 0; i < paintedPositions.length; i++) 
+	{
+		var x = paintedPositions[i].x;
+		var y = paintedPositions[i].y
+		var before = this.getTileAtCoordinates(x, y);
+		var after = this.getAppropriateBrush(x, y, brush);
+		if (before.symbol != after.symbol)
+		{
+			var tileChange = new TileChange(x, y, before, after);
+			tileChanges.push(tileChange);
+		}
+	}
+	return tileChanges;
+}
+
+Cave.prototype.getAppropriateBrush = function(column, row, brush)
+{
+    if (brush.symbol != 'd' && brush.symbol != 'f' && brush.symbol != 'r')
+    {
+        return brush;
+    }
+    
+    if (brush.symbol == 'd')
+    {
+        return this.spikePainter.getTileFromSpikeDigger(row, column);
+    }
+
+    if (brush.symbol == 'f')
+    {
+        return this.spikePainter.getTileFromSpikeFiller(row, column);
+    }
+
+    return this.spikePainter.getTileFromSpikeRemover(row, column);	
+}
+
+Cave.prototype.applyTileChanges = function(tileChanges)
+{
+	for (var i = 0; i < tileChanges.length; i++) 
+	{
+		var tile = TileUtils.getTileFromSymbol(tileChanges[i].after.symbol);
+		this.setTileAtCoordinates(tileChanges[i].x, tileChanges[i].y, tile);
+	}
+}
