@@ -11,8 +11,8 @@ PaintedLineChange.prototype.addTileChange = function(tileChange)
     var matchingChanges = [];
     for (var i = 0; i < this.tileChanges.length; i++) 
     {
-        if (this.tileChanges[i].xCoordinate == tileChange.xCoordinate && 
-            this.tileChanges[i].yCoordinate == tileChange.yCoordinate && 
+        if (this.tileChanges[i].x == tileChange.x && 
+            this.tileChanges[i].y == tileChange.y && 
             this.tileChanges[i].after == tileChange.before)
         {
             matchingChanges.push(this.tileChanges[i]);
@@ -23,8 +23,8 @@ PaintedLineChange.prototype.addTileChange = function(tileChange)
         var merger = matchingChanges[0];
         this.removeChanges(matchingChanges);
 
-        tileChange = new TileChange(tileChange.xCoordinate, 
-                                    tileChange.yCoordinate, 
+        tileChange = new TileChange(tileChange.x, 
+                                    tileChange.y, 
                                     merger.before, 
                                     tileChange.after);
     }
