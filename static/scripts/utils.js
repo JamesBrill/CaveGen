@@ -31,3 +31,29 @@ var getTileSize = function(caveWidth, caveHeight)
 	var largestDimension = Math.max(caveWidth, caveHeight);
 	return Math.floor(CAVE_DISPLAY_SIZE / largestDimension); 
 }
+
+var mergeTileChanges = function(first, second)
+{
+	var tileChanges = [];
+	for (var i = 0; i < first.length; i++) 
+	{
+		tileChanges.push(first[i]);
+	}
+	for (var i = 0; i < second.length; i++) 
+	{
+		var merge = true;
+		for (var j = 0; j < first.length; j++) 
+		{
+			if (second[i].equals(first[j]))
+			{
+				merge = false;
+				break;
+			}
+		}
+		if (merge)
+		{
+			tileChanges.push(second[i]);
+		}
+	}
+	return tileChanges;
+}
