@@ -1,6 +1,7 @@
 var Cave = function(width, height)
 {
 	this.rebuildCaveFromCoordinates(width, height);
+	this.spikePainter = new SpikePainter();
 }
 
 Cave.prototype.rebuildCaveFromCoordinates = function(x, y)
