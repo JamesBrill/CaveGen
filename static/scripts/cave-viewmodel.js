@@ -98,6 +98,11 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	var gridX = caveView.getGridX(pixelX);
 	var gridY = caveView.getGridY(pixelY);
 
+	if (gridX == this.previousCursorPosition.x && gridY == this.previousCursorPosition.y)
+	{
+		return
+	}
+
 	if (!grid.withinLimits(gridX, gridY))
 	{		
 		var x = (gridX < 0) ? 0 : ((gridX > this.width - 1) ? this.width - 1 : gridX);
@@ -113,8 +118,7 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	{
 		this.applyBrushAtPosition(gridX, gridY, currentBrush);
 	}
-	if (grid.withinLimits(gridX, gridY) && 
-	   (gridX != this.previousCursorPosition.x || gridY != this.previousCursorPosition.y))
+	if (grid.withinLimits(gridX, gridY))
 	{
 		this.updateCursor(gridX, gridY);
 	}
@@ -156,6 +160,7 @@ CaveViewModel.prototype.getTileChanges = function(column, row, brush)
 		var lineStart = caveView.previousPaintedPoint;
 		var lineEnd = currentPoint;
 		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
+		positions = positions.slice(1);
 		for (var i = 0; i < positions.length; i++)
 		{
 			var newTileChanges = grid.getTileChangesFromBrush(positions[i].x, positions[i].y, brush);
