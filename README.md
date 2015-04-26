@@ -57,14 +57,15 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * Option to toggle terrain images/grey rectangles 
 
 ## Coming next!
-* Port over the spike tools from the desktop version
 * Zoom and pan
 * Apply jQuery styles to the UI controls
 * Align the UI controls more neatly
 
 ## Changelog
-#### Version 1.1.2 (in progress)
-* Bug fix. Undo/Redo with key shortcuts were broken after changes made to the form (name, height, width, etc). Page would try to revert to old values in the form instead of undoing a cave change. Shortcuts now use Shift instead
+#### Version 1.1.2 
+* Default cursor disabled when mousing over canvas
+* Spike Filler brush: any space with terrain above or below it is replaced with an appropriate spike
+* Spike Remover brush: spikes replaced by space
 
 #### Version 1.1.1
 * Hotkeys (see hotkey guide above)
