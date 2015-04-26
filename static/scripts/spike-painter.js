@@ -1,24 +1,5 @@
 function SpikePainter() {}
 
-SpikePainter.prototype.getTileFromSpikeDigger = function(row, column)
-{
-    if (grid.getTileAtCoordinates(column, row - 1).symbol == 'x')
-    {
-        if (grid.getTileAtCoordinates(column, row + 1).symbol == 'w' && grid.getTileAtCoordinates(column, row + 2).symbol == 'x')
-        {
-            grid.setTileAtCoordinates(column, row + 1, TileUtils.getTileFromSymbol('m'));
-        }
-        return TileUtils.getTileFromSymbol('w');
-    }
-
-    if (grid.getTileAtCoordinates(column, row + 1).symbol == 'x')
-    {
-        return TileUtils.getTileFromSymbol('m');
-    }
-
-    return TileUtils.getTileFromSymbol(' ');
-}
-
 SpikePainter.prototype.getTileFromSpikeFiller = function(row, column)
 {
     if (grid.getTileAtCoordinates(column, row).symbol != ' ')

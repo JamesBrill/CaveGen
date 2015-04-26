@@ -127,14 +127,9 @@ Cave.prototype.getTileChangesFromBrush = function(x, y, brush)
 
 Cave.prototype.getAppropriateBrush = function(column, row, brush)
 {
-    if (brush.symbol != 'd' && brush.symbol != 'f' && brush.symbol != 'r')
+    if (brush.symbol != 'f' && brush.symbol != 'r')
     {
         return brush;
-    }
-    
-    if (brush.symbol == 'd')
-    {
-        return this.spikePainter.getTileFromSpikeDigger(row, column);
     }
 
     if (brush.symbol == 'f')

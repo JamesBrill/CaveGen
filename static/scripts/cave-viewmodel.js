@@ -114,10 +114,12 @@ CaveViewModel.prototype.continuePaintingAtMousePosition = function(pixelX, pixel
 	{
 		caveView.paintLineMode = true;
 	}
+
 	if (caveView.isMouseDown && grid.withinLimits(gridX, gridY))
 	{
 		this.applyBrushAtPosition(gridX, gridY, currentBrush);
 	}
+
 	if (grid.withinLimits(gridX, gridY))
 	{
 		this.updateCursor(gridX, gridY);
