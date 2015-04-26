@@ -104,41 +104,11 @@ CaveView.prototype.getGridY = function(pixelY)
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
-CaveView.prototype.applyBrushAtPosition = function(brush, column, row, caveChange)
+CaveView.prototype.applyTileChanges = function(tileChanges)
 {
-	var currentPoint = { x: column, y: row };
-
-	if (this.paintLineMode)
+	for (var i = 0; i < tileChanges.length; i++) 
 	{
-		var lineStart = this.previousPaintedPoint;
-		var lineEnd = currentPoint;
-		var positions = CaveNetwork.positionsBetweenPoints(lineStart, lineEnd)
-		for (var i = 0; i < positions.length; i++)
-		{
-			this.drawTileRectangle(brush, positions[i].x, positions[i].y, caveChange);
-		}
-	}
-	else
-	{
-		this.drawTileRectangle(brush, column, row, caveChange);
-	}
-	this.previousPaintedPoint = currentPoint;
-}
-
-CaveView.prototype.drawTileRectangle = function(brush, x, y, caveChange)
-{
-	var cursorPositions = grid.getCoordinatesWithinRectangularCursor(brushSize, x, y);
-	for (var i = 0; i < cursorPositions.length; i++)
-	{
-		var before = grid.getSymbolFromPosition(cursorPositions[i]);
-		var tilesChanged = grid.applyBrushAtPosition(brush, cursorPositions[i]);
-		if (tilesChanged)
-		{
-			this.drawAtGridCoordinates(cursorPositions[i].x, cursorPositions[i].y, brush);
-			var after = grid.getSymbolFromPosition(cursorPositions[i]);
-			var tileChange = new TileChange(cursorPositions[i].x, cursorPositions[i].y, before, after);
-			caveChange.addTileChange(tileChange);
-		}
+		this.drawAtGridCoordinates(tileChanges[i].x, tileChanges[i].y, tileChanges[i].after);
 	}
 }
 

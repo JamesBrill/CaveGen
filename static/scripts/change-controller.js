@@ -29,9 +29,12 @@ ChangeController.prototype.addGenerateCaveChange = function()
 	this.changeHistory.addChange(generateCaveChange);
 }
 
-ChangeController.prototype.addTileChange = function(brush, column, row)
+ChangeController.prototype.addTileChanges = function(tileChanges)
 {
-	caveView.applyBrushAtPosition(brush, column, row, this.currentPaintedLineChange);
+	for (var i = 0; i < tileChanges.length; i++) 
+	{
+		this.currentPaintedLineChange.addTileChange(tileChanges[i]);
+	}
 }
 
 ChangeController.prototype.getCurrentChange = function()
@@ -86,13 +89,11 @@ ChangeController.prototype.applyPaintedLineChange = function(currentChange, isUn
     var paintedPositions = [];
     for (var i = 0; i < tileChanges.length; i++) 
     {
-    	var x = tileChanges[i].xCoordinate;
-    	var y = tileChanges[i].yCoordinate;
+    	var x = tileChanges[i].x;
+    	var y = tileChanges[i].y;
     	if (grid.withinLimits(x, y))
     	{
-			var symbol = isUndo ? tileChanges[i].before : tileChanges[i].after;
-			var fileName = TileUtils.getFileNameFromSymbol(symbol);
-			var tile = { fileName: fileName, symbol: symbol };
+			var tile = isUndo ? tileChanges[i].before : tileChanges[i].after;
 			paintedPositions.push({ x: x, y: y, brush: tile });
     		grid.setTileAtCoordinates(x, y, tile);
     	}
