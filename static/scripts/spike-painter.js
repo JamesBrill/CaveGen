@@ -7,7 +7,17 @@ SpikePainter.prototype.getTileFromSpikeFiller = function(row, column)
         return grid.getTileAtCoordinates(column, row);
     }
 
-    return this.getTileFromSpikeDigger(row, column);
+    if (grid.getTileAtCoordinates(column, row - 1).symbol == 'x')
+    {
+        return TileUtils.getTileFromSymbol('w');
+    }
+
+    if (grid.getTileAtCoordinates(column, row + 1).symbol == 'x')
+    {
+        return TileUtils.getTileFromSymbol('m');
+    }
+
+    return TileUtils.getTileFromSymbol(' ');
 }
 
 SpikePainter.prototype.getTileFromSpikeRemover = function(row, column)
