@@ -9,7 +9,9 @@ var twoDimensionalArray = function(x, y)
 
 var getBorder = function(caveWidth, caveHeight)
 {
-	var widthHeightRatio = caveWidth / caveHeight;	
+	var displayWidthHeightRatio = CAVE_DISPLAY_WIDTH / CAVE_DISPLAY_HEIGHT;
+	var caveWidthHeightRatio = caveWidth / caveHeight;	
+	var widthHeightRatio = caveWidthHeightRatio / displayWidthHeightRatio;
 	var border;
 	if (widthHeightRatio > 1)
 	{
