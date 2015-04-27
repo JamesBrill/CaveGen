@@ -28,9 +28,13 @@ var getBorder = function(caveWidth, caveHeight)
 
 var getTileSize = function(caveWidth, caveHeight)
 {
-	var largestDimension = Math.max(caveWidth, caveHeight);
-	var largestDisplayDimension = Math.max(CAVE_DISPLAY_WIDTH, CAVE_DISPLAY_HEIGHT);
-	return Math.floor(largestDisplayDimension / largestDimension); 
+	var displayWidthHeightRatio = CAVE_DISPLAY_WIDTH / CAVE_DISPLAY_HEIGHT;
+	var caveWidthHeightRatio = caveWidth / caveHeight;	
+	if (caveWidthHeightRatio > displayWidthHeightRatio)
+	{
+		return Math.floor(CAVE_DISPLAY_WIDTH / caveWidth);
+	}
+	return Math.floor(CAVE_DISPLAY_HEIGHT / caveHeight);
 }
 
 var mergeTileChanges = function(first, second)
