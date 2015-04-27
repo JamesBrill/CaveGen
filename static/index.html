@@ -73,7 +73,7 @@
 				<button id="save" class="clip_button" data-bind="click: function() { storeCave() }">Save</button>
 			</div>
 
-			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 600px">
+			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
 				<div style="float: left">
 					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
 				</div>
