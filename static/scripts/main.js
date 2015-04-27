@@ -16,7 +16,9 @@ $(document).ready(function ()
 	var init = function()
 	{
 		grid = new Cave(width, height);
-		caveView = new CaveView(width, height, 20);
+		var tileSize = getTileSize(width, height);	
+		var border = getBorder(width, height);
+		caveView = new CaveView(width, height, tileSize, border);
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
 		caveStorage = new CaveStorage();
