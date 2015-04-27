@@ -7,7 +7,8 @@ var caveStorage;
 var currentBrush;
 var brushSize = 1;
 var lastUsedBrushSize = 0;
-var CAVE_DISPLAY_SIZE = 800;
+var CAVE_DISPLAY_WIDTH = 800;
+var CAVE_DISPLAY_HEIGHT = 800;
 var client;
 
 $(document).ready(function () 
