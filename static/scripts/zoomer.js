@@ -123,3 +123,15 @@ Zoomer.prototype.handleScroll = function(evt)
 	if (delta) this.zoom(delta);
 	return evt.preventDefault() && false;
 }
+
+Zoomer.prototype.transformPixelX = function(pixelX)
+{
+	var transformedPoint = this.context.transformedPoint(pixelX, 0);
+	return transformedPoint.x;
+}
+
+Zoomer.prototype.transformPixelY = function(pixelY)
+{
+	var transformedPoint = this.context.transformedPoint(0, pixelY);
+	return transformedPoint.y;
+}

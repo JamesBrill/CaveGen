@@ -91,12 +91,14 @@ CaveView.prototype.drawImage = function(left, top, size, fileName)
 
 CaveView.prototype.getGridX = function(pixelX)
 {
+	pixelX = this.zoomer.transformPixelX(pixelX);
 	pixelX -= this.border.left;
 	return ((pixelX - (pixelX % this.tileSize)) / this.tileSize);   
 }
 
 CaveView.prototype.getGridY = function(pixelY)
 {
+	pixelY = this.zoomer.transformPixelY(pixelY);
 	pixelY -= this.border.top;	
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
