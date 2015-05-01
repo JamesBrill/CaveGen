@@ -44,6 +44,9 @@ function Zoomer(canvas)
 
 Zoomer.prototype.redraw = function()
 {
+	var p1 = this.context.transformedPoint(0,0);
+	var p2 = this.context.transformedPoint(this.canvas.width, this.canvas.height);
+	this.context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
 	caveView.draw(grid);
 }
 

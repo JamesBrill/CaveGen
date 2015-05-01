@@ -20,10 +20,6 @@ var CaveView = function(x, y, tileSize, border)
 
 CaveView.prototype.draw = function(gridModel)
 {
-	this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	this.context.rect(0, 0, this.canvas.width, this.canvas.height);
-	this.context.fillStyle = 'black';
-	this.context.fill();
 	this.drawMeasuringGrid();
 	for (var i = 0; i < this.width; i++)
 	{
