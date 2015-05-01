@@ -7,6 +7,7 @@ function Zoomer(canvas)
 	this.trackTransforms(this.context);
 	this.dragStart;
 	this.dragged;
+	this.panning = false;
 	this.canvas.addEventListener('DOMMouseScroll', function(evt) { 
 		this.handleScroll(evt); 
 	}.bind(this), false);
@@ -16,11 +17,14 @@ function Zoomer(canvas)
 
 	this.canvas.addEventListener('mousedown', function(evt)
 	{
-		document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
-		this.lastX = evt.offsetX || (evt.pageX - this.canvas.offsetLeft);
-		this.lastY = evt.offsetY || (evt.pageY - this.canvas.offsetTop);
-		this.dragStart = this.context.transformedPoint(this.lastX, this.lastY);
-		this.dragged = false;
+		if (this.panning)
+		{
+			document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+			this.lastX = evt.offsetX || (evt.pageX - this.canvas.offsetLeft);
+			this.lastY = evt.offsetY || (evt.pageY - this.canvas.offsetTop);
+			this.dragStart = this.context.transformedPoint(this.lastX, this.lastY);
+			this.dragged = false;
+		}
 	}.bind(this), false);
 
 	this.canvas.addEventListener('mousemove', function(evt)
@@ -48,6 +52,9 @@ Zoomer.prototype.redraw = function()
 	var p2 = this.context.transformedPoint(this.canvas.width, this.canvas.height);
 	this.context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
 	caveView.draw(grid);
+	var gridX = caveView.getGridX(this.lastX);
+	var gridY = caveView.getGridY(this.lastY);
+	caveView.drawCursor(gridX, gridY);
 }
 
 Zoomer.prototype.trackTransforms = function(ctx)
@@ -134,4 +141,14 @@ Zoomer.prototype.transformPixelY = function(pixelY)
 {
 	var transformedPoint = this.context.transformedPoint(0, pixelY);
 	return transformedPoint.y;
+}
+
+Zoomer.prototype.enablePanning = function()
+{
+	this.panning = true;
+}
+
+Zoomer.prototype.disablePanning = function()
+{
+	this.panning = false;
 }

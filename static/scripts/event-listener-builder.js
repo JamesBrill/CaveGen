@@ -40,6 +40,8 @@ EventListenerBuilder.addCommandKeyBindings = function()
 	$(document).bind('keydown', 'shift+y', function() { caveViewModel.redo(); });
 	$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
 	$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });	
+	$(document).bind('keydown', 'ctrl', function() { caveView.zoomer.enablePanning(); });	
+	$(document).bind('keyup', 'ctrl', function() { caveView.zoomer.disablePanning(); });
 }
 
 EventListenerBuilder.addTileKeyBindings = function()
