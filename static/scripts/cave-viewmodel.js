@@ -246,6 +246,7 @@ CaveViewModel.prototype.generateCave = function()
 	{	
 		this.changeController.addGenerateCaveChange();
 		this.updateDimensions();
+		caveView.zoomer.resetZoomLevel();
 		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
 		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
 	}

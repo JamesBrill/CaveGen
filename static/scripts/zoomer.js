@@ -1,5 +1,6 @@
 function Zoomer(canvas) 
 {
+	this.zoomLevel = 0;
 	this.canvas = canvas;
 	this.context = canvas.getContext('2d');
 	this.lastX = this.canvas.width / 2;
@@ -139,7 +140,20 @@ Zoomer.prototype.zoom = function(clicks)
 Zoomer.prototype.handleScroll = function(evt)
 {
 	var delta = evt.wheelDelta ? evt.wheelDelta / 40 : evt.detail ? -evt.detail : 0;
-	if (delta) this.zoom(delta);
+	if (delta)
+	{ 
+		var newZoomLevel = this.zoomLevel + delta;
+		if (newZoomLevel > 19)
+		{
+			delta -= (newZoomLevel - 19);
+		}
+		if (newZoomLevel < 0)
+		{
+			delta -= newZoomLevel;
+		}
+		this.zoomLevel += delta;
+		this.zoom(delta);
+	}
 	return evt.preventDefault() && false;
 }
 
@@ -163,4 +177,9 @@ Zoomer.prototype.enablePanning = function()
 Zoomer.prototype.disablePanning = function()
 {
 	this.panning = false;
+}
+
+Zoomer.prototype.resetZoomLevel = function()
+{
+	this.zoomLevel = 0;
 }
