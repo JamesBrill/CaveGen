@@ -4,7 +4,6 @@ function Zoomer(canvas)
 	this.context = canvas.getContext('2d');
 	this.lastX = this.canvas.width / 2;
 	this.lastY = this.canvas.height / 2;
-	this.trackTransforms(this.context);
 	this.dragStart;
 	this.dragged;
 	this.panning = false;
@@ -44,6 +43,19 @@ function Zoomer(canvas)
 	{
 		this.dragStart = null;
 	}.bind(this), false);
+}
+
+Zoomer.zoomerInstance = null;
+
+Zoomer.getZoomer = function(canvas)
+{
+	if (Zoomer.zoomerInstance == null)
+	{
+		Zoomer.zoomerInstance = new Zoomer(canvas);
+	}
+	var context = Zoomer.zoomerInstance.context;
+	Zoomer.zoomerInstance.trackTransforms(context);
+	return Zoomer.zoomerInstance;
 }
 
 Zoomer.prototype.redraw = function()
@@ -107,7 +119,7 @@ Zoomer.prototype.trackTransforms = function(ctx)
 		xform.f = f;
 		return setTransform.call(ctx,a,b,c,d,e,f);
 	};
-	var pt  = svg.createSVGPoint();
+	var pt = svg.createSVGPoint();
 	ctx.transformedPoint = function(x,y){
 		pt.x=x; pt.y=y;
 		return pt.matrixTransform(xform.inverse());
