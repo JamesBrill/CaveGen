@@ -11,9 +11,12 @@ EventListenerBuilder.addMouseEventListeners = function()
 
 	caveView.canvas.addEventListener("mousedown", function (event) 
 	{
-		var pixelX = event.pageX - this.offsetLeft;
-		var pixelY = event.pageY - this.offsetTop;
-		caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
+		if (!caveView.zoomer.panning)
+		{
+			var pixelX = event.pageX - this.offsetLeft;
+			var pixelY = event.pageY - this.offsetTop;
+			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);     
+		}   
 	});
 
 	caveView.canvas.addEventListener("mouseup", function (event) 
