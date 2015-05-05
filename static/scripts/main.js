@@ -15,6 +15,7 @@ $(document).ready(function ()
 {  
 	var init = function()
 	{
+		ImagePreloader.preloadImages();
 		grid = new Cave(width, height);
 		var tileSize = getTileSize(width, height);	
 		var border = getBorder(width, height);

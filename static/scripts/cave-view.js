@@ -80,14 +80,9 @@ CaveView.prototype.drawSquare= function(left, top, size, colour)
 
 CaveView.prototype.drawImage = function(left, top, size, fileName)
 {
-	var image = new Image();
-	var context = this.context;
-	image.onload = function()
-	{
-		context.drawImage(image, left + 1, top + 1, size - 1, size - 1);
-	}
-	image.src = "images/" + fileName + ".png";	
-}
+	var image = ImagePreloader.getImageFromFileName(fileName);
+	this.context.drawImage(image, left + 1, top + 1, size - 1, size - 1);
+}	
 
 CaveView.prototype.getGridX = function(pixelX)
 {
