@@ -1,7 +1,6 @@
 function ImagePreloader() {}
 
 ImagePreloader.imageMap = [];
-ImagePreloader.imagesLoaded = false;
 
 ImagePreloader.preloadImages = function()
 {
@@ -20,10 +19,6 @@ ImagePreloader.preloadImageLoop = function(index)
         if(index < TileUtils.tileMap.length) 
         {
             ImagePreloader.preloadImageLoop(index);
-        }
-        else
-        {
-        	ImagePreloader.imagesLoaded = true;
         }
     }	
 	image.src = "images/" + fileName + ".png";	
