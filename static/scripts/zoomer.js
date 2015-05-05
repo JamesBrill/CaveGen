@@ -8,12 +8,8 @@ function Zoomer(canvas)
 	this.dragStart;
 	this.dragged;
 	this.panning = false;
-	this.canvas.addEventListener('DOMMouseScroll', function(evt) { 
-		this.handleScroll(evt); 
-	}.bind(this), false);
-	this.canvas.addEventListener('mousewheel', function(evt) { 
-		this.handleScroll(evt);
-	}.bind(this), false);
+	this.canvas.addEventListener('DOMMouseScroll', function(evt) { this.handleScroll(evt) }.bind(this), false);
+	this.canvas.addEventListener('mousewheel', function(evt) { this.handleScroll(evt) }.bind(this), false);
 
 	this.canvas.addEventListener('mousedown', function(evt)
 	{
@@ -34,16 +30,13 @@ function Zoomer(canvas)
 		this.dragged = true;
 		if (this.dragStart)
 		{
-			var pt = this.context.transformedPoint(this.lastX, this.lastY);
-			this.context.translate(pt.x-this.dragStart.x,pt.y-this.dragStart.y);
+			var point = this.context.transformedPoint(this.lastX, this.lastY);
+			this.context.translate(point.x - this.dragStart.x, point.y - this.dragStart.y);
 			this.redraw();
 		}
 	}.bind(this), false);
 
-	this.canvas.addEventListener('mouseup', function(evt)
-	{
-		this.dragStart = null;
-	}.bind(this), false);
+	this.canvas.addEventListener('mouseup', function(evt) { this.dragStart = null }.bind(this), false);
 }
 
 Zoomer.zoomerInstance = null;
@@ -61,69 +54,82 @@ Zoomer.getZoomer = function(canvas)
 
 Zoomer.prototype.redraw = function()
 {
-	var p1 = this.context.transformedPoint(0,0);
+	var p1 = this.context.transformedPoint(0, 0);
 	var p2 = this.context.transformedPoint(this.canvas.width, this.canvas.height);
-	this.context.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
+	this.context.clearRect(p1.x, p1.y, p2.x - p1.x, p2.y - p1.y);
 	caveView.draw(grid);
 	var gridX = caveView.getGridX(this.lastX);
 	var gridY = caveView.getGridY(this.lastY);
 	caveView.drawCursor(gridX, gridY);
 }
 
-Zoomer.prototype.trackTransforms = function(ctx)
+Zoomer.prototype.trackTransforms = function(context)
 {
 	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
 	var xform = svg.createSVGMatrix();
-	ctx.getTransform = function(){ return xform; };
+	context.getTransform = function(){ return xform; };
 	
 	var savedTransforms = [];
-	var save = ctx.save;
-	ctx.save = function(){
-		savedTransforms.push(xform.translate(0,0));
-		return save.call(ctx);
-	};
-	var restore = ctx.restore;
-	ctx.restore = function(){
+	var save = context.save;
+	context.save = function()
+	{
+		savedTransforms.push(xform.translate(0, 0));
+		return save.call(context);
+	}
+	var restore = context.restore;
+	context.restore = function()
+	{
 		xform = savedTransforms.pop();
-		return restore.call(ctx);
-	};
-
-	var scale = ctx.scale;
-	ctx.scale = function(sx,sy){
-		xform = xform.scaleNonUniform(sx,sy);
-		return scale.call(ctx,sx,sy);
-	};
-	var rotate = ctx.rotate;
-	ctx.rotate = function(radians){
-		xform = xform.rotate(radians*180/Math.PI);
-		return rotate.call(ctx,radians);
-	};
-	var translate = ctx.translate;
-	ctx.translate = function(dx,dy){
-		xform = xform.translate(dx,dy);
-		return translate.call(ctx,dx,dy);
-	};
-	var transform = ctx.transform;
-	ctx.transform = function(a,b,c,d,e,f){
-		var m2 = svg.createSVGMatrix();
-		m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
-		xform = xform.multiply(m2);
-		return transform.call(ctx,a,b,c,d,e,f);
-	};
-	var setTransform = ctx.setTransform;
-	ctx.setTransform = function(a,b,c,d,e,f){
+		return restore.call(context);
+	}
+	var scale = context.scale;
+	context.scale = function(sx, sy)
+	{
+		xform = xform.scaleNonUniform(sx, sy);
+		return scale.call(context, sx, sy);
+	}
+	var rotate = context.rotate;
+	context.rotate = function(radians)
+	{
+		xform = xform.rotate(radians * 180 / Math.PI);
+		return rotate.call(context, radians);
+	}
+	var translate = context.translate;
+	context.translate = function(dx, dy)
+	{
+		xform = xform.translate(dx, dy);
+		return translate.call(context, dx, dy);
+	}
+	var transform = context.transform;
+	context.transform = function(a, b, c, d, e, f)
+	{
+		var matrix = svg.createSVGMatrix();
+		matrix.a = a;
+		matrix.b = b;
+		matrix.c = c;
+		matrix.d = d; 
+		matrix.e = e;
+		matrix.f = f;
+		xform = xform.multiply(matrix);
+		return transform.call(context, a, b, c, d, e, f);
+	}
+	var setTransform = context.setTransform;
+	context.setTransform = function(a, b, c, d, e, f)
+	{
 		xform.a = a;
 		xform.b = b;
 		xform.c = c;
 		xform.d = d;
 		xform.e = e;
 		xform.f = f;
-		return setTransform.call(ctx,a,b,c,d,e,f);
-	};
-	var pt = svg.createSVGPoint();
-	ctx.transformedPoint = function(x,y){
-		pt.x=x; pt.y=y;
-		return pt.matrixTransform(xform.inverse());
+		return setTransform.call(context, a, b, c, d, e, f);
+	}
+	var point = svg.createSVGPoint();
+	context.transformedPoint = function(x, y)
+	{
+		point.x = x; 
+		point.y = y;
+		return point.matrixTransform(xform.inverse());
 	}
 }
 
