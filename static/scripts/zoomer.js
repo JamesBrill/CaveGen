@@ -139,7 +139,9 @@ Zoomer.prototype.zoom = function(clicks)
 
 Zoomer.prototype.handleScroll = function(evt)
 {
-	var delta = evt.wheelDelta ? evt.wheelDelta / 40 : evt.detail ? -evt.detail : 0;
+	var delta = evt.wheelDelta ? 
+				evt.wheelDelta / 40 : 
+				(evt.detail ? -evt.detail : 0);
 	if (delta)
 	{ 
 		var newZoomLevel = this.zoomLevel + delta;
