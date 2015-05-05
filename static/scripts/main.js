@@ -9,6 +9,7 @@ var brushSize = 1;
 var lastUsedBrushSize = 0;
 var CAVE_DISPLAY_WIDTH = 1000;
 var CAVE_DISPLAY_HEIGHT = 800;
+var ZOOM_LIMIT = 19;
 var client;
 
 $(document).ready(function () 

@@ -143,9 +143,9 @@ Zoomer.prototype.handleScroll = function(evt)
 	if (delta)
 	{ 
 		var newZoomLevel = this.zoomLevel + delta;
-		if (newZoomLevel > 19)
+		if (newZoomLevel > ZOOM_LIMIT)
 		{
-			delta -= (newZoomLevel - 19);
+			delta -= (newZoomLevel - ZOOM_LIMIT);
 		}
 		if (newZoomLevel < 0)
 		{
