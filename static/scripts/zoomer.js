@@ -1,6 +1,5 @@
 function Zoomer(canvas) 
 {
-	this.zoomLevel = 0;
 	this.canvas = canvas;
 	this.context = canvas.getContext('2d');
 	this.lastX = this.canvas.width / 2;
@@ -133,13 +132,19 @@ Zoomer.prototype.trackTransforms = function(context)
 	}
 }
 
-Zoomer.prototype.zoom = function(clicks)
+Zoomer.prototype.zoom = function(delta)
 {
 	var point = this.context.transformedPoint(this.lastX, this.lastY);
-	this.context.translate(point.x, point.y);
-	var factor = Math.pow(1.1, clicks);
-	this.context.scale(factor, factor);
-	this.context.translate(-point.x, -point.y);
+	scalingFactor += (0.2 * delta);
+	if (scalingFactor < MIN_SCALING_FACTOR)
+	{
+		scalingFactor = MIN_SCALING_FACTOR;
+	}
+	if (scalingFactor > MAX_SCALING_FACTOR)
+	{
+		scalingFactor = MAX_SCALING_FACTOR;
+	}
+	caveView.tileSize = scalingFactor * caveView.unscaledTileSize;
 	this.redraw();
 }
 
@@ -150,17 +155,12 @@ Zoomer.prototype.handleScroll = function(evt)
 				(evt.detail ? -evt.detail : 0);
 	if (delta)
 	{ 
-		var newZoomLevel = this.zoomLevel + delta;
-		if (newZoomLevel > ZOOM_LIMIT)
+		var normalisedDelta = delta / Math.abs(delta);
+		if (isNaN(normalisedDelta))
 		{
-			delta -= (newZoomLevel - ZOOM_LIMIT);
+			normalisedDelta = 0;
 		}
-		if (newZoomLevel < 0)
-		{
-			delta -= newZoomLevel;
-		}
-		this.zoomLevel += delta;
-		this.zoom(delta);
+		this.zoom(normalisedDelta);
 	}
 	return evt.preventDefault() && false;
 }
@@ -185,9 +185,4 @@ Zoomer.prototype.enablePanning = function()
 Zoomer.prototype.disablePanning = function()
 {
 	this.panning = false;
-}
-
-Zoomer.prototype.resetZoomLevel = function()
-{
-	this.zoomLevel = 0;
 }

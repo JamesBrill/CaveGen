@@ -2,6 +2,7 @@ var CaveView = function(x, y, tileSize, border)
 {
 	this.location = { x: 0, y: 0 };
 	this.tileSize = tileSize;
+	this.unscaledTileSize = tileSize;
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
 	this.pixelWidth = CAVE_DISPLAY_WIDTH;
 	this.pixelHeight = CAVE_DISPLAY_HEIGHT;
