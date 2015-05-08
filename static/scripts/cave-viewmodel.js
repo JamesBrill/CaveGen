@@ -258,6 +258,7 @@ CaveViewModel.prototype.loadCave = function(caveName, caveString)
 	this.caveName(caveName);
 	this.caveWidth(grid.width);
 	this.caveHeight(grid.height);
+	scalingFactor = 1;
 	this.updateDimensions(grid);
 	this.changeController = new ChangeController();
 }
