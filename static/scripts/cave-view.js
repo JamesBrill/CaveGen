@@ -4,6 +4,14 @@ var CaveView = function(x, y, tileSize, border)
 	this.tileSize = tileSize;
 	this.unscaledTileSize = tileSize;
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
+	this.leftBorder = function()
+	{
+		return this.border.left * scalingFactor;	
+	}
+	this.topBorder = function()
+	{
+		return this.border.top * scalingFactor;	
+	}
 	this.pixelWidth = CAVE_DISPLAY_WIDTH;
 	this.pixelHeight = CAVE_DISPLAY_HEIGHT;
 	this.width = x;
@@ -38,24 +46,24 @@ CaveView.prototype.drawMeasuringGrid = function()
 	this.linePainter.setColour("#FFFFFF");
 	for (var i = 1; i < this.width; i++) 
 	{
-		var x = i * view.tileSize + view.border.left;
-		this.linePainter.plotVerticalLine(x, view.border.top + offset,  
-			view.border.top + view.height * view.tileSize - offset);
+		var x = i * view.tileSize + this.leftBorder();
+		this.linePainter.plotVerticalLine(x, view.topBorder() + offset,  
+			view.topBorder() + view.height * view.tileSize - offset);
 	}
 
 	for (var i = 1; i < this.height; i++) 
 	{
-		var y = i * view.tileSize + view.border.top;
-		this.linePainter.plotHorizontalLine(view.border.left + offset,  
-			view.border.left + view.width * view.tileSize - offset, y);
+		var y = i * view.tileSize + view.topBorder();
+		this.linePainter.plotHorizontalLine(view.leftBorder() + offset,  
+			view.leftBorder() + view.width * view.tileSize - offset, y);
 	}
 }
 
 CaveView.prototype.drawAtGridCoordinates = function(x, y, tile)
 {
 	var view = this;
-	var left = x * view.tileSize + view.border.left;
-	var top = y * view.tileSize + view.border.top;
+	var left = x * view.tileSize + view.leftBorder();
+	var top = y * view.tileSize + view.topBorder();
 	var size = view.tileSize;
 	if (tile.symbol == 'x')
 	{
@@ -88,14 +96,14 @@ CaveView.prototype.drawImage = function(left, top, size, fileName)
 CaveView.prototype.getGridX = function(pixelX)
 {
 	pixelX = this.zoomer.transformPixelX(pixelX);
-	pixelX -= this.border.left;
+	pixelX -= this.leftBorder();
 	return ((pixelX - (pixelX % this.tileSize)) / this.tileSize);   
 }
 
 CaveView.prototype.getGridY = function(pixelY)
 {
 	pixelY = this.zoomer.transformPixelY(pixelY);
-	pixelY -= this.border.top;	
+	pixelY -= this.topBorder();	
 	return ((pixelY - (pixelY % this.tileSize)) / this.tileSize);   
 }
 
@@ -119,14 +127,14 @@ CaveView.prototype.drawSquareOutline = function(column, row, colour, previousCur
 		colour = "#FFFFFF";
 	}
 	var squareSize = (previousCursorSize == undefined) ? brushSize : previousCursorSize;
-	var unboundedTop = (row - Math.floor(squareSize / 2)) * this.tileSize + this.border.top;
-	var unboundedLeft = (column - Math.floor(squareSize / 2)) * this.tileSize + this.border.left;
+	var unboundedTop = (row - Math.floor(squareSize / 2)) * this.tileSize + this.topBorder();
+	var unboundedLeft = (column - Math.floor(squareSize / 2)) * this.tileSize + this.leftBorder();
 	var unboundedBottom = unboundedTop + squareSize * this.tileSize;
 	var unboundedRight = unboundedLeft + squareSize * this.tileSize;
-	var top = Math.max(unboundedTop, this.border.top + this.tileSize);
-	var left = Math.max(unboundedLeft, this.border.left + this.tileSize);
-	var bottom = Math.min(unboundedBottom, this.border.top + this.tileSize * (this.height - 1));
-	var right = Math.min(unboundedRight, this.border.left + this.tileSize * (this.width - 1));
+	var top = Math.max(unboundedTop, this.topBorder() + this.tileSize);
+	var left = Math.max(unboundedLeft, this.leftBorder() + this.tileSize);
+	var bottom = Math.min(unboundedBottom, this.topBorder() + this.tileSize * (this.height - 1));
+	var right = Math.min(unboundedRight, this.leftBorder()  + this.tileSize * (this.width - 1));
 
 	this.linePainter.setColour(colour);
 	this.linePainter.plotVerticalLine(left, top, bottom);
