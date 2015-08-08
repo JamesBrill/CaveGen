@@ -138,35 +138,35 @@ Zoomer.prototype.trackTransforms = function(context)
 	}
 }
 
-Zoomer.prototype.zoom = function(delta)
+Zoomer.prototype.zoom = function(mouseWheelDelta)
 {
 	var oldScalingFactor = scalingFactor;
-	var deltaFactor;
-	if (delta >= 1)
+	var scalingCoefficient;
+	if (mouseWheelDelta >= 1)
 	{
-		deltaFactor = 1 + (0.2 * delta);
+		scalingCoefficient = 1 + (0.2 * mouseWheelDelta);
 	}
 	else
 	{
-		deltaFactor = 1 / (1 + (0.2 * -delta));
+		scalingCoefficient = 1 / (1 + (0.2 * -mouseWheelDelta));
 	}
-	scalingFactor *= deltaFactor;
+	scalingFactor *= scalingCoefficient;
 
 	if (scalingFactor < MIN_SCALING_FACTOR)
 	{
 		scalingFactor = MIN_SCALING_FACTOR;
-		deltaFactor = scalingFactor / oldScalingFactor;
+		scalingCoefficient = scalingFactor / oldScalingFactor;
 	}
 	if (scalingFactor > MAX_SCALING_FACTOR)
 	{
 		scalingFactor = MAX_SCALING_FACTOR;
-		deltaFactor = scalingFactor / oldScalingFactor;
+		scalingCoefficient = scalingFactor / oldScalingFactor;
 	}
 
 	var oldXContextMouseDistance = this.lastX - this.totalXTranslation;
 	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
-	var newXContextMouseDistance = deltaFactor * oldXContextMouseDistance;
-	var newYContextMouseDistance = deltaFactor * oldYContextMouseDistance;
+	var newXContextMouseDistance = scalingCoefficient * oldXContextMouseDistance;
+	var newYContextMouseDistance = scalingCoefficient * oldYContextMouseDistance;
 	var xDifference = newXContextMouseDistance - oldXContextMouseDistance;
 	var yDifference = newYContextMouseDistance - oldYContextMouseDistance;
 
