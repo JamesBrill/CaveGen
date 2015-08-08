@@ -46,7 +46,6 @@ Zoomer.zoomerInstance = null;
 
 Zoomer.getZoomer = function(canvas)
 {
-	var context = canvas.getContext('2d');
 	if (Zoomer.zoomerInstance == null)
 	{
 		Zoomer.zoomerInstance = new Zoomer(canvas);
