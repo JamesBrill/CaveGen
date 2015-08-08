@@ -25,6 +25,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.isMouseDown = false;
 	this.linePainter = new LinePainter(this.context);
 	this.zoomer = Zoomer.getZoomer(this.canvas);
+	scalingFactor = 1;
 }
 
 CaveView.prototype.draw = function(gridModel)
