@@ -4,6 +4,8 @@ function Zoomer(canvas)
 	this.context = canvas.getContext('2d');
 	this.lastX = this.canvas.width / 2;
 	this.lastY = this.canvas.height / 2;
+	this.totalXTranslation = 0;
+    this.totalYTranslation = 0;
 	this.dragStart;
 	this.dragged;
 	this.panning = false;
@@ -31,6 +33,8 @@ function Zoomer(canvas)
 		{
 			var point = this.context.transformedPoint(this.lastX, this.lastY);
 			this.context.translate(point.x - this.dragStart.x, point.y - this.dragStart.y);
+			this.totalXTranslation += (point.x - this.dragStart.x);
+			this.totalYTranslation += (point.y - this.dragStart.y);
 			this.redraw();
 		}
 	}.bind(this), false);
@@ -42,12 +46,15 @@ Zoomer.zoomerInstance = null;
 
 Zoomer.getZoomer = function(canvas)
 {
+	var context = canvas.getContext('2d');
 	if (Zoomer.zoomerInstance == null)
 	{
 		Zoomer.zoomerInstance = new Zoomer(canvas);
 	}
 	var context = Zoomer.zoomerInstance.context;
 	Zoomer.zoomerInstance.trackTransforms(context);
+	Zoomer.zoomerInstance.totalXTranslation = 0;
+	Zoomer.zoomerInstance.totalYTranslation = 0;
 	return Zoomer.zoomerInstance;
 }
 
@@ -134,16 +141,40 @@ Zoomer.prototype.trackTransforms = function(context)
 
 Zoomer.prototype.zoom = function(delta)
 {
-	var point = this.context.transformedPoint(this.lastX, this.lastY);
-	scalingFactor += (0.2 * delta);
+	var oldScalingFactor = scalingFactor;
+	var deltaFactor;
+	if (delta >= 1)
+	{
+		deltaFactor = 1 + (0.2 * delta);
+	}
+	else
+	{
+		deltaFactor = 1 / (1 + (0.2 * -delta));
+	}
+	scalingFactor *= deltaFactor;
+
 	if (scalingFactor < MIN_SCALING_FACTOR)
 	{
 		scalingFactor = MIN_SCALING_FACTOR;
+		deltaFactor = scalingFactor / oldScalingFactor;
 	}
 	if (scalingFactor > MAX_SCALING_FACTOR)
 	{
 		scalingFactor = MAX_SCALING_FACTOR;
+		deltaFactor = scalingFactor / oldScalingFactor;
 	}
+
+	var oldXContextMouseDistance = this.lastX - this.totalXTranslation;
+	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
+	var newXContextMouseDistance = deltaFactor * oldXContextMouseDistance;
+	var newYContextMouseDistance = deltaFactor * oldYContextMouseDistance;
+	var xDifference = newXContextMouseDistance - oldXContextMouseDistance;
+	var yDifference = newYContextMouseDistance - oldYContextMouseDistance;
+
+	this.context.translate(-xDifference, -yDifference);
+	this.totalXTranslation -= xDifference;
+	this.totalYTranslation -= yDifference;
+
 	caveView.tileSize = scalingFactor * caveView.unscaledTileSize;
 	this.redraw();
 }
