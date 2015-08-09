@@ -244,10 +244,8 @@ CaveViewModel.prototype.generateCave = function()
 {
 	if (this.validateDimensions())
 	{	
-		scalingFactor = 1;
 		this.changeController.addGenerateCaveChange();
 		this.updateDimensions();
-		caveView.setMaxScalingFactor();
 		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Width", this.caveWidth()]);
 		_gaq.push(['_trackEvent', 'Generation', 'Generate Cave', "Height", this.caveHeight()]);
 	}
@@ -259,9 +257,7 @@ CaveViewModel.prototype.loadCave = function(caveName, caveString)
 	this.caveName(caveName);
 	this.caveWidth(grid.width);
 	this.caveHeight(grid.height);
-	scalingFactor = 1;
 	this.updateDimensions(grid);
-	caveView.setMaxScalingFactor();
 	this.changeController = new ChangeController();
 }
 

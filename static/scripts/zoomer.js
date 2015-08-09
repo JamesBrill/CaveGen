@@ -149,13 +149,13 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 		caveView.scalingFactor *= (1 / (1 + (0.2 * -mouseWheelDelta)));
 	}
 
-	if (caveView.scalingFactor < MIN_SCALING_FACTOR)
+	if (caveView.scalingFactor < caveView.MIN_SCALING_FACTOR)
 	{
-		caveView.scalingFactor = MIN_SCALING_FACTOR;
+		caveView.scalingFactor = caveView.MIN_SCALING_FACTOR;
 	}
-	if (caveView.scalingFactor > MAX_SCALING_FACTOR)
+	if (caveView.scalingFactor > caveView.MAX_SCALING_FACTOR)
 	{
-		caveView.scalingFactor = MAX_SCALING_FACTOR;
+		caveView.scalingFactor = caveView.MAX_SCALING_FACTOR;
 	}
 
 	var tilesBetweenMouseAndContextLeft = this.getNumberOfTilesFromContextLeft(this.lastX);

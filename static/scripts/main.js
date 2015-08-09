@@ -9,8 +9,6 @@ var brushSize = 1;
 var lastUsedBrushSize = 0;
 var CAVE_DISPLAY_WIDTH = 1000;
 var CAVE_DISPLAY_HEIGHT = 800;
-var MIN_SCALING_FACTOR = 1;
-var MAX_SCALING_FACTOR = 3;
 var client;
 
 $(document).ready(function () 
