@@ -159,3 +159,21 @@ CaveView.prototype.setMaxScalingFactor = function()
 	var largestDimension = Math.max(this.width, this.height);
 	return 3 + (largestDimension / 10) * 1.5;
 }
+
+CaveView.prototype.multiplyScalingFactor = function(coefficient)
+{
+	this.scalingFactor *= coefficient;
+	this.boundScalingFactor();
+}
+
+CaveView.prototype.boundScalingFactor = function()
+{
+	if (this.scalingFactor < this.MIN_SCALING_FACTOR)
+	{
+		this.scalingFactor = this.MIN_SCALING_FACTOR;
+	}
+	if (this.scalingFactor > this.MAX_SCALING_FACTOR)
+	{
+		this.scalingFactor = this.MAX_SCALING_FACTOR;
+	}
+}

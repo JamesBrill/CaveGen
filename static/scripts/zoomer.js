@@ -142,20 +142,11 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 {
 	if (mouseWheelDelta >= 1)
 	{
-		caveView.scalingFactor *= (1 + (0.2 * mouseWheelDelta));
+		caveView.multiplyScalingFactor(1 + (0.2 * mouseWheelDelta));
 	}
 	else
 	{
-		caveView.scalingFactor *= (1 / (1 + (0.2 * -mouseWheelDelta)));
-	}
-
-	if (caveView.scalingFactor < caveView.MIN_SCALING_FACTOR)
-	{
-		caveView.scalingFactor = caveView.MIN_SCALING_FACTOR;
-	}
-	if (caveView.scalingFactor > caveView.MAX_SCALING_FACTOR)
-	{
-		caveView.scalingFactor = caveView.MAX_SCALING_FACTOR;
+		caveView.multiplyScalingFactor(1 / (1 + (0.2 * -mouseWheelDelta)));
 	}
 
 	var tilesBetweenMouseAndContextLeft = this.getNumberOfTilesFromContextLeft(this.lastX);
