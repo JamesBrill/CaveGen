@@ -26,6 +26,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.linePainter = new LinePainter(this.context);
 	this.zoomer = Zoomer.getZoomer(this.canvas);
 	scalingFactor = 1;
+	MAX_SCALING_FACTOR = this.setMaxScalingFactor();
 }
 
 CaveView.prototype.draw = function(gridModel)
@@ -150,4 +151,10 @@ CaveView.prototype.paintPositions = function(paintedPositions)
 	{
 		this.drawAtGridCoordinates(paintedPositions[i].x, paintedPositions[i].y, paintedPositions[i].brush);
 	}
+}
+
+CaveView.prototype.setMaxScalingFactor = function()
+{
+	var largestDimension = Math.max(this.width, this.height);
+	return 3 + (largestDimension / 10) * 1.5;
 }
