@@ -12,7 +12,6 @@ var CAVE_DISPLAY_HEIGHT = 800;
 var MIN_SCALING_FACTOR = 1;
 var MAX_SCALING_FACTOR = 3;
 var client;
-var scalingFactor = 1;
 
 $(document).ready(function () 
 {  

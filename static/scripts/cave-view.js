@@ -6,11 +6,11 @@ var CaveView = function(x, y, tileSize, border)
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
 	this.leftBorder = function()
 	{
-		return Math.round(this.border.left * scalingFactor);	
+		return Math.round(this.border.left * this.scalingFactor);	
 	}
 	this.topBorder = function()
 	{
-		return Math.round(this.border.top * scalingFactor);	
+		return Math.round(this.border.top * this.scalingFactor);	
 	}
 	this.pixelWidth = CAVE_DISPLAY_WIDTH;
 	this.pixelHeight = CAVE_DISPLAY_HEIGHT;
@@ -25,7 +25,7 @@ var CaveView = function(x, y, tileSize, border)
 	this.isMouseDown = false;
 	this.linePainter = new LinePainter(this.context);
 	this.zoomer = Zoomer.getZoomer(this.canvas);
-	scalingFactor = 1;
+	this.scalingFactor = 1;
 	MAX_SCALING_FACTOR = this.setMaxScalingFactor();
 }
 

@@ -142,25 +142,25 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 {
 	if (mouseWheelDelta >= 1)
 	{
-		scalingFactor *= (1 + (0.2 * mouseWheelDelta));
+		caveView.scalingFactor *= (1 + (0.2 * mouseWheelDelta));
 	}
 	else
 	{
-		scalingFactor *= (1 / (1 + (0.2 * -mouseWheelDelta)));
+		caveView.scalingFactor *= (1 / (1 + (0.2 * -mouseWheelDelta)));
 	}
 
-	if (scalingFactor < MIN_SCALING_FACTOR)
+	if (caveView.scalingFactor < MIN_SCALING_FACTOR)
 	{
-		scalingFactor = MIN_SCALING_FACTOR;
+		caveView.scalingFactor = MIN_SCALING_FACTOR;
 	}
-	if (scalingFactor > MAX_SCALING_FACTOR)
+	if (caveView.scalingFactor > MAX_SCALING_FACTOR)
 	{
-		scalingFactor = MAX_SCALING_FACTOR;
+		caveView.scalingFactor = MAX_SCALING_FACTOR;
 	}
 
 	var tilesBetweenMouseAndContextLeft = this.getNumberOfTilesFromContextLeft(this.lastX);
 	var tilesBetweenMouseAndContextTop = this.getNumberOfTilesFromContextTop(this.lastY);
-	caveView.tileSize = Math.round(scalingFactor * caveView.unscaledTileSize);
+	caveView.tileSize = Math.round(caveView.scalingFactor * caveView.unscaledTileSize);
 	var oldXContextMouseDistance = this.lastX - this.totalXTranslation;
 	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
 	var newXContextMouseDistance = caveView.tileSize * tilesBetweenMouseAndContextLeft;
