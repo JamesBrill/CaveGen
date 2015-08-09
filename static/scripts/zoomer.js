@@ -167,14 +167,14 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
 	var newXContextMouseDistance = scalingCoefficient * oldXContextMouseDistance;
 	var newYContextMouseDistance = scalingCoefficient * oldYContextMouseDistance;
-	var xDifference = newXContextMouseDistance - oldXContextMouseDistance;
-	var yDifference = newYContextMouseDistance - oldYContextMouseDistance;
+	var xDifference = Math.floor(newXContextMouseDistance - oldXContextMouseDistance);
+	var yDifference = Math.floor(newYContextMouseDistance - oldYContextMouseDistance);
 
 	this.context.translate(-xDifference, -yDifference);
 	this.totalXTranslation -= xDifference;
 	this.totalYTranslation -= yDifference;
 
-	caveView.tileSize = scalingFactor * caveView.unscaledTileSize;
+	caveView.tileSize = Math.floor(scalingFactor * caveView.unscaledTileSize);
 	this.redraw();
 }
 

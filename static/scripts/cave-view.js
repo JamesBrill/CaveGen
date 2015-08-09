@@ -6,11 +6,11 @@ var CaveView = function(x, y, tileSize, border)
 	this.border = (border == undefined) ? { top: 0, left: 0 } : border;
 	this.leftBorder = function()
 	{
-		return this.border.left * scalingFactor;	
+		return Math.floor(this.border.left * scalingFactor);	
 	}
 	this.topBorder = function()
 	{
-		return this.border.top * scalingFactor;	
+		return Math.floor(this.border.top * scalingFactor);	
 	}
 	this.pixelWidth = CAVE_DISPLAY_WIDTH;
 	this.pixelHeight = CAVE_DISPLAY_HEIGHT;
