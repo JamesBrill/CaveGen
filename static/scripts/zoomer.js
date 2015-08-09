@@ -140,7 +140,6 @@ Zoomer.prototype.trackTransforms = function(context)
 
 Zoomer.prototype.zoom = function(mouseWheelDelta)
 {
-	var oldScalingFactor = scalingFactor;
 	var scalingCoefficient;
 	if (mouseWheelDelta >= 1)
 	{
