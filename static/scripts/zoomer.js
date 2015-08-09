@@ -155,18 +155,19 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 	if (scalingFactor < MIN_SCALING_FACTOR)
 	{
 		scalingFactor = MIN_SCALING_FACTOR;
-		scalingCoefficient = scalingFactor / oldScalingFactor;
 	}
 	if (scalingFactor > MAX_SCALING_FACTOR)
 	{
 		scalingFactor = MAX_SCALING_FACTOR;
-		scalingCoefficient = scalingFactor / oldScalingFactor;
 	}
 
+	var tilesBetweenMouseAndContextLeft = this.getNumberOfTilesFromContextLeft(this.lastX);
+	var tilesBetweenMouseAndContextTop = this.getNumberOfTilesFromContextTop(this.lastY);
+	caveView.tileSize = Math.floor(scalingFactor * caveView.unscaledTileSize);
 	var oldXContextMouseDistance = this.lastX - this.totalXTranslation;
 	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
-	var newXContextMouseDistance = scalingCoefficient * oldXContextMouseDistance;
-	var newYContextMouseDistance = scalingCoefficient * oldYContextMouseDistance;
+	var newXContextMouseDistance = caveView.tileSize * tilesBetweenMouseAndContextLeft;
+	var newYContextMouseDistance = caveView.tileSize * tilesBetweenMouseAndContextTop;
 	var xDifference = Math.floor(newXContextMouseDistance - oldXContextMouseDistance);
 	var yDifference = Math.floor(newYContextMouseDistance - oldYContextMouseDistance);
 
@@ -174,8 +175,19 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 	this.totalXTranslation -= xDifference;
 	this.totalYTranslation -= yDifference;
 
-	caveView.tileSize = Math.floor(scalingFactor * caveView.unscaledTileSize);
 	this.redraw();
+}
+
+Zoomer.prototype.getNumberOfTilesFromContextLeft = function(mouseX)
+{
+	var distanceFromContextLeft = mouseX - this.totalXTranslation;
+	return distanceFromContextLeft / caveView.tileSize;
+}
+
+Zoomer.prototype.getNumberOfTilesFromContextTop = function(mouseY)
+{
+	var distanceFromContextTop = mouseY - this.totalYTranslation;
+	return distanceFromContextTop / caveView.tileSize;
 }
 
 Zoomer.prototype.handleScroll = function(evt)
