@@ -151,7 +151,7 @@ Zoomer.prototype.zoom = function(mouseWheelDelta)
 
 	var tilesBetweenMouseAndContextLeft = this.getNumberOfTilesFromContextLeft(this.lastX);
 	var tilesBetweenMouseAndContextTop = this.getNumberOfTilesFromContextTop(this.lastY);
-	caveView.tileSize = Math.round(caveView.scalingFactor * caveView.unscaledTileSize);
+	caveView.scaleTileSize();
 	var oldXContextMouseDistance = this.lastX - this.totalXTranslation;
 	var oldYContextMouseDistance = this.lastY - this.totalYTranslation;
 	var newXContextMouseDistance = caveView.tileSize * tilesBetweenMouseAndContextLeft;

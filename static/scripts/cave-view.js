@@ -177,3 +177,8 @@ CaveView.prototype.boundScalingFactor = function()
 		this.scalingFactor = this.MAX_SCALING_FACTOR;
 	}
 }
+
+CaveView.prototype.scaleTileSize = function()
+{
+	this.tileSize = Math.round(this.scalingFactor * this.unscaledTileSize);
+}
