@@ -129,6 +129,8 @@ CaveView.prototype.drawSquareOutline = function(column, row, colour, previousCur
 	{
 		colour = "#FFFFFF";
 	}
+	column = Math.min(Math.max(column, 1), this.width - 2);
+	row = Math.min(Math.max(row, 1), this.height - 2);
 	var squareSize = (previousCursorSize == undefined) ? brushSize : previousCursorSize;
 	var unboundedTop = (row - Math.floor(squareSize / 2)) * this.tileSize + this.topBorder();
 	var unboundedLeft = (column - Math.floor(squareSize / 2)) * this.tileSize + this.leftBorder();

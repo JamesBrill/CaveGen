@@ -65,7 +65,7 @@ Zoomer.prototype.redraw = function()
 	caveView.draw(grid);
 	var gridX = caveView.getGridX(this.lastX);
 	var gridY = caveView.getGridY(this.lastY);
-	caveView.drawCursor(gridX, gridY);
+	caveViewModel.updateCursor(gridX, gridY);
 }
 
 Zoomer.prototype.trackTransforms = function(context)
