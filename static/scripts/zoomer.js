@@ -12,7 +12,11 @@ function Zoomer(canvas)
 	this.canvas.addEventListener('mousewheel', function(evt) { this.handleScroll(evt) }.bind(this), false);
 
 	this.canvas.addEventListener('mousedown', function(evt)
-	{
+	{	
+		if (evt.button == 1)
+		{
+			this.enablePanning();
+		}
 		if (this.panning)
 		{
 			document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
@@ -20,6 +24,7 @@ function Zoomer(canvas)
 			this.lastY = evt.offsetY || (evt.pageY - this.canvas.offsetTop);
 			this.dragStart = this.context.transformedPoint(this.lastX, this.lastY);
 		}
+
 	}.bind(this), false);
 
 	this.canvas.addEventListener('mousemove', function(evt)
@@ -36,7 +41,14 @@ function Zoomer(canvas)
 		}
 	}.bind(this), false);
 
-	this.canvas.addEventListener('mouseup', function(evt) { this.dragStart = null }.bind(this), false);
+	this.canvas.addEventListener('mouseup', function(evt) 
+	{ 
+		if (evt.button == 1)
+		{
+			this.disablePanning();
+		}
+		this.dragStart = null; 
+	}.bind(this), false);
 }
 
 Zoomer.zoomerInstance = null;
