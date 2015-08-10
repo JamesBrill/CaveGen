@@ -35,6 +35,7 @@ EventListenerBuilder.addKeyboardEventListeners = function()
 {
 	EventListenerBuilder.addCommandKeyBindings();
 	EventListenerBuilder.addTileKeyBindings();
+	EventListenerBuilder.addPanningKeyBindings();
 }
 
 EventListenerBuilder.addCommandKeyBindings = function()
@@ -59,4 +60,47 @@ EventListenerBuilder.addTileKeyBindings = function()
 			currentBrush = TileUtils.getTileFromSymbol(keyPressed);
 		}
 	});	
+}
+
+EventListenerBuilder.addPanningKeyBindings = function()
+{
+	window.onkeydown = function(e)
+	{
+		if (e.which == 37)
+		{
+			caveView.zoomer.startPanningLeft();
+		}
+		if (e.which == 38)
+		{
+			caveView.zoomer.startPanningUp();
+		}
+		if (e.which == 39)
+		{
+			caveView.zoomer.startPanningRight();
+		}
+		if (e.which == 40)
+		{
+			caveView.zoomer.startPanningDown();
+		}
+	}
+
+	window.onkeyup = function(e)
+	{
+		if (e.which == 37)
+		{
+			caveView.zoomer.stopPanningLeft();
+		}
+		if (e.which == 38)
+		{
+			caveView.zoomer.stopPanningUp();
+		}
+		if (e.which == 39)
+		{
+			caveView.zoomer.stopPanningRight();
+		}
+		if (e.which == 40)
+		{
+			caveView.zoomer.stopPanningDown();
+		}
+	}
 }

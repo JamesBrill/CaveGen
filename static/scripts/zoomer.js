@@ -8,6 +8,10 @@ function Zoomer(canvas)
     this.totalYTranslation = 0;
 	this.dragStart;
 	this.panning = false;
+	this.panningLeft = false;
+	this.panningUp = false;
+	this.panningRight = false;
+	this.panningDown = false;
 	this.canvas.addEventListener('DOMMouseScroll', function(evt) { this.handleScroll(evt) }.bind(this), false);
 	this.canvas.addEventListener('mousewheel', function(evt) { this.handleScroll(evt) }.bind(this), false);
 
@@ -224,4 +228,140 @@ Zoomer.prototype.enablePanning = function()
 Zoomer.prototype.disablePanning = function()
 {
 	this.panning = false;
+}
+
+Zoomer.prototype.panLeft = function()
+{
+	if (this.totalXTranslation <= (caveView.tileSize * (caveView.width - 2)))
+	{
+		var shift = caveView.tileSize; 
+		this.context.translate(shift, 0);
+		this.totalXTranslation += shift;
+		this.redraw();
+	}
+}
+
+Zoomer.prototype.panRight = function()
+{
+	if (this.totalXTranslation >= -(caveView.tileSize * (caveView.width - 2)))
+	{
+		var shift = -caveView.tileSize; 
+		this.context.translate(shift, 0);
+		this.totalXTranslation += shift;
+		this.redraw();
+	}
+}
+
+Zoomer.prototype.panUp = function()
+{
+	if (this.totalYTranslation <= (caveView.tileSize * (caveView.height - 2)))
+	{
+		var shift = caveView.tileSize; 
+		this.context.translate(0, shift);
+		this.totalYTranslation += shift;
+		this.redraw();
+	}
+}
+
+Zoomer.prototype.panDown = function()
+{
+	if (this.totalYTranslation >= -(caveView.tileSize * (caveView.height - 2)))
+	{
+		var shift = -caveView.tileSize; 
+		this.context.translate(0, shift);
+		this.totalYTranslation += shift;
+		this.redraw();
+	}
+}
+
+Zoomer.prototype.startPanningLeft = function()
+{
+	if (!this.panningLeft)
+	{
+		setTimeout(function() { this.continuePanningLeft(); }.bind(this), 10);
+	}
+	this.panningLeft = true;
+}
+
+Zoomer.prototype.continuePanningLeft = function()
+{
+	if (this.panningLeft)
+	{
+		this.panLeft();
+		setTimeout(function() { this.continuePanningLeft(); }.bind(this), 10);
+	}
+}
+
+Zoomer.prototype.stopPanningLeft = function()
+{
+	this.panningLeft = false;
+}
+
+Zoomer.prototype.startPanningUp = function()
+{
+	if (!this.panningUp)
+	{
+		setTimeout(function() { this.continuePanningUp(); }.bind(this), 10);
+	}
+	this.panningUp = true;
+}
+
+Zoomer.prototype.continuePanningUp = function()
+{
+	if (this.panningUp)
+	{
+		this.panUp();
+		setTimeout(function() { this.continuePanningUp(); }.bind(this), 10);
+	}
+}
+
+Zoomer.prototype.stopPanningUp = function()
+{
+	this.panningUp = false;
+}
+
+Zoomer.prototype.startPanningRight = function()
+{
+	if (!this.panningRight)
+	{
+		setTimeout(function() { this.continuePanningRight(); }.bind(this), 10);
+	}
+	this.panningRight = true;
+}
+
+Zoomer.prototype.continuePanningRight = function()
+{
+	if (this.panningRight)
+	{
+		this.panRight();
+		setTimeout(function() { this.continuePanningRight(); }.bind(this), 10);
+	}
+}
+
+Zoomer.prototype.stopPanningRight = function()
+{
+	this.panningRight = false;
+}
+
+Zoomer.prototype.startPanningDown = function()
+{
+	if (!this.panningDown)
+	{
+		setTimeout(function() { this.continuePanningDown(); }.bind(this), 10);
+	}
+	this.panningDown = true;
+}
+
+Zoomer.prototype.continuePanningDown = function()
+{
+	if (this.panningDown)
+	{
+		this.panDown();
+		setTimeout(function() { this.continuePanningDown(); }.bind(this), 10);
+	}
+}
+
+Zoomer.prototype.stopPanningDown = function()
+{
+	this.panningDown = false;
 }
