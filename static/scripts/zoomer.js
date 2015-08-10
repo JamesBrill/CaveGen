@@ -7,7 +7,6 @@ function Zoomer(canvas)
 	this.totalXTranslation = 0;
     this.totalYTranslation = 0;
 	this.dragStart;
-	this.dragged;
 	this.panning = false;
 	this.canvas.addEventListener('DOMMouseScroll', function(evt) { this.handleScroll(evt) }.bind(this), false);
 	this.canvas.addEventListener('mousewheel', function(evt) { this.handleScroll(evt) }.bind(this), false);
@@ -20,7 +19,6 @@ function Zoomer(canvas)
 			this.lastX = evt.offsetX || (evt.pageX - this.canvas.offsetLeft);
 			this.lastY = evt.offsetY || (evt.pageY - this.canvas.offsetTop);
 			this.dragStart = this.context.transformedPoint(this.lastX, this.lastY);
-			this.dragged = false;
 		}
 	}.bind(this), false);
 
@@ -28,7 +26,6 @@ function Zoomer(canvas)
 	{
 		this.lastX = evt.offsetX || (evt.pageX - this.canvas.offsetLeft);
 		this.lastY = evt.offsetY || (evt.pageY - this.canvas.offsetTop);
-		this.dragged = true;
 		if (this.dragStart)
 		{
 			var point = this.context.transformedPoint(this.lastX, this.lastY);
