@@ -45,6 +45,12 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
  * **5** Enemy 5
  * **c** Clone
  * **0** Shockwave Error
+ 
+## Zooming and panning
+You can zoom in and out by rolling your mousewheel (Mouse3). You can pan across the cave grid in three different ways:
+* Ctrl + left-click and drag
+* Click the mousewheel and drag
+* Arrow keys
 
 ## Feature backlog
 * Fix graphical glitches in larger/asymmetric caves
@@ -57,11 +63,13 @@ But for now, the CaveGen web app is just a crude device for quickly making a cav
 * Option to toggle terrain images/grey rectangles 
 
 ## Coming next!
-* Zoom and pan
 * Apply jQuery styles to the UI controls
 * Align the UI controls more neatly
 
 ## Changelog
+#### Version 1.1.3
+* Zoom and pan
+
 #### Version 1.1.2 
 * Default cursor disabled when mousing over canvas
 * Spike Filler brush: any space with terrain above or below it is replaced with an appropriate spike
