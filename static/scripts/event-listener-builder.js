@@ -11,9 +11,12 @@ EventListenerBuilder.addMouseEventListeners = function()
 
 	caveView.canvas.addEventListener("mousedown", function (event) 
 	{
-		var pixelX = event.pageX - this.offsetLeft;
-		var pixelY = event.pageY - this.offsetTop;
-		caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);        
+		if (!caveView.zoomer.panning)
+		{
+			var pixelX = event.pageX - this.offsetLeft;
+			var pixelY = event.pageY - this.offsetTop;
+			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);     
+		}   
 	});
 
 	caveView.canvas.addEventListener("mouseup", function (event) 
@@ -32,6 +35,7 @@ EventListenerBuilder.addKeyboardEventListeners = function()
 {
 	EventListenerBuilder.addCommandKeyBindings();
 	EventListenerBuilder.addTileKeyBindings();
+	EventListenerBuilder.addPanningKeyBindings();
 }
 
 EventListenerBuilder.addCommandKeyBindings = function()
@@ -40,6 +44,8 @@ EventListenerBuilder.addCommandKeyBindings = function()
 	$(document).bind('keydown', 'shift+y', function() { caveViewModel.redo(); });
 	$(document).bind('keydown', 'shift+g', function() { caveViewModel.generateCave(); });
 	$(document).bind('keydown', 'shift+s', function() { caveStorage.storeCave(); });	
+	$(document).bind('keydown', 'ctrl', function() { caveView.zoomer.enablePanning(); });	
+	$(document).bind('keyup', 'ctrl', function() { caveView.zoomer.disablePanning(); });
 }
 
 EventListenerBuilder.addTileKeyBindings = function()
@@ -54,4 +60,47 @@ EventListenerBuilder.addTileKeyBindings = function()
 			currentBrush = TileUtils.getTileFromSymbol(keyPressed);
 		}
 	});	
+}
+
+EventListenerBuilder.addPanningKeyBindings = function()
+{
+	window.onkeydown = function(e)
+	{
+		if (e.which == 37)
+		{
+			caveView.zoomer.startPanningLeft();
+		}
+		if (e.which == 38)
+		{
+			caveView.zoomer.startPanningUp();
+		}
+		if (e.which == 39)
+		{
+			caveView.zoomer.startPanningRight();
+		}
+		if (e.which == 40)
+		{
+			caveView.zoomer.startPanningDown();
+		}
+	}
+
+	window.onkeyup = function(e)
+	{
+		if (e.which == 37)
+		{
+			caveView.zoomer.stopPanningLeft();
+		}
+		if (e.which == 38)
+		{
+			caveView.zoomer.stopPanningUp();
+		}
+		if (e.which == 39)
+		{
+			caveView.zoomer.stopPanningRight();
+		}
+		if (e.which == 40)
+		{
+			caveView.zoomer.stopPanningDown();
+		}
+	}
 }

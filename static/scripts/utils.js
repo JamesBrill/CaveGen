@@ -9,18 +9,20 @@ var twoDimensionalArray = function(x, y)
 
 var getBorder = function(caveWidth, caveHeight)
 {
-	var widthHeightRatio = caveWidth / caveHeight;	
+	var displayWidthHeightRatio = CAVE_DISPLAY_WIDTH / CAVE_DISPLAY_HEIGHT;
+	var caveWidthHeightRatio = caveWidth / caveHeight;	
+	var widthHeightRatio = caveWidthHeightRatio / displayWidthHeightRatio;
 	var border;
 	if (widthHeightRatio > 1)
 	{
-		var displayHeight = CAVE_DISPLAY_SIZE / widthHeightRatio;
-		var borderThickness = Math.floor((CAVE_DISPLAY_SIZE - displayHeight) / 2);
+		var displayHeight = CAVE_DISPLAY_HEIGHT / widthHeightRatio;
+		var borderThickness = Math.floor((CAVE_DISPLAY_HEIGHT - displayHeight) / 2);
 		border = { top: borderThickness, left: 0 };
 	}
 	else
 	{
-		var displayWidth = CAVE_DISPLAY_SIZE * widthHeightRatio;
-		var borderThickness = Math.floor((CAVE_DISPLAY_SIZE - displayWidth) / 2);
+		var displayWidth = CAVE_DISPLAY_WIDTH * widthHeightRatio;
+		var borderThickness = Math.floor((CAVE_DISPLAY_WIDTH - displayWidth) / 2);
 		border = { top: 0, left: borderThickness };
 	}
 	return border;
@@ -28,8 +30,13 @@ var getBorder = function(caveWidth, caveHeight)
 
 var getTileSize = function(caveWidth, caveHeight)
 {
-	var largestDimension = Math.max(caveWidth, caveHeight);
-	return Math.floor(CAVE_DISPLAY_SIZE / largestDimension); 
+	var displayWidthHeightRatio = CAVE_DISPLAY_WIDTH / CAVE_DISPLAY_HEIGHT;
+	var caveWidthHeightRatio = caveWidth / caveHeight;	
+	if (caveWidthHeightRatio > displayWidthHeightRatio)
+	{
+		return Math.floor(CAVE_DISPLAY_WIDTH / caveWidth);
+	}
+	return Math.floor(CAVE_DISPLAY_HEIGHT / caveHeight);
 }
 
 var mergeTileChanges = function(first, second)

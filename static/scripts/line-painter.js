@@ -29,12 +29,16 @@ LinePainter.prototype.hexToRgb = function(hex)
 
 LinePainter.prototype.plotVerticalLine = function(x, y0, y1)
 {
-	caveView.context.fillRect(x, y0, 1, y1 - y0 + 1);	
+	var bigY = Math.max(y0, y1);
+	var littleY = Math.min(y0, y1);
+	caveView.context.fillRect(x, littleY, 1, bigY - littleY + 1);	
 }
 
 LinePainter.prototype.plotHorizontalLine = function(x0, x1, y)
 {
-	caveView.context.fillRect(x0, y, x1 - x0 + 1, 1);	
+	var bigX = Math.max(x0, x1);
+	var littleX = Math.min(x0, x1);
+	caveView.context.fillRect(littleX, y, bigX - littleX + 1, 1);	
 }
 
 LinePainter.prototype.plotLine = function(x0, y0, x1, y1)

@@ -7,15 +7,19 @@ var caveStorage;
 var currentBrush;
 var brushSize = 1;
 var lastUsedBrushSize = 0;
-var CAVE_DISPLAY_SIZE = 800;
+var CAVE_DISPLAY_WIDTH = 1000;
+var CAVE_DISPLAY_HEIGHT = 800;
 var client;
 
 $(document).ready(function () 
 {  
 	var init = function()
 	{
+		ImagePreloader.preloadImages();
 		grid = new Cave(width, height);
-		caveView = new CaveView(width, height, 20);
+		var tileSize = getTileSize(width, height);	
+		var border = getBorder(width, height);
+		caveView = new CaveView(width, height, tileSize, border);
 		caveView.draw(grid); 
 		caveViewModel = new CaveViewModel();
 		caveStorage = new CaveStorage();
