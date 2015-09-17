@@ -47,47 +47,40 @@
 			})();
 		</script>
 	</head>
-	<body style="background-color: black">
-		<div style="display: inline-block; vertical-align:top">
-			<div id="cave-settings" style="width: 250px">
-				<label for="caveName"><font color="white">Cave name</font></label>
-				<input type="text" id="caveName" data-bind="textInput: caveName" style="width: 250px"/>
+	<body>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">CaveGen</a>
+		    </div>
+		  </div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3" style="background: black">
+					<div id="cave-settings" style="width: 250px">
+						<label for="brushSize"><font color="white">Brush size: </font></label>
+						<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; color:white; margin-bottom: 5px; background-color: black">
+						<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
 
-				<label for="width"><font color="white">Width</font></label>
-				<input type="text" id="width" data-bind="textInput: caveWidth" style="width: 250px"/>
+						<button id="undo" class="clip_button" data-bind="click: function() { undo() }">Undo</button>
 
-				<label for="height"><font color="white">Height</font></label>
-				<input type="text" id="height" data-bind="textInput: caveHeight" style="width: 250px"/>
+						<button id="redo" class="clip_button" data-bind="click: function() { redo() }">Redo</button>
 
-				<label for="brushSize"><font color="white">Brush size: </font></label>
-				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; color:white; margin-bottom: 5px; background-color: black">
-				<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+						<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
+					</div>
 
-				<button id="generate" class="clip_button" data-bind="click: function() { generateCave() }"
-										style="margin-right:100px">Generate cave</button>
-
-				<button id="undo" class="clip_button" data-bind="click: function() { undo() }">Undo</button>
-
-				<button id="redo" class="clip_button" data-bind="click: function() { redo() }">Redo</button>
-
-				<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
-			</div>
-
-			<div id="cave-storage" style="width: 250px">
-				<select name="load" id="load" data-bind='options: caveNames, value: selectedCaveName, optionsCaption: "Load"' style="width: 250px"></select>
-
-				<button id="save" class="clip_button" data-bind="click: function() { storeCave() }">Save</button>
-			</div>
-
-			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
-				<div style="float: left">
-					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
+					<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
+						<div style="float: left">
+							<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
+						</div>
+					</div>
 				</div>
-			</div>
+				<div class="col-md-9" style="background: black">
+					<div id="canvas-container" style="display: inline-block">
+						<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
+					</div> 
+				</div>
 		</div>
-
-		<div id="canvas-container" style="display: inline-block">
-			<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
-		</div> 
 	</body>
 </html>
