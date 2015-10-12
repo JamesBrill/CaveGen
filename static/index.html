@@ -58,12 +58,18 @@
 		<div class="container-fluid">
 			<div class="col-md-3" style="background: black">
 				<div id="cave-settings" style="width: 250px">
-					<span id="brushSize" class="label label-default"><font id="brushSizeText" color="white">Brush size: </font></span>
-					<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+					<div style="width: 90%; margin: 0 auto">
+						<span id="brushSize" class="label label-default"><font id="brushSizeText" color="white">Brush size: </font></span>
+						<div id="brushSizeSlider" style="width: 100%; height: 12px; background: green; margin-top: 5px; margin-bottom: 5px"></div>
+					</div>
 
-					<button id="undo" class="clip_button btn btn-default" data-bind="click: function() { undo() }">Undo</button>
-
-					<button id="redo" class="clip_button btn btn-default" data-bind="click: function() { redo() }">Redo</button>
+					<div style="float: left; width: 45%; text-align: center; margin-top: 15px; margin-bottom: 15px">
+						<button id="undo" class="btn btn-default" style="width: 100%" data-bind="click: function() { undo() }">Undo</button>
+					</div>
+					
+					<div style="float: right; width: 45%; text-align: center; margin-top: 15px; margin-bottom: 15px">
+						<button id="redo" class="btn btn-default" style="width: 100%" data-bind="click: function() { redo() }">Redo</button>
+					</div>
 
 					<button id="copyToClipboard" class="clip_button btn btn-default">Copy to clipboard</button>
 				</div>
