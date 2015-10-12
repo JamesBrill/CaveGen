@@ -63,11 +63,11 @@ $(document).ready(function ()
 			width: 100,
 			slide: function( event, ui ) 
 			{
-				$("#brushSize").val(ui.value);
+				$("#brushSizeText").html("Brush size: " + ui.value);
 				brushSize = ui.value;
 			}
 		});
-		$("#brushSize").val($("#brushSizeSlider").slider("value"));
+		$("#brushSizeText").html("Brush size: " + $("#brushSizeSlider").slider("value"));
 	}
 
 	init();

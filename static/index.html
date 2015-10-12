@@ -47,7 +47,7 @@
 			})();
 		</script>
 	</head>
-	<body>
+	<body style="background: black">
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
@@ -56,31 +56,29 @@
 		  </div>
 		</nav>
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-3" style="background: black">
-					<div id="cave-settings" style="width: 250px">
-						<label for="brushSize"><font color="white">Brush size: </font></label>
-						<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; color:white; margin-bottom: 5px; background-color: black">
-						<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+			<div class="col-md-3" style="background: black">
+				<div id="cave-settings" style="width: 250px">
+					<span id="brushSize" class="label label-default"><font id="brushSizeText" color="white">Brush size: </font></span>
+					<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
 
-						<button id="undo" class="clip_button" data-bind="click: function() { undo() }">Undo</button>
+					<button id="undo" class="clip_button btn btn-default" data-bind="click: function() { undo() }">Undo</button>
 
-						<button id="redo" class="clip_button" data-bind="click: function() { redo() }">Redo</button>
+					<button id="redo" class="clip_button btn btn-default" data-bind="click: function() { redo() }">Redo</button>
 
-						<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
-					</div>
+					<button id="copyToClipboard" class="clip_button btn btn-default">Copy to clipboard</button>
+				</div>
 
-					<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
-						<div style="float: left">
-							<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
-						</div>
+				<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
+					<div style="float: left">
+						<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
 					</div>
 				</div>
-				<div class="col-md-9" style="background: black">
-					<div id="canvas-container" style="display: inline-block">
-						<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
-					</div> 
-				</div>
+			</div>
+			<div class="col-md-9" style="background: black">
+				<div id="canvas-container" style="display: inline-block">
+					<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
+				</div> 
+			</div>
 		</div>
 	</body>
 </html>
