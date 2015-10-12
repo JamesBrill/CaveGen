@@ -74,7 +74,7 @@
 					<button id="copyToClipboard" class="clip_button btn btn-default">Copy to clipboard</button>
 				</div>
 
-				<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
+				<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px; margin-top: 20px">
 					<div style="float: left">
 						<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
 					</div>
