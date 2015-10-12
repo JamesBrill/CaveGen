@@ -22,7 +22,7 @@ function PaletteViewModel()
 			var excessWidth = width % largestPossibleTileSize;
 			largestPossibleTileSize = (width - excessWidth) / (columns + 1);
 		}
-		return (largestPossibleTileSize - 6) + "px";
+		return largestPossibleTileSize + "px";
 	});
 
 	self.imagePath = function(imageName)
