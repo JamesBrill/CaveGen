@@ -65,8 +65,20 @@
 										<input type="text" id="caveName" class="form-control" data-bind="textInput: caveName"/>
 									</div>
 								</li>
+								<li>
+									<div style="width: 80%; margin-left: 5px; margin-right: 5px">
+						                <label for="width">Width</label>
+						                <input type="text" id="width" class="form-control" data-bind="textInput: caveWidth"/>
+									</div>
+								</li>
+								<li>
+									<div style="width: 80%; margin-left: 5px; margin-right: 5px">
+						                <label for="height">Height</label>
+						                <input type="text" id="height" class="form-control" data-bind="textInput: caveHeight"/>
+									</div>
+								</li>
 								<li role="separator" class="divider"></li>
-								<li><a href="#" id="generate" data-bind="click: function() { generateCave() }">Generate cave</a></li>
+								<li style="text-align: center"><a href="#" id="generate" data-bind="click: function() { generateCave() }">Generate cave</a></li>
 							</ul>
 						</li>
 					</ul>
