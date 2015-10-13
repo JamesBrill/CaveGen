@@ -29,7 +29,8 @@ $(document).ready(function ()
 		ko.applyBindings(new PaletteViewModel(), $('#palette-container')[0]);
 		ko.applyBindings(caveViewModel, $('#cave-settings')[0]);
 		ko.applyBindings(caveViewModel, $('#undo-redo')[0]);
-		ko.applyBindings(caveStorage, $('#cave-storage')[0]);
+		ko.applyBindings(caveStorage, $('#load')[0]);
+		ko.applyBindings(caveStorage, $('#save')[0]);
 		currentBrush = { fileName: "terrain", symbol: "x" };
 		initBrushSizeSlider();
 	}
