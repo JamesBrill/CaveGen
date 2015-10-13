@@ -67,6 +67,9 @@ You can zoom in and out by rolling your mousewheel (Mouse3). You can pan across 
 * Align the UI controls more neatly
 
 ## Changelog
+### Version 1.2.0
+* Use Bootstrap to add a navbar and tidy up the styling and alignment of buttons.
+
 #### Version 1.1.3
 * Zoom and pan
 
