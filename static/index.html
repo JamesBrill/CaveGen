@@ -3,8 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Cave Gen</title>
+	    <meta name="viewport" content="width = device-width, initial-scale = 1">
 		<script type="text/javascript" src="scripts/lib/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>    
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script> 		
 		<script type="text/javascript" src="scripts/lib/knockout-3.3.0.js"></script>
 		<script type="text/javascript" src="scripts/lib/ZeroClipboard.min.js"></script>
 		<script type="text/javascript" src="scripts/lib/jquery-hotkeys.js"></script>
@@ -31,6 +33,8 @@
 		<link rel="stylesheet" type="text/css" href="styles/palette.css">
 		<link rel="stylesheet" type="text/css" href="styles/clipboardButton.css">
 		<link rel="stylesheet" type="text/css" href="jquery-ui-1.11.2.custom/jquery-ui.min.css">
+	    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-61601702-1']);
@@ -43,47 +47,82 @@
 			})();
 		</script>
 	</head>
-	<body style="background-color: black">
-		<div style="display: inline-block; vertical-align:top">
-			<div id="cave-settings" style="width: 250px">
-				<label for="caveName"><font color="white">Cave name</font></label>
-				<input type="text" id="caveName" data-bind="textInput: caveName" style="width: 250px"/>
+	<body style="background: black">
+		<nav class="navbar navbar-default">
+		  	<div class="container-fluid">
+		    	<div class="navbar-header">
+		      		<a class="navbar-brand" href="#">CaveGen</a>
+		    	</div>
 
-				<label for="width"><font color="white">Width</font></label>
-				<input type="text" id="width" data-bind="textInput: caveWidth" style="width: 250px"/>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Properties<span class="caret"></span></a>
+							<ul id="cave-settings" class="dropdown-menu">
+								<li>
+									<div style="width: 80%; margin-left: 5px; margin-right: 5px">
+										<label for="caveName">Cave name</label>
+										<input type="text" id="caveName" class="form-control" data-bind="textInput: caveName"/>
+									</div>
+								</li>
+								<li>
+									<div style="width: 80%; margin-left: 5px; margin-right: 5px">
+						                <label for="width">Width</label>
+						                <input type="text" id="width" class="form-control" data-bind="textInput: caveWidth"/>
+									</div>
+								</li>
+								<li>
+									<div style="width: 80%; margin-left: 5px; margin-right: 5px">
+						                <label for="height">Height</label>
+						                <input type="text" id="height" class="form-control" data-bind="textInput: caveHeight"/>
+									</div>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li style="text-align: center"><a href="#" id="generate" data-bind="click: function() { generateCave() }">Rebuild</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Load<span class="caret"></span></a>
+							<ul id="load" class="dropdown-menu" data-bind="foreach: caveNames">
+						        <li><a href="#" data-bind="html: $data, click: function() { $parent.loadCave($data) }"></a></li>								
+							</ul>
+						</li>
+						<li id="save" style="text-align: center"><a href="#" data-bind="click: function() { storeCave() }">Save</a></li>
+					</ul>
+				</div>
+		  	</div>
+		</nav>
 
-				<label for="height"><font color="white">Height</font></label>
-				<input type="text" id="height" data-bind="textInput: caveHeight" style="width: 250px"/>
+		<div class="container-fluid">
+			<div class="col-md-3" style="background: black">
+				<div id="undo-redo" style="width: 250px">
+					<div style="width: 90%; margin: 0 auto">
+						<span id="brushSize" class="label label-default"><font id="brushSizeText" color="white">Brush size: </font></span>
+						<div id="brushSizeSlider" style="width: 100%; height: 12px; background: green; margin-top: 5px; margin-bottom: 5px"></div>
+					</div>
 
-				<label for="brushSize"><font color="white">Brush size: </font></label>
-				<input type="text" id="brushSize" readonly style="border:0; font-weight:bold; color:white; margin-bottom: 5px; background-color: black">
-				<div id="brushSizeSlider" style="width: 200px; height: 12px; background: green; margin-left: auto; margin-right: auto"></div>
+					<div style="float: left; width: 45%; text-align: center; margin-top: 15px; margin-bottom: 15px">
+						<button id="undo" class="btn btn-default" style="width: 100%" data-bind="click: function() { undo() }">Undo</button>
+					</div>
+					
+					<div style="float: right; width: 45%; text-align: center; margin-top: 15px; margin-bottom: 15px">
+						<button id="redo" class="btn btn-default" style="width: 100%" data-bind="click: function() { redo() }">Redo</button>
+					</div>
 
-				<button id="generate" class="clip_button" data-bind="click: function() { generateCave() }"
-										style="margin-right:100px">Generate cave</button>
+					<button id="copyToClipboard" class="clip_button btn btn-default">Copy to clipboard</button>
+				</div>
 
-				<button id="undo" class="clip_button" data-bind="click: function() { undo() }">Undo</button>
-
-				<button id="redo" class="clip_button" data-bind="click: function() { redo() }">Redo</button>
-
-				<button id="copyToClipboard" class="clip_button">Copy to clipboard</button>
-			</div>
-
-			<div id="cave-storage" style="width: 250px">
-				<select name="load" id="load" data-bind='options: caveNames, value: selectedCaveName, optionsCaption: "Load"' style="width: 250px"></select>
-
-				<button id="save" class="clip_button" data-bind="click: function() { storeCave() }">Save</button>
-			</div>
-
-			<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px">
-				<div style="float: left">
-					<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
+				<div id="palette-container" data-bind="foreach: images" style="width: 250px; height: 400px; margin-top: 20px">
+					<div style="float: left">
+						<img class="paletteTile" data-bind="attr: { src: $parent.imagePath(fileName) }, click : $parent.handleClick($data), style: { width: $parent.size, height: $parent.size }" draggable="false">
+					</div>
 				</div>
 			</div>
+			<div class="col-md-9" style="background: black">
+				<div id="canvas-container" style="display: inline-block">
+					<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
+				</div> 
+			</div>
 		</div>
-
-		<div id="canvas-container" style="display: inline-block">
-			<canvas id="caveGridCanvas" style="left: 0; top: 0; z-index: 1; cursor: none"/>
-		</div> 
 	</body>
 </html>

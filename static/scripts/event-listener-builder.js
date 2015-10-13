@@ -4,8 +4,8 @@ EventListenerBuilder.addMouseEventListeners = function()
 {
 	caveView.canvas.addEventListener("mousemove", function (event) 
 	{
-		var pixelX = event.pageX - this.offsetLeft;
-		var pixelY = event.pageY - this.offsetTop;
+		var pixelX = event.pageX - this.offsetLeft - this.offsetParent.offsetLeft;
+		var pixelY = event.pageY - this.offsetTop - this.offsetParent.offsetTop;
 		caveViewModel.continuePaintingAtMousePosition(pixelX, pixelY);
 	});
 
@@ -13,8 +13,8 @@ EventListenerBuilder.addMouseEventListeners = function()
 	{
 		if (!caveView.zoomer.panning)
 		{
-			var pixelX = event.pageX - this.offsetLeft;
-			var pixelY = event.pageY - this.offsetTop;
+			var pixelX = event.pageX - this.offsetLeft - this.offsetParent.offsetLeft;
+			var pixelY = event.pageY - this.offsetTop - this.offsetParent.offsetTop;
 			caveViewModel.startPaintingAtMousePosition(pixelX, pixelY);     
 		}   
 	});

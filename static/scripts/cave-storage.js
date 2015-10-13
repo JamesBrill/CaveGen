@@ -3,25 +3,17 @@ function CaveStorage()
 	var initialCaveNames = this.loadAllCaveNames();
 	this.caveNames = ko.observableArray(initialCaveNames);
 	this.selectedCaveName = ko.observable("");
-	ko.computed(function()
-	{
-		var caveName = this.selectedCaveName();
-		if (caveName == undefined || caveName == "")
-		{
-			return;
-		}
-		var caveString = this.loadCave(caveName);
-		ko.ignoreDependencies(caveViewModel.loadCave, caveViewModel, [caveName, caveString]);
-		ko.ignoreDependencies(function() 
-		{
-			_gaq.push(['_trackEvent', 'Storage', 'Load Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
-		}, this, []);	
-	}, this);
 }
 
 CaveStorage.prototype.loadCave = function(caveName)
 {
-	return localStorage["cavegen_" + caveName];
+	if (caveName == undefined || caveName == "")
+	{
+		return;
+	}
+	var caveString = localStorage["cavegen_" + caveName];
+	_gaq.push(['_trackEvent', 'Storage', 'Load Cave', caveViewModel.caveName(), caveViewModel.caveWidth() * caveViewModel.caveHeight()]);
+	caveViewModel.loadCave(caveName, caveString);
 }
 
 CaveStorage.prototype.loadAllCaveNames = function()
