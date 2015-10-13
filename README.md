@@ -62,10 +62,6 @@ You can zoom in and out by rolling your mousewheel (Mouse3). You can pan across 
 * Validate tiles (e.g. number of Hannahs, enemies, doors, etc.)
 * Option to toggle terrain images/grey rectangles 
 
-## Coming next!
-* Apply jQuery styles to the UI controls
-* Align the UI controls more neatly
-
 ## Changelog
 ### Version 1.2.0
 * Use Bootstrap to add a navbar and tidy up the styling and alignment of buttons.
